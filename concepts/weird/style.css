@@ -46,7 +46,22 @@ a{color:inherit}
 .hero h1{margin:4px 0 10px;font:900 clamp(80px,13vw,175px)/.72 'Fraunces';letter-spacing:-.08em}
 .hero h1 span{display:block;text-shadow:8px 6px 0 #201322}
 .pink{color:#ff2a9b}.acid{color:#baff00}.cyan{color:#00d8ff}
-.tagline{font:900 clamp(18px,2.5vw,34px)/1 'Anton';color:#f6e9cc;margin:28px 0 0}
+.tagline{
+  display:inline-block;
+  margin:32px auto 4px;
+  padding:12px 22px 14px;
+  background:#050506;
+  border:2px solid #f6e9cc;
+  border-radius:999px;
+  color:#f6e9cc;
+  font-family:'Space Grotesk',sans-serif;
+  font-size:clamp(15px,1.8vw,23px);
+  font-weight:700;
+  line-height:1.15;
+  letter-spacing:.04em;
+  text-transform:uppercase;
+  box-shadow:5px 5px 0 #ff2a9b
+}
 .psycho-sun{position:absolute;left:-70px;top:90px;width:260px;height:260px;border-radius:50%;display:grid;place-items:center;background:#ff7a00;box-shadow:0 0 0 20px #ff2a9b55,0 0 0 42px #baff0044;animation:pulse 3.5s ease-in-out infinite}
 .eye{font-size:80px}
 @keyframes pulse{50%{transform:scale(1.07) rotate(4deg)}}

@@ -10,13 +10,13 @@
 <meta property="og:type" content="website">
 <meta property="og:title" content="Psych Fest West">
 <meta property="og:description" content="A Bay Area psychedelic music community. Live music, listening parties, gatherings and other strange happenings on the road to Psych Fest West.">
-<meta property="og:image" content="https://psychfestwest.com/social-card.png">
-<meta property="og:url" content="https://psychfestwest.com">
+<meta property="og:image" content="https://samurai-vershlugan.github.io/psychfestwest/concepts/claude/social-card.png">
+<meta property="og:url" content="https://samurai-vershlugan.github.io/psychfestwest/concepts/claude/">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Psych Fest West">
 <meta name="twitter:description" content="A Bay Area psychedelic music community. Live music, listening parties, gatherings and other strange happenings on the road to Psych Fest West.">
-<meta name="twitter:image" content="https://psychfestwest.com/social-card.png">
-<link rel="canonical" href="https://psychfestwest.com">
+<meta name="twitter:image" content="https://samurai-vershlugan.github.io/psychfestwest/concepts/claude/social-card.png">
+<link rel="canonical" href="https://samurai-vershlugan.github.io/psychfestwest/concepts/claude/">
 <link rel="icon" type="image/svg+xml" href="logo.svg">
 <link rel="icon" type="image/png" href="favicon.png">
 <link rel="apple-touch-icon" href="favicon.png">
@@ -24,7 +24,7 @@
 <!-- Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400..900&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <!-- ============================================================
      GOOGLE ANALYTICS — replace G-XXXXXXXXXX with your GA4 Measurement ID
@@ -42,18 +42,21 @@
 
 <style>
   :root{
-    --ink:        #16191A;
-    --ink-soft:   #1F2320;
-    --paper:      #F1EAD9;
-    --paper-dim:  #E4D9BE;
-    --rust:       #BD4426;
-    --rust-light: #D6613F;
-    --marigold:   #E7A63C;
-    --sage:       #6C7F58;
-    --cream:      #F1EAD9;
-    --ink-text:   #201B12;
+    --ink:        #12191C;
+    --ink-soft:   #1B3236;
+    --paper:      #F3EBDA;
+    --paper-dim:  #E6DAB9;
+    --rust:       #C15A3A;
+    --rust-light: #E87A52;
+    --marigold:   #F0B04E;
+    --marigold-light: #F7CE84;
+    --sage:       #3E8E86;
+    --sage-light: #7FC4BA;
+    --cream:      #F3EBDA;
+    --ink-text:   #241C12;
 
     --serif: 'Fraunces', Georgia, serif;
+    --display: 'Unbounded', var(--serif);
     --sans: 'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 
     --max: 720px;
@@ -104,28 +107,24 @@
     padding:96px 0 64px;
     overflow:hidden;
     isolation:isolate;
+    background:linear-gradient(180deg, var(--ink) 0%, var(--ink-soft) 40%, var(--rust-light) 78%, var(--marigold) 100%);
   }
-  .hero-halftone{
-    position:absolute; top:-10%; right:-18%; width:70vw; max-width:560px; height:auto;
-    opacity:0.5; z-index:-1; pointer-events:none;
-  }
-  .hero-hills{
-    position:absolute; left:0; right:0; bottom:0; width:100%; height:auto; z-index:-1; pointer-events:none;
-    opacity:0.9;
+  .hero-art{
+    position:absolute; inset:0; width:100%; height:100%; z-index:-1; pointer-events:none;
   }
   .kicker{
     font-size:13px;
     letter-spacing:0.04em;
-    color:var(--marigold);
+    color:var(--marigold-light);
     margin-bottom:18px;
-    max-width:340px;
+    max-width:360px;
   }
   .mark{
     position:relative;
-    font-family:var(--serif);
-    font-weight:600;
-    font-size:clamp(52px, 15vw, 108px);
-    line-height:0.94;
+    font-family:var(--display);
+    font-weight:900;
+    font-size:clamp(46px, 13.5vw, 100px);
+    line-height:0.98;
     letter-spacing:-0.01em;
     margin:0 0 28px;
     width:fit-content;
@@ -133,8 +132,8 @@
   .mark .layer{
     display:block;
   }
-  .mark .l1{ color:var(--rust-light); position:absolute; top:0; left:0; transform:translate(3px,-2px); mix-blend-mode:screen; opacity:0.85; }
-  .mark .l2{ color:var(--sage); position:absolute; top:0; left:0; transform:translate(-3px,2px); mix-blend-mode:screen; opacity:0.85; }
+  .mark .l1{ color:var(--rust-light); position:absolute; top:0; left:0; transform:translate(3px,-2px); mix-blend-mode:screen; opacity:0.8; }
+  .mark .l2{ color:var(--sage-light); position:absolute; top:0; left:0; transform:translate(-3px,2px); mix-blend-mode:screen; opacity:0.8; }
   .mark .l3{ color:var(--cream); position:relative; }
 
   .tagline{
@@ -148,7 +147,7 @@
   }
   .sub{
     max-width:480px;
-    color:#C9C4B4;
+    color:#E9E0CB;
     font-size:16px;
   }
   .scroll-cue{
@@ -157,7 +156,8 @@
     align-items:center;
     gap:10px;
     font-size:13px;
-    color:#9A9585;
+    color:#D9CCAA;
+    text-decoration:none;
   }
   .scroll-cue svg{ width:14px; height:14px; }
 
@@ -387,33 +387,99 @@
      HERO
      ============================================================ -->
 <section class="hero">
-  <svg class="hero-halftone" viewBox="0 0 400 400" aria-hidden="true">
+  <svg class="hero-art" viewBox="0 0 1200 900" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
     <defs>
-      <pattern id="dots" width="16" height="16" patternUnits="userSpaceOnUse">
-        <circle cx="2" cy="2" r="1.6" fill="#E7A63C"/>
+      <pattern id="dots" width="14" height="14" patternUnits="userSpaceOnUse">
+        <circle cx="2" cy="2" r="1.5" fill="#F0B04E"/>
       </pattern>
-      <radialGradient id="fade" cx="50%" cy="50%" r="50%">
+      <radialGradient id="dotFade" cx="50%" cy="50%" r="50%">
         <stop offset="0%" stop-color="white" stop-opacity="1"/>
         <stop offset="100%" stop-color="white" stop-opacity="0"/>
       </radialGradient>
-      <mask id="fadeMask"><rect width="400" height="400" fill="url(#fade)"/></mask>
-    </defs>
-    <rect width="400" height="400" fill="url(#dots)" mask="url(#fadeMask)"/>
-  </svg>
+      <mask id="dotMask"><rect x="680" y="-100" width="600" height="600" fill="url(#dotFade)"/></mask>
 
-  <svg class="hero-hills" viewBox="0 0 1200 220" preserveAspectRatio="none" aria-hidden="true">
-    <path d="M0,180 C150,120 280,190 420,140 C560,90 650,170 820,130 C960,100 1080,160 1200,120 L1200,220 L0,220 Z" fill="#1F2320"/>
-    <path d="M0,200 C180,160 320,210 480,175 C640,140 760,205 940,170 C1050,150 1120,190 1200,165 L1200,220 L0,220 Z" fill="#191C1A" opacity="0.9"/>
+      <radialGradient id="sunGlow" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="#F7CE84" stop-opacity="0.95"/>
+        <stop offset="35%" stop-color="#F0B04E" stop-opacity="0.6"/>
+        <stop offset="70%" stop-color="#E87A52" stop-opacity="0.22"/>
+        <stop offset="100%" stop-color="#E87A52" stop-opacity="0"/>
+      </radialGradient>
+
+      <linearGradient id="hillFarGrad" x1="0" y1="565" x2="0" y2="900" gradientUnits="userSpaceOnUse">
+        <stop offset="0" stop-color="#F7CE84" stop-opacity="0.85"/>
+        <stop offset="0.3" stop-color="#3E8E86" stop-opacity="0.7"/>
+        <stop offset="1" stop-color="#3E8E86" stop-opacity="0.55"/>
+      </linearGradient>
+      <linearGradient id="hillMidGrad" x1="0" y1="625" x2="0" y2="900" gradientUnits="userSpaceOnUse">
+        <stop offset="0" stop-color="#F0B04E" stop-opacity="0.75"/>
+        <stop offset="0.28" stop-color="#1B3236" stop-opacity="1"/>
+        <stop offset="1" stop-color="#1B3236" stop-opacity="1"/>
+      </linearGradient>
+      <linearGradient id="hillNearGrad" x1="0" y1="720" x2="0" y2="900" gradientUnits="userSpaceOnUse">
+        <stop offset="0" stop-color="#E87A52" stop-opacity="0.55"/>
+        <stop offset="0.3" stop-color="#12191C" stop-opacity="1"/>
+        <stop offset="1" stop-color="#12191C" stop-opacity="1"/>
+      </linearGradient>
+    </defs>
+
+    <g fill="#F3EBDA">
+      <circle cx="120" cy="70" r="1.6" opacity="0.8"/>
+      <circle cx="220" cy="140" r="1.1" opacity="0.55"/>
+      <circle cx="340" cy="60" r="1.4" opacity="0.7"/>
+      <circle cx="460" cy="130" r="1" opacity="0.5"/>
+      <circle cx="90" cy="220" r="1.2" opacity="0.6"/>
+      <circle cx="560" cy="80" r="1.5" opacity="0.75"/>
+      <circle cx="640" cy="180" r="1" opacity="0.5"/>
+      <circle cx="1080" cy="90" r="1.3" opacity="0.65"/>
+      <circle cx="1150" cy="200" r="1" opacity="0.5"/>
+      <circle cx="980" cy="60" r="1.5" opacity="0.7"/>
+      <circle cx="300" cy="220" r="1" opacity="0.5"/>
+      <circle cx="700" cy="230" r="1.1" opacity="0.55"/>
+    </g>
+    <path d="M180,100 L184,112 L196,113 L187,121 L190,133 L180,126 L170,133 L173,121 L164,113 L176,112 Z" fill="#F7CE84" opacity="0.8"/>
+    <path d="M1000,150 L1002,157 L1009,158 L1003,163 L1005,170 L1000,166 L995,170 L997,163 L991,158 L998,157 Z" fill="#F7CE84" opacity="0.7"/>
+
+    <rect x="680" y="-100" width="600" height="600" fill="url(#dots)" mask="url(#dotMask)"/>
+
+    <g transform="translate(860,300)">
+      <circle r="320" fill="url(#sunGlow)"/>
+      <circle r="120" fill="#F7CE84"/>
+      <g stroke="#F7CE84" stroke-width="1.5" opacity="0.7">
+        <line x1="0" y1="-260" x2="0" y2="-330"/>
+        <line x1="130" y1="-225" x2="165" y2="-285"/>
+        <line x1="225" y1="-130" x2="278" y2="-170"/>
+        <line x1="260" y1="0" x2="330" y2="0"/>
+        <line x1="225" y1="130" x2="278" y2="170"/>
+        <line x1="-130" y1="-225" x2="-165" y2="-285"/>
+        <line x1="-225" y1="-130" x2="-278" y2="-170"/>
+        <line x1="-260" y1="0" x2="-330" y2="0"/>
+        <line x1="0" y1="260" x2="0" y2="330"/>
+        <line x1="130" y1="225" x2="165" y2="285"/>
+        <line x1="-130" y1="225" x2="-165" y2="285"/>
+      </g>
+      <circle r="120" fill="none" stroke="#C15A3A" stroke-width="2" opacity="0.85" transform="translate(4,-3)"/>
+      <circle r="120" fill="none" stroke="#3E8E86" stroke-width="2" opacity="0.85" transform="translate(-4,3)"/>
+      <circle r="120" fill="none" stroke="#F3EBDA" stroke-width="1" opacity="0.6"/>
+      <circle r="78" fill="none" stroke="#F0B04E" stroke-width="1.5" opacity="0.6"/>
+      <circle r="42" fill="none" stroke="#F3EBDA" stroke-width="1" opacity="0.4"/>
+    </g>
+
+    <path d="M0,660 C160,600 300,645 460,605 C620,565 760,630 940,590 C1040,568 1120,600 1200,578 L1200,900 L0,900 Z"
+          fill="url(#hillFarGrad)"/>
+    <path d="M0,720 C180,660 340,710 520,665 C680,625 820,690 1000,650 C1080,632 1150,665 1200,648 L1200,900 L0,900 Z"
+          fill="url(#hillMidGrad)"/>
+    <path d="M0,800 C200,750 360,805 560,760 C740,720 880,780 1080,740 C1130,728 1170,750 1200,740 L1200,900 L0,900 Z"
+          fill="url(#hillNearGrad)"/>
   </svg>
 
   <div class="wrap">
-    <p class="kicker">Bay Area · Psychedelic Music Community</p>
+    <p class="kicker">Bay Area · Psychedelic Rock Music Community</p>
     <h1 class="mark" aria-label="Psych Fest West">
-      <span class="layer l1" aria-hidden="true">PSYCH FEST<br>WEST</span>
-      <span class="layer l2" aria-hidden="true">PSYCH FEST<br>WEST</span>
-      <span class="layer l3">PSYCH FEST<br>WEST</span>
+      <span class="layer l1" aria-hidden="true">PSYCH<br>FEST<br>WEST</span>
+      <span class="layer l2" aria-hidden="true">PSYCH<br>FEST<br>WEST</span>
+      <span class="layer l3">PSYCH<br>FEST<br>WEST</span>
     </h1>
-    <p class="tagline">A Bay Area psychedelic music community.</p>
+    <p class="tagline">Journey beyond reality.</p>
     <p class="sub">Live music, listening parties, gatherings and other strange happenings on the road to Psych Fest West.</p>
 
     <a href="#event" class="scroll-cue" aria-label="Scroll to first event">
@@ -461,8 +527,8 @@
      ============================================================ -->
 <section class="future">
   <svg class="future-hills" viewBox="0 0 1200 200" preserveAspectRatio="none" aria-hidden="true">
-    <path d="M0,160 C200,90 350,170 520,110 C680,60 820,150 1000,100 C1080,80 1140,120 1200,100 L1200,200 L0,200 Z" fill="none" stroke="#6C7F58" stroke-width="1.5" opacity="0.55"/>
-    <path d="M0,180 C220,130 380,190 560,150 C720,115 860,175 1040,140 C1110,125 1160,150 1200,140" fill="none" stroke="#BD4426" stroke-width="1.5" opacity="0.4"/>
+    <path d="M0,160 C200,90 350,170 520,110 C680,60 820,150 1000,100 C1080,80 1140,120 1200,100 L1200,200 L0,200 Z" fill="none" stroke="#3E8E86" stroke-width="1.5" opacity="0.55"/>
+    <path d="M0,180 C220,130 380,190 560,150 C720,115 860,175 1040,140 C1110,125 1160,150 1200,140" fill="none" stroke="#C15A3A" stroke-width="1.5" opacity="0.4"/>
   </svg>
   <div class="wrap">
     <h2>Eventually, all roads lead to an annual Psych Fest West music festival.</h2>

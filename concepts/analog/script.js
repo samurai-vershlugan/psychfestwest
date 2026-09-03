@@ -1,0 +1,1 @@
+document.getElementById('year').textContent=new Date().getFullYear();const b=document.getElementById('signup-button');if(b&&b.getAttribute('href').startsWith('SET-')){b.addEventListener('click',e=>{e.preventDefault();alert('Connect your Brevo signup form before publishing. See README.md.');});}

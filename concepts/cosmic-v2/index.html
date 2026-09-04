@@ -8,6 +8,29 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
+
+<style>
+/* Saturn-style ring for one of the small hero planets */
+.satellite.saturn{
+  overflow:visible;
+}
+.satellite.saturn::after{
+  content:"";
+  position:absolute;
+  left:-42%;
+  right:-42%;
+  top:37%;
+  height:24%;
+  border:3px solid #f4edcf;
+  border-left-color:#ff8b3d;
+  border-right-color:#44dbc7;
+  border-radius:50%;
+  transform:rotate(-18deg);
+  opacity:.9;
+  box-shadow:0 0 10px #ff5fc866;
+}
+</style>
+
 </head>
 <body>
 
@@ -25,7 +48,7 @@
 <!-- A few smaller planets around it. These are part of the hero, so they scroll with the page. -->
 <div class="satellite satellite-a"></div>
 <div class="satellite satellite-b"></div>
-<div class="satellite satellite-c"></div>
+<div class="satellite satellite-c saturn"></div>
 <div class="satellite satellite-d"></div>
 
 <p class="eyebrow">BAY AREA • CALIFORNIA</p>

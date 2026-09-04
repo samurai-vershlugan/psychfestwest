@@ -1,5 +1,8 @@
 document.getElementById('year').textContent = new Date().getFullYear();
 
+const heroTagline = document.querySelector('.tagline');
+if (heroTagline) heroTagline.textContent = 'THE JOURNEY IS THE COMMUNITY';
+
 const button = document.getElementById('signup-button');
 if (button && button.getAttribute('href').startsWith('SET-')) {
   button.addEventListener('click', (event) => {

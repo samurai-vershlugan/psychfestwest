@@ -45,6 +45,31 @@ function applyMobileLayoutFixes() {
     }
 
     @media (max-width: 760px) {
+      header {
+        gap: 14px !important;
+      }
+
+      header nav {
+        gap: 15px !important;
+        align-items: center !important;
+        flex-wrap: nowrap !important;
+      }
+
+      /* PFW logo already functions as Home, so remove duplicate Home link on mobile. */
+      header nav a:first-child {
+        display: none !important;
+      }
+
+      /* Keep the compact primary nav clean; Instagram remains available in the footer. */
+      header nav a:last-child {
+        display: none !important;
+      }
+
+      header nav a {
+        white-space: nowrap !important;
+        font-size: 10px !important;
+      }
+
       .flyer-feature {
         grid-template-columns: minmax(105px, 42%) minmax(0, 1fr) !important;
         gap: 16px !important;
@@ -60,6 +85,13 @@ function applyMobileLayoutFixes() {
         letter-spacing: -.045em !important;
         max-width: 100% !important;
         white-space: nowrap !important;
+      }
+
+      .flyer-actions .btn {
+        white-space: nowrap !important;
+        font-size: 9px !important;
+        padding: 0 12px !important;
+        min-height: 44px !important;
       }
     }
 

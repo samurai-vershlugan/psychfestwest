@@ -21,17 +21,13 @@ function fixBrevoFieldColors() {
   });
 }
 
-// Keep the mobile event identity balanced and force the title to exactly two lines.
 function applyMobileLayoutFixes() {
   if (document.getElementById('pfw-mobile-fixes')) return;
 
   const style = document.createElement('style');
   style.id = 'pfw-mobile-fixes';
   style.textContent = `
-    /* The chips repeat information already stated in the event description and flyer. */
-    .chips {
-      display: none !important;
-    }
+    .chips { display: none !important; }
 
     .live-signup .brevo-embed .sib-sms-field .entry__specification {
       display: block !important;
@@ -55,28 +51,19 @@ function applyMobileLayoutFixes() {
     }
 
     @media (max-width: 760px) {
-      header {
-        gap: 8px !important;
-      }
-
+      header { gap: 8px !important; }
       header .pfw {
         padding: 8px !important;
         font-size: 10px !important;
         flex: 0 0 auto !important;
       }
-
       header nav {
         gap: 10px !important;
         align-items: center !important;
         flex-wrap: nowrap !important;
         min-width: 0 !important;
       }
-
-      /* Keep Instagram out of the compact mobile nav; it remains in the footer. */
-      header nav a:last-child {
-        display: none !important;
-      }
-
+      header nav a:last-child { display: none !important; }
       header nav a {
         display: inline !important;
         white-space: nowrap !important;
@@ -91,7 +78,6 @@ function applyMobileLayoutFixes() {
         color: transparent !important;
         min-height: 44px !important;
       }
-
       .ticker::after {
         content: "PSYCH ROCK ✦ COMMUNITY ✦ CRAFT BEER ✦ VINYL ✦ LIVE MUSIC ✦ STRANGE HAPPENINGS ✦ NORTHERN CALIFORNIA ✦";
         position: absolute;
@@ -107,11 +93,7 @@ function applyMobileLayoutFixes() {
         grid-template-columns: minmax(105px, 42%) minmax(0, 1fr) !important;
         gap: 16px !important;
       }
-
-      .flyer-feature .flyer-info {
-        min-width: 0 !important;
-      }
-
+      .flyer-feature .flyer-info { min-width: 0 !important; }
       .flyer-feature .flyer-info h3 {
         font-size: clamp(18px, 5vw, 22px) !important;
         line-height: .95 !important;
@@ -119,22 +101,55 @@ function applyMobileLayoutFixes() {
         max-width: 100% !important;
         white-space: nowrap !important;
       }
-
       .flyer-actions .btn {
         white-space: nowrap !important;
         font-size: 9px !important;
         padding: 0 12px !important;
         min-height: 44px !important;
       }
+
+      /* Compact the mailing-list card on phones without changing the fields themselves. */
+      .live-signup {
+        padding: 28px 24px 24px !important;
+      }
+      .live-signup .brevo-embed {
+        margin-top: 8px !important;
+      }
+      .live-signup .brevo-embed .sib-form {
+        padding: 0 !important;
+      }
+      .live-signup .brevo-embed #sib-form-container,
+      .live-signup .brevo-embed #sib-container {
+        padding: 0 !important;
+        margin: 0 !important;
+      }
+      .live-signup .brevo-embed .sib-form-block {
+        padding-top: 6px !important;
+        padding-bottom: 6px !important;
+      }
+      .live-signup .brevo-embed .form__entry {
+        margin: 0 !important;
+      }
+      .live-signup .brevo-embed .entry__label {
+        margin-bottom: 4px !important;
+      }
+      .live-signup .brevo-embed .entry__specification {
+        margin-top: 4px !important;
+      }
+      .live-signup .brevo-embed .sib-form-block__button {
+        margin-top: 2px !important;
+      }
+      .live-signup > .note {
+        margin: 10px 0 0 !important;
+      }
     }
 
     .pfw-subscribe-success {
-      padding: 32px 0 18px;
+      padding: 24px 0 12px;
       text-align: center;
       color: #12081e;
       font-family: 'Space Grotesk', sans-serif;
     }
-
     .pfw-subscribe-success strong {
       display: block;
       font-family: 'Archivo Black', sans-serif;
@@ -142,7 +157,6 @@ function applyMobileLayoutFixes() {
       line-height: 1;
       margin-bottom: 10px;
     }
-
     .pfw-subscribe-success span {
       font-size: 14px;
       line-height: 1.5;
@@ -151,8 +165,6 @@ function applyMobileLayoutFixes() {
   document.head.appendChild(style);
 }
 
-// Keep Brevo submission on-page. The remote response loads into a hidden iframe,
-// then the form is replaced by a simple thank-you message.
 function keepBrevoSuccessInline() {
   const form = document.getElementById('sib-form');
   const embed = document.querySelector('.live-signup .brevo-embed');
@@ -167,16 +179,11 @@ function keepBrevoSuccessInline() {
   document.body.appendChild(frame);
 
   form.setAttribute('target', frame.name);
-
   let submitted = false;
-
-  form.addEventListener('submit', () => {
-    submitted = true;
-  });
+  form.addEventListener('submit', () => { submitted = true; });
 
   frame.addEventListener('load', () => {
     if (!submitted) return;
-
     embed.innerHTML = `
       <div class="pfw-subscribe-success" role="status" aria-live="polite">
         <strong>THANK YOU FOR SUBSCRIBING.</strong>

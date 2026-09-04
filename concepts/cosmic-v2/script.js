@@ -51,24 +51,43 @@ function applyMobileLayoutFixes() {
     }
 
     @media (max-width: 760px) {
-      header { gap: 8px !important; }
+      header {
+        gap: 12px !important;
+      }
+
       header .pfw {
-        padding: 8px !important;
-        font-size: 10px !important;
+        padding: 9px !important;
+        font-size: 10.5px !important;
         flex: 0 0 auto !important;
       }
+
       header nav {
-        gap: 10px !important;
+        gap: 12px !important;
         align-items: center !important;
+        justify-content: flex-end !important;
         flex-wrap: nowrap !important;
         min-width: 0 !important;
+        flex: 1 1 auto !important;
       }
-      header nav a:last-child { display: none !important; }
+
       header nav a {
         display: inline !important;
         white-space: nowrap !important;
-        font-size: 9px !important;
-        letter-spacing: .05em !important;
+        font-size: 10px !important;
+        letter-spacing: .055em !important;
+      }
+
+      /* Restore Instagram on mobile in a compact form so the nav can breathe. */
+      header nav a:last-child {
+        display: inline !important;
+        font-size: 0 !important;
+      }
+
+      header nav a:last-child::after {
+        content: "IG ↗";
+        font: 500 10px 'DM Mono', monospace;
+        letter-spacing: .055em;
+        white-space: nowrap;
       }
 
       .ticker {

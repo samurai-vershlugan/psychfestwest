@@ -28,6 +28,11 @@ function applyMobileLayoutFixes() {
   const style = document.createElement('style');
   style.id = 'pfw-mobile-fixes';
   style.textContent = `
+    /* The chips repeat information already stated in the event description and flyer. */
+    .chips {
+      display: none !important;
+    }
+
     .live-signup .brevo-embed .sib-sms-field .entry__specification {
       display: block !important;
       width: 100% !important;
@@ -42,6 +47,11 @@ function applyMobileLayoutFixes() {
     .live-signup .brevo-embed .sib-sms-field .entry__specification::after {
       content: none !important;
       display: none !important;
+    }
+
+    @keyframes pfwTickerScroll {
+      from { transform: translateX(100vw); }
+      to { transform: translateX(-100%); }
     }
 
     @media (max-width: 760px) {
@@ -72,6 +82,25 @@ function applyMobileLayoutFixes() {
         white-space: nowrap !important;
         font-size: 9px !important;
         letter-spacing: .05em !important;
+      }
+
+      .ticker {
+        position: relative !important;
+        overflow: hidden !important;
+        white-space: nowrap !important;
+        color: transparent !important;
+        min-height: 44px !important;
+      }
+
+      .ticker::after {
+        content: "PSYCH ROCK ✦ COMMUNITY ✦ CRAFT BEER ✦ VINYL ✦ LIVE MUSIC ✦ STRANGE HAPPENINGS ✦ NORTHERN CALIFORNIA ✦";
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #0b0710;
+        white-space: nowrap;
+        animation: pfwTickerScroll 18s linear infinite;
       }
 
       .flyer-feature {

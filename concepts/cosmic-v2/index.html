@@ -67,9 +67,9 @@
 /* Highlight the community message */
 .be-one{color:#ff5fc8;}
 
-/* Live Brevo signup + QR */
+/* Live Brevo signup */
 .live-signup{max-width:none;}
-.signup-grid{display:grid;grid-template-columns:minmax(0,1fr) 180px;gap:28px;align-items:start;margin-top:20px;}
+.brevo-embed{margin-top:20px;}
 .brevo-embed .sib-form{background:transparent!important;padding:0!important;}
 .brevo-embed #sib-form-container{padding:0!important;}
 .brevo-embed #sib-container{max-width:none!important;background:transparent!important;border:0!important;padding:0!important;}
@@ -81,13 +81,6 @@
 .brevo-embed .input{color:#f4edcf!important;background:rgba(18,8,30,.55)!important;font-family:'Space Grotesk',sans-serif!important;}
 .brevo-embed .entry__specification{display:none!important;}
 .brevo-embed .sib-form-block__button{width:100%;justify-content:center;text-align:center!important;background:#ff5fc8!important;color:#12081e!important;border-radius:0!important;font-family:'DM Mono',monospace!important;letter-spacing:.06em;}
-.signup-qr{text-align:center;border-left:1px solid #f4edcf33;padding-left:28px;}
-.signup-qr a{display:block;max-width:160px;margin:12px auto;background:#fff;padding:8px;}
-.signup-qr img{display:block;width:100%;height:auto;}
-@media(max-width:760px){
-  .signup-grid{grid-template-columns:1fr;}
-  .signup-qr{border-left:0;border-top:1px solid #f4edcf33;padding:24px 0 0;}
-}
 
 </style>
 <link rel="stylesheet" href="https://sibforms.com/forms/end-form/build/sib-styles.css">
@@ -349,8 +342,8 @@ header{
 <div class="signup live-signup">
   <p class="formtitle">MAILING LIST</p>
   <p>Join the Psych Fest West transmission for event announcements, venue updates and future happenings.</p>
-  <div class="signup-grid">
-    <div class="brevo-embed">
+
+  <div class="brevo-embed">
 <div class="sib-form" style="text-align: center;
          background-color: #EFF2F7; 
         
@@ -431,7 +424,7 @@ header{
               <div class="form__label-row ">
 
 
-                <label class="entry__label" style="font-weight: 700; text-align: left; font-family:Helvetica, sans-serif; font-size:16px; font-weight:700; text-align:left; color:#3c4858;" for="FIRSTNAME" data-required="*">Enter your FIRSTNAME</label>
+                <label class="entry__label" style="font-weight: 700; text-align: left; font-family:Helvetica, sans-serif; font-size:16px; font-weight:700; text-align:left; color:#3c4858;" for="FIRSTNAME" data-required="*">Enter your first name</label>
 
 
 
@@ -472,14 +465,14 @@ header{
               <div class="form__label-row ">
 
 
-                <label class="entry__label" style="font-weight: 700; text-align: left; font-family:Helvetica, sans-serif; font-size:16px; font-weight:700; text-align:left; color:#3c4858;" for="LASTNAME">Enter your Last Name</label>
+                <label class="entry__label" style="font-weight: 700; text-align: left; font-family:Helvetica, sans-serif; font-size:16px; font-weight:700; text-align:left; color:#3c4858;" for="LASTNAME" data-required="*">Enter your last name</label>
 
 
 
 
                 <div class="entry__field">
 
-                  <input class="input " maxlength="200" type="text" id="LASTNAME" name="LASTNAME" autocomplete="off" placeholder="LASTNAME" />
+                  <input class="input " maxlength="200" type="text" id="LASTNAME" name="LASTNAME" autocomplete="off" placeholder="LASTNAME" data-required="true" required />
 
                 </div>
 
@@ -513,7 +506,7 @@ header{
               <div class="form__label-row ">
 
 
-                <label class="entry__label" style="font-weight: 700; text-align: left; font-family:Helvetica, sans-serif; font-size:16px; font-weight:700; text-align:left; color:#3c4858;" for="EMAIL" data-required="*">Enter your email address to subscribe</label>
+                <label class="entry__label" style="font-weight: 700; text-align: left; font-family:Helvetica, sans-serif; font-size:16px; font-weight:700; text-align:left; color:#3c4858;" for="EMAIL" data-required="*">Enter your email address</label>
 
 
 
@@ -554,7 +547,7 @@ header{
               <div class="form__label-row ">
 
 
-                <label class="entry__label" style="font-weight: 700; text-align: left; font-family:Helvetica, sans-serif; font-size:16px; font-weight:700; text-align:left; color:#3c4858;" for="SMS">What&#39;s your mobile?</label>
+                <label class="entry__label" style="font-weight: 700; text-align: left; font-family:Helvetica, sans-serif; font-size:16px; font-weight:700; text-align:left; color:#3c4858;" for="SMS">What&#39;s your mobile number?</label>
 
 
 
@@ -1653,15 +1646,8 @@ header{
     </div>
   </div>
 </div>
-    </div>
-    <div class="signup-qr">
-      <p class="eyebrow pink">SCAN TO JOIN</p>
-      <a href="https://bec2852a.sibforms.com/serve/MUIFABzgW-OJRXpNBBrqUNu7k_OgNfIXtPzDPzOcmAo6uEaQI9hS2TQnB3yuspDQIsclOgTSwPmWROywSZ_2gO8HIzQ6-09HQsbDzTqk8cpCIu7yIw6s-hRXZg2w7tATg6Ea1uSmGGwrS2N31vi_PJ1fssSjUWbQOP-nG1UwHFGfbZX0xJ2-8ZMPysB5Puq5kwSQw2yg7pWAbSTeQA==" target="_blank" rel="noopener" aria-label="Open the Psych Fest West mailing list signup form">
-        <img src="psych-fest-west-signup-qr.png" alt="QR code for the Psych Fest West mailing list signup form">
-      </a>
-      <p class="note">Scan with your phone or use the form here.</p>
-    </div>
   </div>
+
   <p class="note">No spam. Just event announcements, music and occasional transmissions from beyond reality. Unsubscribe anytime.</p>
 </div>
 </section>

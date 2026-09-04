@@ -63,25 +63,6 @@
     text-decoration: underline;
     color: #2BB2FC;
   }
-
-/* Highlight the community message */
-.be-one{color:#ff5fc8;}
-
-/* Live Brevo signup */
-.live-signup{max-width:none;}
-.brevo-embed{margin-top:20px;}
-.brevo-embed .sib-form{background:transparent!important;padding:0!important;}
-.brevo-embed #sib-form-container{padding:0!important;}
-.brevo-embed #sib-container{max-width:none!important;background:transparent!important;border:0!important;padding:0!important;}
-.brevo-embed #sib-container > form > div:nth-of-type(1),
-.brevo-embed #sib-container > form > div:nth-of-type(2){display:none;}
-.brevo-embed .sib-form-block{padding-left:0!important;padding-right:0!important;}
-.brevo-embed .entry__label{color:#f4edcf!important;font-family:'DM Mono',monospace!important;font-size:12px!important;text-transform:uppercase;letter-spacing:.06em;}
-.brevo-embed .entry__field{background:transparent!important;border-color:#f4edcf55!important;}
-.brevo-embed .input{color:#f4edcf!important;background:rgba(18,8,30,.55)!important;font-family:'Space Grotesk',sans-serif!important;}
-.brevo-embed .entry__specification{display:none!important;}
-.brevo-embed .sib-form-block__button{width:100%;justify-content:center;text-align:center!important;background:#ff5fc8!important;color:#12081e!important;border-radius:0!important;font-family:'DM Mono',monospace!important;letter-spacing:.06em;}
-
 </style>
 <link rel="stylesheet" href="https://sibforms.com/forms/end-form/build/sib-styles.css">
 
@@ -243,6 +224,134 @@ header{
     padding-right:16px;
   }
 }
+
+
+/* Brevo readability fixes for the cream mailing-list card */
+.live-signup .brevo-embed .sib-form,
+.live-signup .brevo-embed #sib-form-container,
+.live-signup .brevo-embed #sib-container{
+  background:transparent!important;
+  color:#12081e!important;
+}
+
+.live-signup .brevo-embed #sib-container{
+  border:0!important;
+}
+
+/* Make Brevo's hidden field labels readable on the cream card */
+.live-signup .brevo-embed .entry__label{
+  display:block!important;
+  visibility:visible!important;
+  opacity:1!important;
+  color:#12081e!important;
+  font-family:'DM Mono',monospace!important;
+  font-size:11px!important;
+  font-weight:700!important;
+  line-height:1.3!important;
+  letter-spacing:.06em!important;
+  text-transform:uppercase!important;
+  margin:0 0 7px!important;
+}
+
+/* Brevo adds the required star separately */
+.live-signup .brevo-embed .entry__label::after{
+  color:#ff5fc8!important;
+}
+
+/* Human-readable labels without changing Brevo field names */
+.live-signup .brevo-embed label[for="FIRSTNAME"]{
+  font-size:0!important;
+}
+.live-signup .brevo-embed label[for="FIRSTNAME"]::before{
+  content:"FIRST NAME *";
+  font-size:11px!important;
+  color:#12081e!important;
+}
+.live-signup .brevo-embed label[for="LASTNAME"]{
+  font-size:0!important;
+}
+.live-signup .brevo-embed label[for="LASTNAME"]::before{
+  content:"LAST NAME *";
+  font-size:11px!important;
+  color:#12081e!important;
+}
+.live-signup .brevo-embed label[for="EMAIL"]{
+  font-size:0!important;
+}
+.live-signup .brevo-embed label[for="EMAIL"]::before{
+  content:"EMAIL *";
+  font-size:11px!important;
+  color:#12081e!important;
+}
+.live-signup .brevo-embed label[for="SMS"]{
+  font-size:0!important;
+}
+.live-signup .brevo-embed label[for="SMS"]::before{
+  content:"MOBILE NUMBER (OPTIONAL)";
+  font-size:11px!important;
+  color:#12081e!important;
+}
+
+/* Inputs */
+.live-signup .brevo-embed .entry__field,
+.live-signup .brevo-embed .sib-sms-input-wrapper .entry__field{
+  background:#8b8183!important;
+  border:1px solid #8b8183!important;
+  border-radius:0!important;
+}
+
+.live-signup .brevo-embed .input,
+.live-signup .brevo-embed select.input{
+  color:#fff8df!important;
+  background:#8b8183!important;
+  font-family:'Space Grotesk',sans-serif!important;
+}
+
+.live-signup .brevo-embed input::placeholder{
+  color:#e7e2dc!important;
+  opacity:1!important;
+}
+
+/* Keep phone controls legible */
+.live-signup .brevo-embed .sib-sms-input-wrapper select.input{
+  background:#fff!important;
+  color:#12081e!important;
+}
+.live-signup .brevo-embed .sib-sms-tooltip__icon{
+  color:#2BB2FC!important;
+}
+
+/* Hide Brevo's publishing-helper copy but keep real errors visible */
+.live-signup .brevo-embed .entry__specification{
+  display:none!important;
+}
+.live-signup .brevo-embed .entry__error{
+  color:#8d1521!important;
+  background:transparent!important;
+  border:0!important;
+  font-size:12px!important;
+}
+
+/* Hide Brevo's duplicate title/description; use PFW's title and intro above */
+.live-signup .brevo-embed #sib-container > form > div:nth-of-type(1),
+.live-signup .brevo-embed #sib-container > form > div:nth-of-type(2){
+  display:none!important;
+}
+
+/* PFW subscribe button */
+.live-signup .brevo-embed .sib-form-block__button{
+  width:100%!important;
+  background:#ff5fc8!important;
+  color:#12081e!important;
+  border-radius:0!important;
+  font-family:'DM Mono',monospace!important;
+  font-size:14px!important;
+  font-weight:700!important;
+  letter-spacing:.06em!important;
+  text-align:center!important;
+  justify-content:center!important;
+}
+
 </style>
 
 </head>
@@ -344,6 +453,7 @@ header{
   <p>Join the Psych Fest West transmission for event announcements, venue updates and future happenings.</p>
 
   <div class="brevo-embed">
+
 <div class="sib-form" style="text-align: center;
          background-color: #EFF2F7; 
         
@@ -506,7 +616,7 @@ header{
               <div class="form__label-row ">
 
 
-                <label class="entry__label" style="font-weight: 700; text-align: left; font-family:Helvetica, sans-serif; font-size:16px; font-weight:700; text-align:left; color:#3c4858;" for="EMAIL" data-required="*">Enter your email address</label>
+                <label class="entry__label" style="font-weight: 700; text-align: left; font-family:Helvetica, sans-serif; font-size:16px; font-weight:700; text-align:left; color:#3c4858;" for="EMAIL" data-required="*">Email address</label>
 
 
 
@@ -547,7 +657,7 @@ header{
               <div class="form__label-row ">
 
 
-                <label class="entry__label" style="font-weight: 700; text-align: left; font-family:Helvetica, sans-serif; font-size:16px; font-weight:700; text-align:left; color:#3c4858;" for="SMS">What&#39;s your mobile number?</label>
+                <label class="entry__label" style="font-weight: 700; text-align: left; font-family:Helvetica, sans-serif; font-size:16px; font-weight:700; text-align:left; color:#3c4858;" for="SMS">Mobile number</label>
 
 
 
@@ -1646,6 +1756,7 @@ header{
     </div>
   </div>
 </div>
+  
   </div>
 
   <p class="note">No spam. Just event announcements, music and occasional transmissions from beyond reality. Unsubscribe anytime.</p>

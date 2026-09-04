@@ -46,6 +46,36 @@ function applyMobileLayoutFixes() {
   style.textContent = `
     .chips { display: none !important; }
 
+    /* Give the desktop navigation more presence and pull it slightly in from the edge. */
+    @media (min-width: 981px) {
+      header nav {
+        gap: 30px !important;
+        margin-right: clamp(12px, 3vw, 42px) !important;
+      }
+
+      header nav a {
+        font-size: 13px !important;
+        letter-spacing: .07em !important;
+      }
+    }
+
+    /* Collapse the event facts below the flyer/title before the title gets squeezed. */
+    @media (min-width: 761px) and (max-width: 980px) {
+      .card {
+        grid-template-columns: 1fr !important;
+      }
+
+      .flyer-feature {
+        grid-column: 1 !important;
+      }
+
+      .details {
+        grid-column: 1 !important;
+        border-left: 0 !important;
+        border-top: 1px solid #f4edcf33 !important;
+      }
+    }
+
     /* Highlight BE ONE using the site's pink-to-purple palette. */
     .be-one {
       background: linear-gradient(90deg, #ff5fc8 0%, #8d66ff 100%);
@@ -118,7 +148,9 @@ function applyMobileLayoutFixes() {
         overflow: hidden !important;
         white-space: nowrap !important;
         color: transparent !important;
-        min-height: 44px !important;
+        height: 39px !important;
+        min-height: 39px !important;
+        padding: 0 13px !important;
       }
 
       .ticker::after {

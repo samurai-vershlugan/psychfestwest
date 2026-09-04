@@ -1,7 +1,19 @@
 document.getElementById('year').textContent = new Date().getFullYear();
 
+// Keep the original hero tagline.
 const heroTagline = document.querySelector('.tagline');
-if (heroTagline) heroTagline.textContent = 'THE JOURNEY IS THE COMMUNITY';
+if (heroTagline) heroTagline.textContent = 'COSMIC VIBES BEYOND REALITY!';
+
+// Update the lower-page community line from POINT to JOURNEY without changing the rest of the sentence.
+function replacePointWithJourney() {
+  const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+  let node;
+  while ((node = walker.nextNode())) {
+    if (/\bPOINT\b/.test(node.nodeValue)) {
+      node.nodeValue = node.nodeValue.replace(/\bPOINT\b/g, 'JOURNEY');
+    }
+  }
+}
 
 const button = document.getElementById('signup-button');
 if (button && button.getAttribute('href').startsWith('SET-')) {
@@ -31,6 +43,15 @@ function applyMobileLayoutFixes() {
   style.id = 'pfw-mobile-fixes';
   style.textContent = `
     .chips { display: none !important; }
+
+    /* Highlight BE ONE using the site's pink-to-purple palette. */
+    .be-one {
+      background: linear-gradient(90deg, #ff5fc8 0%, #8d66ff 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent !important;
+      -webkit-text-fill-color: transparent;
+    }
 
     .live-signup .brevo-embed .sib-sms-field .entry__specification {
       display: block !important;
@@ -80,7 +101,6 @@ function applyMobileLayoutFixes() {
         letter-spacing: .055em !important;
       }
 
-      /* Restore Instagram on mobile in a compact form so the nav can breathe. */
       header nav a:last-child {
         display: inline !important;
         font-size: 0 !important;
@@ -130,7 +150,6 @@ function applyMobileLayoutFixes() {
         min-height: 44px !important;
       }
 
-      /* Compact the mailing-list card on phones without changing the fields themselves. */
       .live-signup {
         padding: 28px 24px 24px !important;
       }
@@ -215,11 +234,13 @@ function keepBrevoSuccessInline() {
   });
 }
 
+replacePointWithJourney();
 fixBrevoFieldColors();
 applyMobileLayoutFixes();
 keepBrevoSuccessInline();
 
 window.addEventListener('load', () => {
+  replacePointWithJourney();
   fixBrevoFieldColors();
   applyMobileLayoutFixes();
   keepBrevoSuccessInline();

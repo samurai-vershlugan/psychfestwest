@@ -217,3 +217,31 @@ footer a{text-decoration:none}
   .signup{transform:none;padding:28px}
   footer{flex-direction:column}
 }
+
+/* Brevo form refinements: lighter inputs and clearer helper text */
+.live-signup .brevo-embed .entry__field,
+.live-signup .brevo-embed .sib-sms-input-wrapper .entry__field{
+  background:#fff!important;
+  border:1px solid #d8d0c7!important;
+}
+.live-signup .brevo-embed .input{
+  background:#fff!important;
+  color:#12081e!important;
+}
+.live-signup .brevo-embed input::placeholder{
+  color:#7a6f78!important;
+  opacity:1!important;
+}
+.live-signup .brevo-embed .entry__specification{
+  color:#3f3540!important;
+}
+.live-signup .brevo-embed .sib-sms-field .entry__specification{
+  font-size:0!important;
+}
+.live-signup .brevo-embed .sib-sms-field .entry__specification::after{
+  content:"Enter your mobile number (without any special characters) to receive text updates";
+  display:block;
+  font-size:12px;
+  line-height:1.4;
+  color:#3f3540;
+}

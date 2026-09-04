@@ -4,12 +4,9 @@ document.getElementById('year').textContent = new Date().getFullYear();
 const heroTagline = document.querySelector('.tagline');
 if (heroTagline) heroTagline.textContent = 'COSMIC VIBES BEYOND REALITY!';
 
-// Refine the hero location and intro copy.
+// Keep the hero location label consistent.
 const heroEyebrow = document.querySelector('.hero > .eyebrow');
 if (heroEyebrow) heroEyebrow.textContent = 'NORTHERN CALIFORNIA';
-
-const heroIntro = document.querySelector('.hero > .intro');
-if (heroIntro) heroIntro.textContent = 'Live music, listening parties, social gatherings and other strange happenings on the road to Psych Fest West.';
 
 // Keep the lower-page community statement exactly as intended.
 function setCommunityJourneyLine() {

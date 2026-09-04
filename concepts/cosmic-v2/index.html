@@ -107,6 +107,17 @@ footer a{
   flex:0 0 auto;
 }
 
+/* Keep primary navigation visible while scrolling */
+header{
+  position:sticky;
+  top:0;
+  z-index:1000;
+  background:rgba(18,8,30,.88);
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+  border-bottom:1px solid rgba(244,237,207,.15);
+}
+
 @media(max-width:760px){
   .flyer-feature{
     grid-template-columns:1fr;

@@ -226,70 +226,53 @@ header{
 }
 
 
-/* Brevo readability fixes for the cream mailing-list card */
+
+
+/* Brevo form styling for the Psych Fest West cream signup card */
 .live-signup .brevo-embed .sib-form,
 .live-signup .brevo-embed #sib-form-container,
 .live-signup .brevo-embed #sib-container{
   background:transparent!important;
   color:#12081e!important;
 }
-
 .live-signup .brevo-embed #sib-container{
   border:0!important;
+  max-width:none!important;
+  padding:0!important;
 }
 
-/* Make Brevo's hidden field labels readable on the cream card */
+/* Hide Brevo's duplicate title and intro because the PFW card already provides them */
+.live-signup .brevo-embed #sib-container > form > div:nth-of-type(1),
+.live-signup .brevo-embed #sib-container > form > div:nth-of-type(2){
+  display:none!important;
+}
+
+/* Field labels */
 .live-signup .brevo-embed .entry__label{
   display:block!important;
   visibility:visible!important;
   opacity:1!important;
   color:#12081e!important;
-  font-family:'DM Mono',monospace!important;
-  font-size:11px!important;
+  font-family:'Space Grotesk',sans-serif!important;
+  font-size:15px!important;
   font-weight:700!important;
-  line-height:1.3!important;
-  letter-spacing:.06em!important;
-  text-transform:uppercase!important;
-  margin:0 0 7px!important;
+  line-height:1.35!important;
+  text-transform:none!important;
+  letter-spacing:0!important;
+  margin:0 0 6px!important;
 }
 
-/* Brevo adds the required star separately */
-.live-signup .brevo-embed .entry__label::after{
-  color:#ff5fc8!important;
-}
-
-/* Human-readable labels without changing Brevo field names */
-.live-signup .brevo-embed label[for="FIRSTNAME"]{
-  font-size:0!important;
-}
-.live-signup .brevo-embed label[for="FIRSTNAME"]::before{
-  content:"FIRST NAME *";
-  font-size:11px!important;
-  color:#12081e!important;
-}
-.live-signup .brevo-embed label[for="LASTNAME"]{
-  font-size:0!important;
-}
-.live-signup .brevo-embed label[for="LASTNAME"]::before{
-  content:"LAST NAME *";
-  font-size:11px!important;
-  color:#12081e!important;
-}
-.live-signup .brevo-embed label[for="EMAIL"]{
-  font-size:0!important;
-}
-.live-signup .brevo-embed label[for="EMAIL"]::before{
-  content:"EMAIL *";
-  font-size:11px!important;
-  color:#12081e!important;
-}
-.live-signup .brevo-embed label[for="SMS"]{
-  font-size:0!important;
-}
-.live-signup .brevo-embed label[for="SMS"]::before{
-  content:"MOBILE NUMBER (OPTIONAL)";
-  font-size:11px!important;
-  color:#12081e!important;
+/* Brevo helper text below each field */
+.live-signup .brevo-embed .entry__specification{
+  display:block!important;
+  visibility:visible!important;
+  opacity:1!important;
+  color:#51464f!important;
+  background:transparent!important;
+  font-family:'Space Grotesk',sans-serif!important;
+  font-size:12px!important;
+  line-height:1.4!important;
+  margin-top:6px!important;
 }
 
 /* Inputs */
@@ -299,20 +282,17 @@ header{
   border:1px solid #8b8183!important;
   border-radius:0!important;
 }
-
-.live-signup .brevo-embed .input,
-.live-signup .brevo-embed select.input{
+.live-signup .brevo-embed .input{
   color:#fff8df!important;
   background:#8b8183!important;
   font-family:'Space Grotesk',sans-serif!important;
 }
-
 .live-signup .brevo-embed input::placeholder{
-  color:#e7e2dc!important;
+  color:#eee8df!important;
   opacity:1!important;
 }
 
-/* Keep phone controls legible */
+/* Keep phone selector readable */
 .live-signup .brevo-embed .sib-sms-input-wrapper select.input{
   background:#fff!important;
   color:#12081e!important;
@@ -321,10 +301,7 @@ header{
   color:#2BB2FC!important;
 }
 
-/* Hide Brevo's publishing-helper copy but keep real errors visible */
-.live-signup .brevo-embed .entry__specification{
-  display:none!important;
-}
+/* Validation text */
 .live-signup .brevo-embed .entry__error{
   color:#8d1521!important;
   background:transparent!important;
@@ -332,15 +309,11 @@ header{
   font-size:12px!important;
 }
 
-/* Hide Brevo's duplicate title/description; use PFW's title and intro above */
-.live-signup .brevo-embed #sib-container > form > div:nth-of-type(1),
-.live-signup .brevo-embed #sib-container > form > div:nth-of-type(2){
-  display:none!important;
-}
-
-/* PFW subscribe button */
+/* Subscribe button */
 .live-signup .brevo-embed .sib-form-block__button{
   width:100%!important;
+  justify-content:center!important;
+  text-align:center!important;
   background:#ff5fc8!important;
   color:#12081e!important;
   border-radius:0!important;
@@ -348,8 +321,6 @@ header{
   font-size:14px!important;
   font-weight:700!important;
   letter-spacing:.06em!important;
-  text-align:center!important;
-  justify-content:center!important;
 }
 
 </style>
@@ -454,6 +425,7 @@ header{
 
   <div class="brevo-embed">
 
+
 <div class="sib-form" style="text-align: center;
          background-color: #EFF2F7; 
         
@@ -534,7 +506,7 @@ header{
               <div class="form__label-row ">
 
 
-                <label class="entry__label" style="font-weight: 700; text-align: left; font-family:Helvetica, sans-serif; font-size:16px; font-weight:700; text-align:left; color:#3c4858;" for="FIRSTNAME" data-required="*">Enter your first name</label>
+                <label class="entry__label" style="font-weight: 700; text-align: left; font-family:Helvetica, sans-serif; font-size:16px; font-weight:700; text-align:left; color:#3c4858;" for="FIRSTNAME" data-required="*">First Name</label>
 
 
 
@@ -553,7 +525,7 @@ header{
 
 
               <label class="entry__specification" style="font-family:Helvetica, sans-serif; font-size:12px; text-align:left; color:#8390A4; text-align: left ">
-                Customize this optional help text before publishing your form.
+                Enter your first name
               </label>
 
             </div>
@@ -575,7 +547,7 @@ header{
               <div class="form__label-row ">
 
 
-                <label class="entry__label" style="font-weight: 700; text-align: left; font-family:Helvetica, sans-serif; font-size:16px; font-weight:700; text-align:left; color:#3c4858;" for="LASTNAME" data-required="*">Enter your last name</label>
+                <label class="entry__label" style="font-weight: 700; text-align: left; font-family:Helvetica, sans-serif; font-size:16px; font-weight:700; text-align:left; color:#3c4858;" for="LASTNAME" data-required="*">Last Name</label>
 
 
 
@@ -594,7 +566,7 @@ header{
 
 
               <label class="entry__specification" style="font-family:Helvetica, sans-serif; font-size:12px; text-align:left; color:#8390A4; text-align: left ">
-                Customize this optional help text before publishing your form.
+                Enter your last name
               </label>
 
             </div>
@@ -1713,7 +1685,7 @@ header{
 
 
               <label class="entry__specification" style="font-family:Helvetica, sans-serif; font-size:12px; text-align:left; color:#8390A4; text-align: left ">
-                Customize this optional help text before publishing your form.
+                Provide your mobile number to receive text updates
               </label>
 
             </div>
@@ -1756,6 +1728,7 @@ header{
     </div>
   </div>
 </div>
+  
   
   </div>
 

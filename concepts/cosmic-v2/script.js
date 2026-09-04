@@ -4,15 +4,10 @@ document.getElementById('year').textContent = new Date().getFullYear();
 const heroTagline = document.querySelector('.tagline');
 if (heroTagline) heroTagline.textContent = 'COSMIC VIBES BEYOND REALITY!';
 
-// Update the lower-page community line from POINT to JOURNEY without changing the rest of the sentence.
-function replacePointWithJourney() {
-  const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
-  let node;
-  while ((node = walker.nextNode())) {
-    if (/\bPOINT\b/.test(node.nodeValue)) {
-      node.nodeValue = node.nodeValue.replace(/\bPOINT\b/g, 'JOURNEY');
-    }
-  }
+// Keep the lower-page community statement exactly as intended.
+function setCommunityJourneyLine() {
+  const line = document.querySelector('.manifesto p:last-child');
+  if (line) line.textContent = 'THE COMMUNITY IS THE JOURNEY.';
 }
 
 const button = document.getElementById('signup-button');
@@ -234,13 +229,13 @@ function keepBrevoSuccessInline() {
   });
 }
 
-replacePointWithJourney();
+setCommunityJourneyLine();
 fixBrevoFieldColors();
 applyMobileLayoutFixes();
 keepBrevoSuccessInline();
 
 window.addEventListener('load', () => {
-  replacePointWithJourney();
+  setCommunityJourneyLine();
   fixBrevoFieldColors();
   applyMobileLayoutFixes();
   keepBrevoSuccessInline();

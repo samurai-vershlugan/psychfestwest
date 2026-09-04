@@ -21,5 +21,48 @@ function fixBrevoFieldColors() {
   });
 }
 
+// Fix two mobile layout issues caused by Brevo's generated styles and the two-column event header.
+function applyMobileLayoutFixes() {
+  if (document.getElementById('pfw-mobile-fixes')) return;
+
+  const style = document.createElement('style');
+  style.id = 'pfw-mobile-fixes';
+  style.textContent = `
+    .live-signup .brevo-embed .sib-sms-field .entry__specification {
+      display: block !important;
+      width: 100% !important;
+      max-width: none !important;
+      font-size: 12px !important;
+      line-height: 1.4 !important;
+      white-space: normal !important;
+      word-break: normal !important;
+      overflow-wrap: normal !important;
+    }
+
+    .live-signup .brevo-embed .sib-sms-field .entry__specification::after {
+      content: none !important;
+      display: none !important;
+    }
+
+    @media (max-width: 760px) {
+      .flyer-feature .flyer-info {
+        min-width: 0 !important;
+      }
+
+      .flyer-feature .flyer-info h3 {
+        font-size: clamp(21px, 6vw, 28px) !important;
+        line-height: .95 !important;
+        letter-spacing: -.045em !important;
+        max-width: 100% !important;
+      }
+    }
+  `;
+  document.head.appendChild(style);
+}
+
 fixBrevoFieldColors();
-window.addEventListener('load', fixBrevoFieldColors);
+applyMobileLayoutFixes();
+window.addEventListener('load', () => {
+  fixBrevoFieldColors();
+  applyMobileLayoutFixes();
+});

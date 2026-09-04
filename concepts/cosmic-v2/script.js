@@ -21,7 +21,7 @@ function fixBrevoFieldColors() {
   });
 }
 
-// Fix two mobile layout issues caused by Brevo's generated styles and the two-column event header.
+// Keep the mobile event identity balanced and force the title to exactly two lines.
 function applyMobileLayoutFixes() {
   if (document.getElementById('pfw-mobile-fixes')) return;
 
@@ -45,24 +45,88 @@ function applyMobileLayoutFixes() {
     }
 
     @media (max-width: 760px) {
+      .flyer-feature {
+        grid-template-columns: minmax(105px, 42%) minmax(0, 1fr) !important;
+        gap: 16px !important;
+      }
+
       .flyer-feature .flyer-info {
         min-width: 0 !important;
       }
 
       .flyer-feature .flyer-info h3 {
-        font-size: clamp(21px, 6vw, 28px) !important;
+        font-size: clamp(18px, 5vw, 22px) !important;
         line-height: .95 !important;
         letter-spacing: -.045em !important;
         max-width: 100% !important;
+        white-space: nowrap !important;
       }
+    }
+
+    .pfw-subscribe-success {
+      padding: 32px 0 18px;
+      text-align: center;
+      color: #12081e;
+      font-family: 'Space Grotesk', sans-serif;
+    }
+
+    .pfw-subscribe-success strong {
+      display: block;
+      font-family: 'Archivo Black', sans-serif;
+      font-size: clamp(24px, 4vw, 34px);
+      line-height: 1;
+      margin-bottom: 10px;
+    }
+
+    .pfw-subscribe-success span {
+      font-size: 14px;
+      line-height: 1.5;
     }
   `;
   document.head.appendChild(style);
 }
 
+// Keep Brevo submission on-page. The remote response loads into a hidden iframe,
+// then the form is replaced by a simple thank-you message.
+function keepBrevoSuccessInline() {
+  const form = document.getElementById('sib-form');
+  const embed = document.querySelector('.live-signup .brevo-embed');
+  if (!form || !embed || form.dataset.pfwInlineSuccess === 'true') return;
+
+  form.dataset.pfwInlineSuccess = 'true';
+
+  const frame = document.createElement('iframe');
+  frame.name = 'pfw-brevo-submit-frame';
+  frame.setAttribute('aria-hidden', 'true');
+  frame.style.display = 'none';
+  document.body.appendChild(frame);
+
+  form.setAttribute('target', frame.name);
+
+  let submitted = false;
+
+  form.addEventListener('submit', () => {
+    submitted = true;
+  });
+
+  frame.addEventListener('load', () => {
+    if (!submitted) return;
+
+    embed.innerHTML = `
+      <div class="pfw-subscribe-success" role="status" aria-live="polite">
+        <strong>THANK YOU FOR SUBSCRIBING.</strong>
+        <span>You’re on the Psych Fest West mailing list.</span>
+      </div>
+    `;
+  });
+}
+
 fixBrevoFieldColors();
 applyMobileLayoutFixes();
+keepBrevoSuccessInline();
+
 window.addEventListener('load', () => {
   fixBrevoFieldColors();
   applyMobileLayoutFixes();
+  keepBrevoSuccessInline();
 });

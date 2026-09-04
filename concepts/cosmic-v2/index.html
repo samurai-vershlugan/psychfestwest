@@ -30,14 +30,13 @@
   box-shadow:0 0 10px #ff5fc866;
 }
 
-/* Event flyer */
+/* Event identity + flyer in the top-left of the event card */
 .flyer-feature{
-  grid-column:1/-1;
-  border-top:1px solid #f4edcf33;
-  padding:42px 46px 46px;
+  grid-column:1;
+  padding:34px;
   display:grid;
-  grid-template-columns:minmax(220px,360px) 1fr;
-  gap:42px;
+  grid-template-columns:minmax(150px,210px) minmax(0,1fr);
+  gap:30px;
   align-items:center;
 }
 .flyer-link{
@@ -50,32 +49,41 @@
   width:100%;
   height:auto;
   border:1px solid #f4edcf55;
-  box-shadow:14px 14px 0 #8d66ff44;
+  box-shadow:10px 10px 0 #8d66ff44;
   transition:transform .2s ease,box-shadow .2s ease;
 }
 .flyer-link:hover img{
   transform:translate(-3px,-3px);
-  box-shadow:18px 18px 0 #ff5fc844;
+  box-shadow:14px 14px 0 #ff5fc844;
 }
 .flyer-info h3{
-  font:400 clamp(34px,5vw,62px)/.92 'Archivo Black';
+  font:400 clamp(30px,4vw,54px)/.9 'Archivo Black';
   letter-spacing:-.055em;
-  margin:10px 0 18px;
+  margin:10px 0 12px;
 }
 .flyer-info p{
-  max-width:560px;
-  font-size:18px;
-  line-height:1.5;
-  color:#f4edcfcc;
+  max-width:420px;
+  line-height:1.45;
+}
+.flyer-info .event-subtitle{
+  font-size:12px;
+  line-height:1.45;
+  color:#ff5fc8;
+  margin:0;
 }
 .flyer-actions{
   display:flex;
   gap:10px;
   flex-wrap:wrap;
-  margin-top:24px;
+  margin-top:20px;
 }
 .flyer-actions .btn{
   margin:0;
+}
+
+/* Keep the event facts in the right-hand column */
+.details{
+  grid-column:2;
 }
 
 /* Larger, more legible footer */
@@ -126,14 +134,25 @@ header{
 }
 
 @media(max-width:760px){
+  /* Override the base stylesheet's old nav hiding rule now that Events is a single item */
+  nav a:nth-child(-n+2){
+    display:inline;
+  }
   .flyer-feature{
-    grid-template-columns:1fr;
-    padding:30px 25px 34px;
-    gap:26px;
+    grid-column:1;
+    grid-template-columns:minmax(110px,150px) minmax(0,1fr);
+    padding:28px 25px;
+    gap:22px;
   }
   .flyer-link{
-    max-width:420px;
-    margin:auto;
+    max-width:150px;
+    margin:0;
+  }
+  .flyer-info h3{
+    font-size:clamp(28px,9vw,42px);
+  }
+  .details{
+    grid-column:1;
   }
   footer{
     font-size:15px;
@@ -157,7 +176,7 @@ header{
 <div class="space-layer stars-near" aria-hidden="true"></div>
 <div class="space-layer stars-far" aria-hidden="true"></div>
 
-<header><a class="pfw" href="#top">PFW</a><nav><a href="#top">Home</a><a href="#event">Oct 18</a><a href="#flyer">Flyer</a><a href="#about">About</a><a href="#join">Join</a><a href="https://instagram.com/psychfestwest" target="_blank">@psychfestwest ↗</a></nav></header>
+<header><a class="pfw" href="#top">PFW</a><nav><a href="#top">Home</a><a href="#event">Events</a><a href="#about">About</a><a href="#join">Join</a><a href="https://instagram.com/psychfestwest" target="_blank">@psychfestwest ↗</a></nav></header>
 
 <main id="top">
 <section class="hero">
@@ -187,10 +206,19 @@ header{
 <p class="eyebrow pink">TRANSMISSION 001</p>
 
 <div class="card">
-<div>
-  <p class="eyebrow">PSYCH FEST WEST PRESENTS</p>
-  <h2>ADVENTURES<br>IN TIMELAND</h2>
-  <p class="pink mono">A King Gizz community gathering.</p>
+<div class="flyer-feature" id="flyer">
+  <a class="flyer-link" href="adventures-in-timeland-flyer.png" target="_blank" rel="noopener" aria-label="Open the full Adventures in Timeland event flyer">
+    <img src="adventures-in-timeland-flyer.png" alt="Psych Fest West Presents Adventures in Timeland, a King Gizz community gathering on Sunday, October 18, 3–8 PM in Petaluma, California">
+  </a>
+
+  <div class="flyer-info">
+    <p class="eyebrow">PSYCH FEST WEST PRESENTS</p>
+    <h3>ADVENTURES<br>IN TIMELAND</h3>
+    <p class="pink mono event-subtitle">A King Gizz community gathering.</p>
+    <div class="flyer-actions">
+      <a class="btn primary" href="adventures-in-timeland-flyer.png" target="_blank" rel="noopener">VIEW FULL FLYER ↗</a>
+    </div>
+  </div>
 </div>
 
 <div class="details">
@@ -210,22 +238,6 @@ header{
   <span>RECORD + SWAG SWAP</span>
   <span>COMMUNITY</span>
   <span>KGLW STREAM</span>
-</div>
-
-<div class="flyer-feature" id="flyer">
-  <a class="flyer-link" href="adventures-in-timeland-flyer.png" target="_blank" rel="noopener" aria-label="Open the full Adventures in Timeland event flyer">
-    <img src="adventures-in-timeland-flyer.png" alt="Psych Fest West Presents Adventures in Timeland, a King Gizz community gathering on Sunday, October 18, 3–8 PM in Petaluma, California">
-  </a>
-
-  <div class="flyer-info">
-    <p class="eyebrow pink">THE EVENT FLYER</p>
-    <h3>ADVENTURES<br>IN TIMELAND</h3>
-    <p>Share it, save it, send it to friends or open the full-size flyer for all the event details.</p>
-    <div class="flyer-actions">
-      <a class="btn primary" href="adventures-in-timeland-flyer.png" target="_blank" rel="noopener">VIEW FULL FLYER ↗</a>
-      <a class="btn" href="#join">GET EVENT UPDATES</a>
-    </div>
-  </div>
 </div>
 
 <a class="btn primary full" href="#join">GET EVENT UPDATES</a>

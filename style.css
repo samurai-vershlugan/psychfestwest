@@ -160,8 +160,29 @@ nav a,.eyebrow,.mono,small{font:500 11px 'DM Mono';letter-spacing:.08em;text-tra
 }
 .primary{background:#d9ff4f;color:#0b0710;border-color:#d9ff4f}
 .primary:hover{background:#ff5fc8;border-color:#ff5fc8}
-.ticker{background:#f4edcf;color:#0b0710;padding:13px;white-space:nowrap;overflow:hidden;font:600 11px 'DM Mono';letter-spacing:.05em}
-.ticker span{display:inline-block;white-space:nowrap}
+
+/* Continuous ticker: centered vertically in the beige band on every screen size. */
+.ticker{
+  background:#f4edcf;
+  color:#0b0710;
+  height:39px;
+  min-height:39px;
+  padding:0;
+  overflow:hidden;
+  white-space:nowrap;
+  display:flex;
+  align-items:center;
+  font:600 11px/1 'DM Mono';
+  letter-spacing:.05em;
+}
+.ticker-copy{
+  display:inline-block;
+  flex:0 0 auto;
+  white-space:nowrap;
+  padding-right:2.5rem;
+  animation:pfwTickerScroll 42s linear infinite;
+  will-change:transform;
+}
 
 section:not(.hero){width:min(calc(100% - 34px),1180px);margin:auto;padding:110px 0}
 .pink{color:#ff5fc8}
@@ -345,7 +366,7 @@ footer a{font-size:17px;text-decoration:none}
 }
 
 @keyframes pfwTickerScroll{
-  from{transform:translateX(100vw)}
+  from{transform:translateX(0)}
   to{transform:translateX(-100%)}
 }
 
@@ -382,22 +403,7 @@ footer a{font-size:17px;text-decoration:none}
   .satellite-c{width:34px;height:34px;right:17%;top:40%}
   .satellite-d{display:none}
 
-  .ticker{
-    position:relative!important;
-    overflow:hidden!important;
-    white-space:nowrap!important;
-    color:#0b0710!important;
-    height:39px!important;
-    min-height:39px!important;
-    padding:0!important;
-    display:flex!important;
-    align-items:center!important;
-  }
-  .ticker span{
-    display:inline-block;
-    padding-left:100vw;
-    animation:pfwTickerScroll 30s linear infinite;
-  }
+  .ticker-copy{animation-duration:34s}
 
   .card,.two{grid-template-columns:1fr}
   .details{border-left:0;border-top:1px solid #f4edcf33;grid-column:1}

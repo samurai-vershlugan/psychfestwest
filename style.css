@@ -274,19 +274,47 @@ footer a{font-size:17px;text-decoration:none}
   line-height:1.4!important;
   margin-top:6px!important;
 }
+
+/* Keep all four entry fields visually consistent. */
 .live-signup .brevo-embed .entry__field,
 .live-signup .brevo-embed .sib-sms-input-wrapper .entry__field{
-  background:#8b8183!important;
-  border:1px solid #8b8183!important;
+  background:#fff!important;
+  border:1px solid #d8d0c7!important;
   border-radius:0!important;
 }
 .live-signup .brevo-embed .input{
-  color:#fff8df!important;
-  background:#8b8183!important;
+  color:#12081e!important;
+  background:#fff!important;
   font-family:'Space Grotesk',sans-serif!important;
 }
-.live-signup .brevo-embed input::placeholder{color:#eee8df!important;opacity:1!important}
-.live-signup .brevo-embed .sib-sms-input-wrapper select.input{background:#fff!important;color:#12081e!important}
+.live-signup .brevo-embed input::placeholder{
+  color:#7a6f78!important;
+  opacity:1!important;
+}
+
+/* Prevent browser autofill from turning fields yellow. */
+.live-signup .brevo-embed input:-webkit-autofill,
+.live-signup .brevo-embed input:-webkit-autofill:hover,
+.live-signup .brevo-embed input:-webkit-autofill:focus,
+.live-signup .brevo-embed input:-webkit-autofill:active{
+  -webkit-box-shadow:0 0 0 1000px #fff inset!important;
+  -webkit-text-fill-color:#12081e!important;
+  caret-color:#12081e!important;
+  transition:background-color 9999s ease-out 0s;
+}
+
+/* Phone country selector and country list: white background, dark readable names. */
+.live-signup .brevo-embed .sib-sms-input-wrapper select.input,
+.live-signup .brevo-embed .sib-sms-input-wrapper select.input option{
+  background:#fff!important;
+  color:#12081e!important;
+}
+.live-signup .brevo-embed .sib-sms-tooltip__box,
+.live-signup .brevo-embed .sib-sms-tooltip__box *,
+.live-signup .brevo-embed .sib-sms-select__dropdown,
+.live-signup .brevo-embed .sib-sms-select__dropdown *{
+  color:#12081e!important;
+}
 .live-signup .brevo-embed .sib-sms-tooltip__icon{color:#2BB2FC!important}
 .live-signup .brevo-embed .entry__error{color:#8d1521!important;background:transparent!important;border:0!important;font-size:12px!important}
 .live-signup .brevo-embed .sib-form-block__button{

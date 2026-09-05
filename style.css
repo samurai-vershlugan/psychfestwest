@@ -179,7 +179,7 @@ nav a,.eyebrow,.mono,small{font:500 11px 'DM Mono';letter-spacing:.08em;text-tra
   display:inline-block;
   flex:0 0 auto;
   white-space:nowrap;
-  padding-right:2.5rem;
+  padding-right:0;
   animation:pfwTickerScroll 42s linear infinite;
   will-change:transform;
 }

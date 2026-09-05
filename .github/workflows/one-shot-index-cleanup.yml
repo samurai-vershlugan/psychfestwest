@@ -1,0 +1,67 @@
+name: One-shot index cleanup
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/one-shot-index-cleanup.yml
+
+permissions:
+  contents: write
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Reconcile index content and ticker
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+
+          path = Path('index.html')
+          s = path.read_text()
+
+          # Remove the legacy custom PFW <style> block from index.html.
+          # Keep only Brevo's required inline style block; PFW styling belongs in style.css.
+          blocks = list(re.finditer(r'<style>.*?</style>', s, flags=re.S))
+          for m in reversed(blocks):
+              block = m.group(0)
+              if ('Saturn-style ring for one of the small hero planets' in block
+                  or 'Brevo form styling for the Psych Fest West cream signup card' in block):
+                  s = s[:m.start()] + s[m.end():]
+
+          ticker = ('<div class="ticker"><span>'
+                    'PSYCH ROCK ✦ COMMUNITY ✦ CRAFT BEER ✦ VINYL ✦ LIVE MUSIC ✦ '
+                    'LISTENING PARTIES ✦ SOCIAL GATHERINGS ✦ STRANGE HAPPENINGS ✦ '
+                    'NORTHERN CALIFORNIA ✦ BAY AREA ✦ COSMIC VOYAGES ✦ MUSIC FESTIVAL ✦ '
+                    'VINYL ROULETTE ✦ RECORD + SWAG SWAPS ✦ DELAYED LIVE STREAMS ✦ '
+                    'WAH WAH ✦ TASTY TREATS ✦ CURIOUS HUMANS ✦'
+                    '</span></div>')
+          s, count = re.subn(r'<div class="ticker">.*?</div>', ticker, s, count=1, flags=re.S)
+          if count != 1:
+              raise SystemExit(f'Expected one ticker, found {count}')
+
+          s = s.replace(
+              'followed by a delayed stream of <strong>King Gizzard &amp; the Lizard Wizard’s October 18 show from Melbourne, Australia.</strong>',
+              'followed by a delayed live stream of <strong>King Gizzard &amp; the Lizard Wizard’s October 18 show from Melbourne, Australia.</strong>'
+          )
+          s = s.replace('<span>KGLW STREAM</span>', '<span>KGLW DELAYED LIVE STREAM</span>')
+
+          path.write_text(s)
+          PY
+
+      - name: Commit cleanup and remove one-shot workflow
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git rm .github/workflows/one-shot-index-cleanup.yml
+          git add index.html
+          git commit -m "Reconcile index content and restore full ticker"
+          git push

@@ -66,264 +66,7 @@
 </style>
 <link rel="stylesheet" href="https://sibforms.com/forms/end-form/build/sib-styles.css">
 
-<style>
-/* Saturn-style ring for one of the small hero planets */
-.satellite.saturn{
-  overflow:visible;
-}
-.satellite.saturn::after{
-  content:"";
-  position:absolute;
-  left:-42%;
-  right:-42%;
-  top:37%;
-  height:24%;
-  border:3px solid #f4edcf;
-  border-left-color:#ff8b3d;
-  border-right-color:#44dbc7;
-  border-radius:50%;
-  transform:rotate(-18deg);
-  opacity:.9;
-  box-shadow:0 0 10px #ff5fc866;
-}
 
-/* Event identity + flyer in the top-left of the event card */
-.flyer-feature{
-  grid-column:1;
-  padding:34px;
-  display:grid;
-  grid-template-columns:minmax(150px,210px) minmax(0,1fr);
-  gap:30px;
-  align-items:center;
-}
-.flyer-link{
-  display:block;
-  position:relative;
-  text-decoration:none;
-}
-.flyer-link img{
-  display:block;
-  width:100%;
-  height:auto;
-  border:1px solid #f4edcf55;
-  box-shadow:10px 10px 0 #8d66ff44;
-  transition:transform .2s ease,box-shadow .2s ease;
-}
-.flyer-link:hover img{
-  transform:translate(-3px,-3px);
-  box-shadow:14px 14px 0 #ff5fc844;
-}
-.flyer-info h3{
-  font:400 clamp(30px,4vw,54px)/.9 'Archivo Black';
-  letter-spacing:-.055em;
-  margin:10px 0 12px;
-}
-.flyer-info p{
-  max-width:420px;
-  line-height:1.45;
-}
-.flyer-info .event-subtitle{
-  font-size:12px;
-  line-height:1.45;
-  color:#ff5fc8;
-  margin:0;
-}
-.flyer-actions{
-  display:flex;
-  gap:10px;
-  flex-wrap:wrap;
-  margin-top:20px;
-}
-.flyer-actions .btn{
-  margin:0;
-}
-
-/* Keep the event facts in the right-hand column */
-.details{
-  grid-column:2;
-}
-
-/* Larger, more legible footer */
-footer{
-  font-size:16px;
-  line-height:1.5;
-  padding-top:34px;
-  padding-bottom:34px;
-}
-footer strong{
-  font-size:20px;
-  letter-spacing:.02em;
-}
-footer span{
-  font-size:15px;
-}
-footer a{
-  font-size:17px;
-}
-.instagram-link{
-  display:inline-flex;
-  align-items:center;
-  gap:9px;
-  text-decoration:none;
-}
-.instagram-icon{
-  width:22px;
-  height:22px;
-  flex:0 0 auto;
-}
-
-/* Keep primary navigation visible while scrolling */
-header{
-  position:sticky;
-  top:0;
-  z-index:1000;
-  width:100vw;
-  max-width:none;
-  margin-left:calc(50% - 50vw);
-  margin-right:calc(50% - 50vw);
-  padding-left:clamp(20px,3vw,48px);
-  padding-right:clamp(20px,3vw,48px);
-  box-sizing:border-box;
-  background:rgba(18,8,30,.88);
-  backdrop-filter:blur(10px);
-  -webkit-backdrop-filter:blur(10px);
-  border-bottom:1px solid rgba(244,237,207,.15);
-}
-
-@media(max-width:760px){
-  /* Override the base stylesheet's old nav hiding rule now that Events is a single item */
-  nav a:nth-child(-n+2){
-    display:inline;
-  }
-  .flyer-feature{
-    grid-column:1;
-    grid-template-columns:minmax(110px,150px) minmax(0,1fr);
-    padding:28px 25px;
-    gap:22px;
-  }
-  .flyer-link{
-    max-width:150px;
-    margin:0;
-  }
-  .flyer-info h3{
-    font-size:clamp(28px,9vw,42px);
-  }
-  .details{
-    grid-column:1;
-  }
-  footer{
-    font-size:15px;
-    padding-top:28px;
-    padding-bottom:28px;
-  }
-  footer strong{
-    font-size:18px;
-  }
-  header{
-    padding-left:16px;
-    padding-right:16px;
-  }
-}
-
-
-
-
-/* Brevo form styling for the Psych Fest West cream signup card */
-.live-signup .brevo-embed .sib-form,
-.live-signup .brevo-embed #sib-form-container,
-.live-signup .brevo-embed #sib-container{
-  background:transparent!important;
-  color:#12081e!important;
-}
-.live-signup .brevo-embed #sib-container{
-  border:0!important;
-  max-width:none!important;
-  padding:0!important;
-}
-
-/* Hide Brevo's duplicate title and intro because the PFW card already provides them */
-.live-signup .brevo-embed #sib-container > form > div:nth-of-type(1),
-.live-signup .brevo-embed #sib-container > form > div:nth-of-type(2){
-  display:none!important;
-}
-
-/* Field labels */
-.live-signup .brevo-embed .entry__label{
-  display:block!important;
-  visibility:visible!important;
-  opacity:1!important;
-  color:#12081e!important;
-  font-family:'Space Grotesk',sans-serif!important;
-  font-size:15px!important;
-  font-weight:700!important;
-  line-height:1.35!important;
-  text-transform:none!important;
-  letter-spacing:0!important;
-  margin:0 0 6px!important;
-}
-
-/* Brevo helper text below each field */
-.live-signup .brevo-embed .entry__specification{
-  display:block!important;
-  visibility:visible!important;
-  opacity:1!important;
-  color:#51464f!important;
-  background:transparent!important;
-  font-family:'Space Grotesk',sans-serif!important;
-  font-size:12px!important;
-  line-height:1.4!important;
-  margin-top:6px!important;
-}
-
-/* Inputs */
-.live-signup .brevo-embed .entry__field,
-.live-signup .brevo-embed .sib-sms-input-wrapper .entry__field{
-  background:#8b8183!important;
-  border:1px solid #8b8183!important;
-  border-radius:0!important;
-}
-.live-signup .brevo-embed .input{
-  color:#fff8df!important;
-  background:#8b8183!important;
-  font-family:'Space Grotesk',sans-serif!important;
-}
-.live-signup .brevo-embed input::placeholder{
-  color:#eee8df!important;
-  opacity:1!important;
-}
-
-/* Keep phone selector readable */
-.live-signup .brevo-embed .sib-sms-input-wrapper select.input{
-  background:#fff!important;
-  color:#12081e!important;
-}
-.live-signup .brevo-embed .sib-sms-tooltip__icon{
-  color:#2BB2FC!important;
-}
-
-/* Validation text */
-.live-signup .brevo-embed .entry__error{
-  color:#8d1521!important;
-  background:transparent!important;
-  border:0!important;
-  font-size:12px!important;
-}
-
-/* Subscribe button */
-.live-signup .brevo-embed .sib-form-block__button{
-  width:100%!important;
-  justify-content:center!important;
-  text-align:center!important;
-  background:#ff5fc8!important;
-  color:#12081e!important;
-  border-radius:0!important;
-  font-family:'DM Mono',monospace!important;
-  font-size:14px!important;
-  font-weight:700!important;
-  letter-spacing:.06em!important;
-}
-
-</style>
 
 </head>
 <body>
@@ -356,7 +99,7 @@ header{
 </div>
 </section>
 
-<div class="ticker">PSYCH ROCK ✦ COMMUNITY ✦ CRAFT BEER ✦ VINYL ✦ LIVE MUSIC ✦ STRANGE HAPPENINGS ✦ NORTHERN CALIFORNIA ✦ COSMIC VOYAGES ✦ MUSIC FESTIVAL ✦ SOCIAL GATHERINGS ✦ WAH WAH ✦ TASTY TREATS ✦ </div>
+<div class="ticker"><span>PSYCH ROCK ✦ COMMUNITY ✦ CRAFT BEER ✦ VINYL ✦ LIVE MUSIC ✦ LISTENING PARTIES ✦ SOCIAL GATHERINGS ✦ STRANGE HAPPENINGS ✦ NORTHERN CALIFORNIA ✦ BAY AREA ✦ COSMIC VOYAGES ✦ MUSIC FESTIVAL ✦ VINYL ROULETTE ✦ RECORD + SWAG SWAPS ✦ DELAYED LIVE STREAMS ✦ WAH WAH ✦ TASTY TREATS ✦ CURIOUS HUMANS ✦</span></div>
 
 <section id="event">
 <p class="eyebrow pink">TRANSMISSION 001</p>
@@ -384,7 +127,7 @@ header{
 </div>
 
 <div class="copy">
-  <p>Craft beer, vinyl roulette, record + swag swap and a community hang, followed by a delayed stream of <strong>King Gizzard &amp; the Lizard Wizard’s October 18 show from Melbourne, Australia.</strong></p>
+  <p>Craft beer, vinyl roulette, record + swag swap and a community hang, followed by a delayed live stream of <strong>King Gizzard &amp; the Lizard Wizard’s October 18 show from Melbourne, Australia.</strong></p>
   <small>Official public screening permission secured from the band.</small>
 </div>
 
@@ -393,7 +136,7 @@ header{
   <span>VINYL ROULETTE</span>
   <span>RECORD + SWAG SWAP</span>
   <span>COMMUNITY</span>
-  <span>KGLW STREAM</span>
+  <span>KGLW DELAYED LIVE STREAM</span>
 </div>
 
 <a class="btn primary full" href="#join">GET EVENT UPDATES</a>

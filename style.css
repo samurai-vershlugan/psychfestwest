@@ -71,8 +71,19 @@ header{
   align-items:center;
   justify-content:space-between;
   border-bottom:1px solid #f4edcf33;
-  position:relative;
-  z-index:3
+  position:sticky;
+  top:0;
+  z-index:1000;
+  width:100vw;
+  max-width:none;
+  margin-left:calc(50% - 50vw);
+  margin-right:calc(50% - 50vw);
+  padding-left:clamp(20px,3vw,48px);
+  padding-right:clamp(20px,3vw,48px);
+  box-sizing:border-box;
+  background:rgba(18,8,30,.88);
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
 }
 .pfw{font:600 12px 'DM Mono';border:1px solid;border-radius:50%;padding:10px;text-decoration:none}
 nav{display:flex;gap:22px}
@@ -99,7 +110,6 @@ nav a,.eyebrow,.mono,small{font:500 11px 'DM Mono';letter-spacing:.08em;text-tra
 .hero h1 span:nth-child(2){margin-left:.28em;color:transparent;-webkit-text-stroke:2px #f4edcf}
 .hero h1 span:nth-child(3){color:#d9ff4f}
 
-/* ORIGINAL COSMIC PLANET: unchanged, no extra circles or overlays */
 .planet{
   position:absolute;
   right:4%;
@@ -110,38 +120,28 @@ nav a,.eyebrow,.mono,small{font:500 11px 'DM Mono';letter-spacing:.08em;text-tra
   background:radial-gradient(circle at 35% 28%,#ff8b3d,#ff5fc8 38%,#8d66ff 70%,#27123d);
   box-shadow:0 0 80px #ff5fc844
 }
-
-/* A FEW EXTRA PLANETS AROUND THE ORIGINAL ONE.
-   They stay inside the hero, so they scroll away with the page. */
 .satellite{
   position:absolute;
   border-radius:50%;
   z-index:1;
   box-shadow:inset -8px -7px 13px #0b071088,0 0 24px currentColor
 }
-.satellite-a{
-  width:42px;height:42px;
-  right:27%;top:10%;
-  color:#44dbc7;
-  background:radial-gradient(circle at 32% 28%,#cafff7,#44dbc7 38%,#42509b 72%,#1b102a)
-}
-.satellite-b{
-  width:28px;height:28px;
-  right:2%;top:42%;
-  color:#ff8b3d;
-  background:radial-gradient(circle at 33% 28%,#ffd7b1,#ff8b3d 40%,#b33b67 72%,#211022)
-}
-.satellite-c{
-  width:55px;height:55px;
-  right:20%;top:48%;
-  color:#8d66ff;
-  background:radial-gradient(circle at 31% 27%,#bcebf5,#658fd1 30%,#8d66ff 67%,#241231)
-}
-.satellite-d{
-  width:22px;height:22px;
-  right:34%;top:28%;
-  color:#ff5fc8;
-  background:radial-gradient(circle at 30% 27%,#ffe1f5,#ff5fc8 42%,#7e3e8c 75%,#210f28)
+.satellite-a{width:42px;height:42px;right:27%;top:10%;color:#44dbc7;background:radial-gradient(circle at 32% 28%,#cafff7,#44dbc7 38%,#42509b 72%,#1b102a)}
+.satellite-b{width:28px;height:28px;right:2%;top:42%;color:#ff8b3d;background:radial-gradient(circle at 33% 28%,#ffd7b1,#ff8b3d 40%,#b33b67 72%,#211022)}
+.satellite-c{width:55px;height:55px;right:20%;top:48%;color:#8d66ff;background:radial-gradient(circle at 31% 27%,#bcebf5,#658fd1 30%,#8d66ff 67%,#241231)}
+.satellite-d{width:22px;height:22px;right:34%;top:28%;color:#ff5fc8;background:radial-gradient(circle at 30% 27%,#ffe1f5,#ff5fc8 42%,#7e3e8c 75%,#210f28)}
+.satellite.saturn{overflow:visible}
+.satellite.saturn::after{
+  content:"";
+  position:absolute;
+  left:-42%;right:-42%;top:37%;height:24%;
+  border:3px solid #f4edcf;
+  border-left-color:#ff8b3d;
+  border-right-color:#44dbc7;
+  border-radius:50%;
+  transform:rotate(-18deg);
+  opacity:.9;
+  box-shadow:0 0 10px #ff5fc866;
 }
 
 .tagline{font:500 clamp(20px,2.5vw,31px)/1 'DM Mono';color:#ff5fc8}
@@ -187,21 +187,164 @@ section:not(.hero){width:min(calc(100% - 34px),1180px);margin:auto;padding:110px
 .note{font:500 10px/1.5 'DM Mono';opacity:.55}
 .manifesto p{font:400 clamp(30px,5vw,64px)/1.05 'Archivo Black';letter-spacing:-.05em;margin:0}
 .manifesto p:last-child{color:#d9ff4f}
+.be-one{
+  background:linear-gradient(90deg,#ff5fc8 0%,#8d66ff 100%);
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+  -webkit-text-fill-color:transparent;
+}
 footer{
   width:min(calc(100% - 34px),1180px);
   margin:auto;
   border-top:1px solid #f4edcf33;
-  padding:38px 0;
+  padding:34px 0;
   display:flex;
   justify-content:space-between;
   gap:20px;
-  font:500 10px/1.6 'DM Mono';
+  font:500 16px/1.5 'DM Mono';
   color:#f4edcf99
 }
-footer a{text-decoration:none}
+footer strong{font-size:20px;letter-spacing:.02em}
+footer span{font-size:15px}
+footer a{font-size:17px;text-decoration:none}
+.instagram-link{display:inline-flex;align-items:center;gap:9px;text-decoration:none}
+.instagram-icon{width:22px;height:22px;flex:0 0 auto}
+
+.flyer-feature{
+  grid-column:1;
+  padding:34px;
+  display:grid;
+  grid-template-columns:minmax(150px,210px) minmax(0,1fr);
+  gap:30px;
+  align-items:center;
+}
+.flyer-link{display:block;position:relative;text-decoration:none}
+.flyer-link img{
+  display:block;
+  width:100%;
+  height:auto;
+  border:1px solid #f4edcf55;
+  box-shadow:10px 10px 0 #8d66ff44;
+  transition:transform .2s ease,box-shadow .2s ease;
+}
+.flyer-link:hover img{transform:translate(-3px,-3px);box-shadow:14px 14px 0 #ff5fc844}
+.flyer-info h3{font:400 clamp(30px,4vw,54px)/.9 'Archivo Black';letter-spacing:-.055em;margin:10px 0 12px}
+.flyer-info p{max-width:420px;line-height:1.45}
+.flyer-info .event-subtitle{font-size:12px;line-height:1.45;color:#ff5fc8;margin:0}
+.flyer-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}
+.flyer-actions .btn{margin:0}
+.details{grid-column:2}
+
+/* Brevo signup card styling. Keep vendor mechanics in the embed, appearance here. */
+.live-signup .brevo-embed .sib-form,
+.live-signup .brevo-embed #sib-form-container,
+.live-signup .brevo-embed #sib-container{
+  background:transparent!important;
+  color:#12081e!important;
+}
+.live-signup .brevo-embed #sib-container{
+  border:0!important;
+  max-width:none!important;
+  padding:0!important;
+}
+.live-signup .brevo-embed #sib-container > form > div:nth-of-type(1),
+.live-signup .brevo-embed #sib-container > form > div:nth-of-type(2){display:none!important}
+.live-signup .brevo-embed .entry__label{
+  display:block!important;
+  visibility:visible!important;
+  opacity:1!important;
+  color:#12081e!important;
+  font-family:'Space Grotesk',sans-serif!important;
+  font-size:15px!important;
+  font-weight:700!important;
+  line-height:1.35!important;
+  text-transform:none!important;
+  letter-spacing:0!important;
+  margin:0 0 6px!important;
+}
+.live-signup .brevo-embed .entry__specification{
+  display:block!important;
+  visibility:visible!important;
+  opacity:1!important;
+  color:#51464f!important;
+  background:transparent!important;
+  font-family:'Space Grotesk',sans-serif!important;
+  font-size:12px!important;
+  line-height:1.4!important;
+  margin-top:6px!important;
+}
+.live-signup .brevo-embed .entry__field,
+.live-signup .brevo-embed .sib-sms-input-wrapper .entry__field{
+  background:#8b8183!important;
+  border:1px solid #8b8183!important;
+  border-radius:0!important;
+}
+.live-signup .brevo-embed .input{
+  color:#fff8df!important;
+  background:#8b8183!important;
+  font-family:'Space Grotesk',sans-serif!important;
+}
+.live-signup .brevo-embed input::placeholder{color:#eee8df!important;opacity:1!important}
+.live-signup .brevo-embed .sib-sms-input-wrapper select.input{background:#fff!important;color:#12081e!important}
+.live-signup .brevo-embed .sib-sms-tooltip__icon{color:#2BB2FC!important}
+.live-signup .brevo-embed .entry__error{color:#8d1521!important;background:transparent!important;border:0!important;font-size:12px!important}
+.live-signup .brevo-embed .sib-form-block__button{
+  width:100%!important;
+  justify-content:center!important;
+  text-align:center!important;
+  background:#ff5fc8!important;
+  color:#12081e!important;
+  border-radius:0!important;
+  font-family:'DM Mono',monospace!important;
+  font-size:14px!important;
+  font-weight:700!important;
+  letter-spacing:.06em!important;
+}
+
+/* Desktop navigation refinement. */
+@media(min-width:981px){
+  header nav{gap:30px!important;margin-right:clamp(12px,3vw,42px)!important}
+  header nav a{font-size:13px!important;letter-spacing:.07em!important}
+}
+
+/* Stack event facts before the title gets squeezed at intermediate widths. */
+@media(min-width:761px) and (max-width:980px){
+  .card{grid-template-columns:1fr!important}
+  .flyer-feature{grid-column:1!important}
+  .details{grid-column:1!important;border-left:0!important;border-top:1px solid #f4edcf33!important}
+}
+
+@keyframes pfwTickerScroll{
+  from{transform:translateX(100vw)}
+  to{transform:translateX(-100%)}
+}
 
 @media(max-width:760px){
-  nav a:nth-child(-n+2){display:none}
+  header{gap:12px!important;padding-left:16px;padding-right:16px}
+  header .pfw{padding:9px!important;font-size:10.5px!important;flex:0 0 auto!important}
+  header nav{
+    gap:12px!important;
+    align-items:center!important;
+    justify-content:flex-end!important;
+    flex-wrap:nowrap!important;
+    min-width:0!important;
+    flex:1 1 auto!important;
+  }
+  header nav a{
+    display:inline!important;
+    white-space:nowrap!important;
+    font-size:10px!important;
+    letter-spacing:.055em!important;
+  }
+  header nav a:last-child{display:inline!important;font-size:0!important}
+  header nav a:last-child::after{
+    content:"IG ↗";
+    font:500 10px 'DM Mono',monospace;
+    letter-spacing:.055em;
+    white-space:nowrap;
+  }
+
   .hero{min-height:650px}
   .hero h1{font-size:24vw}
   .planet{width:110px;height:110px;right:-10px}
@@ -209,39 +352,68 @@ footer a{text-decoration:none}
   .satellite-b{width:18px;height:18px;right:3%;top:35%}
   .satellite-c{width:34px;height:34px;right:17%;top:40%}
   .satellite-d{display:none}
+
+  .ticker{
+    position:relative!important;
+    overflow:hidden!important;
+    white-space:nowrap!important;
+    color:transparent!important;
+    height:39px!important;
+    min-height:39px!important;
+    padding:0 13px!important;
+  }
+  .ticker::after{
+    content:"PSYCH ROCK ✦ COMMUNITY ✦ CRAFT BEER ✦ VINYL ✦ LIVE MUSIC ✦ STRANGE HAPPENINGS ✦ NORTHERN CALIFORNIA ✦";
+    position:absolute;
+    left:0;
+    top:50%;
+    transform:translateY(-50%);
+    color:#0b0710;
+    white-space:nowrap;
+    animation:pfwTickerScroll 18s linear infinite;
+  }
+
   .card,.two{grid-template-columns:1fr}
-  .details{border-left:0;border-top:1px solid #f4edcf33}
+  .details{border-left:0;border-top:1px solid #f4edcf33;grid-column:1}
   .card>div:first-child,.details,.copy{padding:28px 25px}
-  .chips{padding:0 25px 28px}
+  .chips{display:none;padding:0 25px 28px}
   .two{gap:20px}
   .signup{transform:none;padding:28px}
-  footer{flex-direction:column}
-}
 
-/* Brevo form refinements: lighter inputs and clearer helper text */
-.live-signup .brevo-embed .entry__field,
-.live-signup .brevo-embed .sib-sms-input-wrapper .entry__field{
-  background:#fff!important;
-  border:1px solid #d8d0c7!important;
-}
-.live-signup .brevo-embed .input{
-  background:#fff!important;
-  color:#12081e!important;
-}
-.live-signup .brevo-embed input::placeholder{
-  color:#7a6f78!important;
-  opacity:1!important;
-}
-.live-signup .brevo-embed .entry__specification{
-  color:#3f3540!important;
-}
-.live-signup .brevo-embed .sib-sms-field .entry__specification{
-  font-size:0!important;
-}
-.live-signup .brevo-embed .sib-sms-field .entry__specification::after{
-  content:"Enter your mobile number (without any special characters) to receive text updates";
-  display:block;
-  font-size:12px;
-  line-height:1.4;
-  color:#3f3540;
+  .flyer-feature{
+    grid-column:1;
+    grid-template-columns:minmax(105px,42%) minmax(0,1fr)!important;
+    padding:28px 25px;
+    gap:16px!important;
+  }
+  .flyer-link{max-width:150px;margin:0}
+  .flyer-feature .flyer-info{min-width:0!important}
+  .flyer-feature .flyer-info h3{
+    font-size:clamp(18px,5vw,22px)!important;
+    line-height:.95!important;
+    letter-spacing:-.045em!important;
+    max-width:100%!important;
+    white-space:nowrap!important;
+  }
+  .flyer-actions .btn{
+    white-space:nowrap!important;
+    font-size:9px!important;
+    padding:0 12px!important;
+    min-height:44px!important;
+  }
+
+  .live-signup{padding:28px 24px 24px!important}
+  .live-signup .brevo-embed{margin-top:8px!important}
+  .live-signup .brevo-embed .sib-form{padding:0!important}
+  .live-signup .brevo-embed #sib-form-container,
+  .live-signup .brevo-embed #sib-container{padding:0!important;margin:0!important}
+  .live-signup .brevo-embed .sib-form-block{padding-top:6px!important;padding-bottom:6px!important}
+  .live-signup .brevo-embed .form__entry{margin:0!important}
+  .live-signup .brevo-embed .entry__label{margin-bottom:4px!important}
+  .live-signup .brevo-embed .entry__specification{margin-top:4px!important}
+  .live-signup .brevo-embed .sib-form-block__button{margin-top:2px!important}
+  .live-signup>.note{margin:10px 0 0!important}
+
+  footer{flex-direction:column;font-size:15px;padding-top:28px;padding-bottom:28px}
+  footer strong{font-size:18px}
 }

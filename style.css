@@ -161,6 +161,7 @@ nav a,.eyebrow,.mono,small{font:500 11px 'DM Mono';letter-spacing:.08em;text-tra
 .primary{background:#d9ff4f;color:#0b0710;border-color:#d9ff4f}
 .primary:hover{background:#ff5fc8;border-color:#ff5fc8}
 .ticker{background:#f4edcf;color:#0b0710;padding:13px;white-space:nowrap;overflow:hidden;font:600 11px 'DM Mono';letter-spacing:.05em}
+.ticker span{display:inline-block;white-space:nowrap}
 
 section:not(.hero){width:min(calc(100% - 34px),1180px);margin:auto;padding:110px 0}
 .pink{color:#ff5fc8}
@@ -385,20 +386,17 @@ footer a{font-size:17px;text-decoration:none}
     position:relative!important;
     overflow:hidden!important;
     white-space:nowrap!important;
-    color:transparent!important;
+    color:#0b0710!important;
     height:39px!important;
     min-height:39px!important;
-    padding:0 13px!important;
+    padding:0!important;
+    display:flex!important;
+    align-items:center!important;
   }
-  .ticker::after{
-    content:"PSYCH ROCK ✦ COMMUNITY ✦ CRAFT BEER ✦ VINYL ✦ LIVE MUSIC ✦ STRANGE HAPPENINGS ✦ NORTHERN CALIFORNIA ✦";
-    position:absolute;
-    left:0;
-    top:50%;
-    transform:translateY(-50%);
-    color:#0b0710;
-    white-space:nowrap;
-    animation:pfwTickerScroll 18s linear infinite;
+  .ticker span{
+    display:inline-block;
+    padding-left:100vw;
+    animation:pfwTickerScroll 30s linear infinite;
   }
 
   .card,.two{grid-template-columns:1fr}

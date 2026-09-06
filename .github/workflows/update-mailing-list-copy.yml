@@ -1,0 +1,56 @@
+name: Update mailing list copy
+
+on:
+  push:
+    paths:
+      - '.github/workflows/update-mailing-list-copy.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  update-copy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Update mailing list copy
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+
+          path = Path('index.html')
+          text = path.read_text()
+
+          old_top = '<p><strong>Subscribe to The Doomsletter.</strong><br>Event announcements, venue updates, new gatherings and occasional transmissions from beyond the beyond.</p>'
+          new_top = '<p><strong>Subscribe to The Doomsletter</strong><br><br>Event announcements, venue updates and occasional transmissions from beyond the beyond.</p>'
+          text = text.replace(old_top, new_top)
+
+          # Replace the existing bottom reassurance/disclaimer if present.
+          replacements = [
+              'No spam. Just event announcements, music and occasional transmissions from beyond reality. Unsubscribe anytime.',
+              'No spam. Just event announcements, music and occasional transmissions from beyond the beyond. Unsubscribe anytime.',
+              'No spam. Just occasional transmissions. Unsubscribe anytime.'
+          ]
+          for old in replacements:
+              text = text.replace(old, 'Occasional transmissions only. Unsubscribe anytime.')
+
+          # Catch equivalent plain-text disclaimer wording that begins with “No spam.”
+          text = re.sub(r'No spam\.[^<\n]*?Unsubscribe anytime\.', 'Occasional transmissions only. Unsubscribe anytime.', text)
+
+          path.write_text(text)
+          PY
+
+      - name: Commit update and remove workflow
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          rm .github/workflows/update-mailing-list-copy.yml
+          git add index.html .github/workflows/update-mailing-list-copy.yml
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+            exit 0
+          fi
+          git commit -m "Refine Doomsletter signup copy"
+          git push

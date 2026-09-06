@@ -24,20 +24,27 @@ if (ticker && tickerText) {
   }
 }
 
-// Keep the reCAPTCHA v3 badge with the mailing-list form instead of floating over the page.
+// Keep the reCAPTCHA v3 badge inside the mailing-list form, left-aligned directly above Subscribe.
 const placeRecaptchaBadge = () => {
-  const embed = document.querySelector('.live-signup .brevo-embed');
+  const form = document.querySelector('.live-signup .brevo-embed #sib-form');
   const badge = document.querySelector('.grecaptcha-badge');
-  if (!embed || !badge || badge.closest('.recaptcha-badge-slot')) return Boolean(badge);
+  const submitButton = form?.querySelector('.sib-form-block__button');
+  const submitRow = submitButton?.closest('[style*="padding"]') || submitButton?.parentElement?.parentElement;
 
-  let slot = embed.querySelector('.recaptcha-badge-slot');
+  if (!form || !badge || !submitRow) return false;
+
+  let slot = form.querySelector('.recaptcha-badge-slot');
   if (!slot) {
     slot = document.createElement('div');
     slot.className = 'recaptcha-badge-slot';
     slot.setAttribute('aria-label', 'reCAPTCHA protection');
-    embed.appendChild(slot);
   }
-  slot.appendChild(badge);
+
+  if (slot.parentElement !== form || slot.nextElementSibling !== submitRow) {
+    form.insertBefore(slot, submitRow);
+  }
+
+  if (badge.parentElement !== slot) slot.appendChild(badge);
   return true;
 };
 

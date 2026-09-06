@@ -1,0 +1,32 @@
+name: Align reCAPTCHA left
+on:
+  push:
+    paths:
+      - '.github/workflows/align-recaptcha-left.yml'
+permissions:
+  contents: write
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Align compact reCAPTCHA above subscribe button
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p = Path('style.css')
+          s = p.read_text()
+          s = s.replace('justify-content:flex-end;\n  min-height:44px;\n  margin-top:8px;', 'justify-content:flex-start;\n  min-height:44px;\n  margin-top:8px;')
+          s = s.replace('transform-origin:top right!important;', 'transform-origin:top left!important;')
+          p.write_text(s)
+          PY
+      - name: Commit and self-delete
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git rm .github/workflows/align-recaptcha-left.yml
+          git add style.css
+          git commit -m 'Align reCAPTCHA with subscribe button'
+          git push

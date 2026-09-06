@@ -23,3 +23,27 @@ if (ticker && tickerText) {
     ticker.appendChild(duplicate);
   }
 }
+
+// Keep the reCAPTCHA v3 badge with the mailing-list form instead of floating over the page.
+const placeRecaptchaBadge = () => {
+  const embed = document.querySelector('.live-signup .brevo-embed');
+  const badge = document.querySelector('.grecaptcha-badge');
+  if (!embed || !badge || badge.closest('.recaptcha-badge-slot')) return Boolean(badge);
+
+  let slot = embed.querySelector('.recaptcha-badge-slot');
+  if (!slot) {
+    slot = document.createElement('div');
+    slot.className = 'recaptcha-badge-slot';
+    slot.setAttribute('aria-label', 'reCAPTCHA protection');
+    embed.appendChild(slot);
+  }
+  slot.appendChild(badge);
+  return true;
+};
+
+if (!placeRecaptchaBadge()) {
+  const captchaObserver = new MutationObserver(() => {
+    if (placeRecaptchaBadge()) captchaObserver.disconnect();
+  });
+  captchaObserver.observe(document.body, { childList: true, subtree: true });
+}

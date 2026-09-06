@@ -1,0 +1,82 @@
+name: Refine captcha and country UI
+on:
+  push:
+    paths:
+      - '.github/workflows/refine-captcha-and-country-ui.yml'
+permissions:
+  contents: write
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Append styling and behavior
+        run: |
+          cat >> style.css <<'CSS'
+
+          /* Keep Brevo's reCAPTCHA v3 badge compact and visually associated with the form. */
+          .recaptcha-badge-slot{
+            display:flex;
+            justify-content:flex-end;
+            min-height:44px;
+            margin-top:8px;
+            overflow:visible;
+          }
+          .recaptcha-badge-slot .grecaptcha-badge{
+            position:relative!important;
+            right:auto!important;
+            bottom:auto!important;
+            transform:scale(.72)!important;
+            transform-origin:top right!important;
+            box-shadow:none!important;
+          }
+
+          /* Strengthen native and Brevo-rendered country option contrast. */
+          .live-signup .brevo-embed select,
+          .live-signup .brevo-embed select option,
+          .live-signup .brevo-embed .sib-sms-select__dropdown,
+          .live-signup .brevo-embed .sib-sms-select__dropdown *{
+            background:#fff!important;
+            color:#12081e!important;
+            -webkit-text-fill-color:#12081e!important;
+            font-weight:600!important;
+            opacity:1!important;
+          }
+          CSS
+
+          cat >> script.js <<'JS'
+
+          // Keep the reCAPTCHA v3 badge with the mailing-list form instead of floating over the page.
+          const placeRecaptchaBadge = () => {
+            const embed = document.querySelector('.live-signup .brevo-embed');
+            const badge = document.querySelector('.grecaptcha-badge');
+            if (!embed || !badge || badge.closest('.recaptcha-badge-slot')) return Boolean(badge);
+
+            let slot = embed.querySelector('.recaptcha-badge-slot');
+            if (!slot) {
+              slot = document.createElement('div');
+              slot.className = 'recaptcha-badge-slot';
+              slot.setAttribute('aria-label', 'reCAPTCHA protection');
+              embed.appendChild(slot);
+            }
+            slot.appendChild(badge);
+            return true;
+          };
+
+          if (!placeRecaptchaBadge()) {
+            const captchaObserver = new MutationObserver(() => {
+              if (placeRecaptchaBadge()) captchaObserver.disconnect();
+            });
+            captchaObserver.observe(document.body, { childList: true, subtree: true });
+          }
+          JS
+      - name: Commit and self-delete
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git rm .github/workflows/refine-captcha-and-country-ui.yml
+          git add style.css script.js
+          git commit -m 'Refine captcha placement and country selector contrast'
+          git push

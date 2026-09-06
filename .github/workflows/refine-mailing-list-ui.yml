@@ -1,0 +1,113 @@
+name: Refine mailing list UI
+on:
+  push:
+    paths:
+      - '.github/workflows/refine-mailing-list-ui.yml'
+permissions:
+  contents: write
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Patch copy, captcha placement, and country contrast
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          # index.html copy
+          p = Path('index.html')
+          s = p.read_text()
+          s = s.replace(
+            '<p>Get the venue announcement, October 18 details and first word on future Psych Fest West events.</p>',
+            '<p>Get important announcements, event information and occasional transmissions from beyond the beyond.</p>',
+            1
+          )
+          s = s.replace(
+            '<p><strong>Subscribe to The Doomsletter</strong><br><br>Event announcements, venue updates and occasional transmissions from beyond the beyond.</p>',
+            '<p><strong>Subscribe to The Doomsletter</strong></p>',
+            1
+          )
+          p.write_text(s)
+
+          # style.css refinements
+          p = Path('style.css')
+          s = p.read_text()
+          marker = '/* Desktop navigation refinement. */'
+          addition = r'''
+/* Keep Brevo's reCAPTCHA v3 badge compact and visually associated with the form. */
+.recaptcha-badge-slot{
+  display:flex;
+  justify-content:flex-end;
+  min-height:44px;
+  margin-top:8px;
+  overflow:visible;
+}
+.recaptcha-badge-slot .grecaptcha-badge{
+  position:static!important;
+  right:auto!important;
+  bottom:auto!important;
+  transform:scale(.72)!important;
+  transform-origin:top right!important;
+  margin-right:-72px!important;
+}
+
+/* Strengthen native and Brevo-rendered country option contrast. */
+.live-signup .brevo-embed select,
+.live-signup .brevo-embed select option,
+.live-signup .brevo-embed .sib-sms-select__dropdown,
+.live-signup .brevo-embed .sib-sms-select__dropdown *{
+  color:#12081e!important;
+  -webkit-text-fill-color:#12081e!important;
+  font-weight:600!important;
+  opacity:1!important;
+}
+
+'''
+          if addition.strip() not in s:
+              s = s.replace(marker, addition + marker, 1)
+          p.write_text(s)
+
+          # script.js: move dynamically injected badge into form
+          p = Path('script.js')
+          s = p.read_text()
+          addition_js = r'''
+
+// Keep the reCAPTCHA v3 badge with the mailing-list form instead of floating over the page.
+const placeRecaptchaBadge = () => {
+  const embed = document.querySelector('.live-signup .brevo-embed');
+  const badge = document.querySelector('.grecaptcha-badge');
+  if (!embed || !badge || badge.closest('.recaptcha-badge-slot')) return Boolean(badge);
+
+  let slot = embed.querySelector('.recaptcha-badge-slot');
+  if (!slot) {
+    slot = document.createElement('div');
+    slot.className = 'recaptcha-badge-slot';
+    slot.setAttribute('aria-label', 'reCAPTCHA protection');
+    embed.appendChild(slot);
+  }
+  slot.appendChild(badge);
+  return true;
+};
+
+if (!placeRecaptchaBadge()) {
+  const captchaObserver = new MutationObserver(() => {
+    if (placeRecaptchaBadge()) captchaObserver.disconnect();
+  });
+  captchaObserver.observe(document.body, { childList: true, subtree: true });
+}
+'''
+          if 'const placeRecaptchaBadge' not in s:
+              s += addition_js
+          p.write_text(s)
+          PY
+      - name: Commit and self-delete
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git rm .github/workflows/refine-mailing-list-ui.yml
+          git add index.html style.css script.js
+          git commit -m 'Refine mailing list copy and form UI'
+          git push

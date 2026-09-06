@@ -1,0 +1,47 @@
+name: Update Doomsletter website copy
+
+on:
+  push:
+    paths:
+      - '.github/workflows/update-doomsletter-copy.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Update mailing list copy
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          p = Path('index.html')
+          s = p.read_text()
+
+          old_outer = '''  <p class="formtitle">MAILING LIST</p>\n  <p>Join the Psych Fest West transmission for event announcements, venue updates and future happenings.</p>'''
+          new_outer = '''  <p class="formtitle">MAILING LIST</p>\n  <p><strong>Subscribe to The Doomsletter.</strong><br>Event announcements, venue updates, new gatherings and occasional transmissions from beyond the beyond.</p>'''
+
+          old_inner = '<p>Subscribe to our newsletter and stay updated.</p>'
+          new_inner = '<p>Subscribe to The Doomsletter.</p>'
+
+          if old_outer not in s:
+              raise SystemExit('Outer mailing-list copy not found')
+          if old_inner not in s:
+              raise SystemExit('Brevo mailing-list copy not found')
+
+          s = s.replace(old_outer, new_outer, 1)
+          s = s.replace(old_inner, new_inner, 1)
+          p.write_text(s)
+          PY
+      - name: Remove one-shot workflow
+        run: rm .github/workflows/update-doomsletter-copy.yml
+      - name: Commit changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html .github/workflows/update-doomsletter-copy.yml
+          git commit -m "Introduce The Doomsletter on signup form"
+          git push

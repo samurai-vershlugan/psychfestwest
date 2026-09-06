@@ -12,7 +12,7 @@ if (ticker && tickerText) {
   const withoutBayArea = items.filter((item) => item.toUpperCase() !== 'BAY AREA');
   const hasBayArea = items.some((item) => item.toUpperCase() === 'BAY AREA');
   const orderedItems = hasBayArea ? [...withoutBayArea, 'BAY AREA'] : withoutBayArea;
-  const loopText = `${orderedItems.join(' ✦ ')} ✦`;
+  const loopText = `${orderedItems.join(' ✦ ')} ✦ `;
 
   tickerText.textContent = loopText;
   tickerText.classList.add('ticker-copy');

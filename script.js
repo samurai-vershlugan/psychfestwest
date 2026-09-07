@@ -24,7 +24,7 @@ if (ticker && tickerText) {
   }
 }
 
-// Keep the reCAPTCHA v3 badge inside the mailing-list form, left-aligned directly above Subscribe.
+// Keep the reCAPTCHA v3 badge inside the mailing-list form, aligned with the form fields above Subscribe.
 const placeRecaptchaBadge = () => {
   const form = document.querySelector('.live-signup .brevo-embed #sib-form');
   const badge = document.querySelector('.grecaptcha-badge');
@@ -36,8 +36,10 @@ const placeRecaptchaBadge = () => {
   let slot = form.querySelector('.recaptcha-badge-slot');
   if (!slot) {
     slot = document.createElement('div');
-    slot.className = 'recaptcha-badge-slot';
+    slot.className = 'recaptcha-badge-slot sib-form-block';
     slot.setAttribute('aria-label', 'reCAPTCHA protection');
+  } else {
+    slot.classList.add('sib-form-block');
   }
 
   if (slot.parentElement !== form || slot.nextElementSibling !== submitRow) {

@@ -4,25 +4,6 @@ const ticker = document.querySelector('.ticker');
 const tickerText = ticker?.querySelector('span');
 
 if (ticker && tickerText) {
-  const items = tickerText.textContent
-    .split('✦')
-    .map((item) => item.trim())
-    .filter(Boolean);
-
-const ticker = document.querySelector('.ticker');
-const tickerText = ticker?.querySelector('span');
-
-if (ticker && tickerText) {
-  tickerText.classList.add('ticker-copy');
-
-  if (!ticker.querySelector('.ticker-copy[aria-hidden="true"]')) {
-    const duplicate = tickerText.cloneNode(true);
-    duplicate.setAttribute('aria-hidden', 'true');
-    ticker.appendChild(duplicate);
-  }
-}
-
-  tickerText.textContent = loopText;
   tickerText.classList.add('ticker-copy');
 
   if (!ticker.querySelector('.ticker-copy[aria-hidden="true"]')) {

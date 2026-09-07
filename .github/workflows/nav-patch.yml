@@ -1,0 +1,10 @@
+name: Temporary nav patch
+on:
+  push:
+    paths:
+      - '.github/workflows/nav-patch.yml'
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo ok

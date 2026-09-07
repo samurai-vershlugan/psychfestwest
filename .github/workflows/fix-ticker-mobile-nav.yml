@@ -1,0 +1,82 @@
+name: Fix ticker and mobile nav
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/fix-ticker-mobile-nav.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Patch files
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          # script.js: HTML remains authoritative; JS only clones the ticker for the seamless loop.
+          p = Path('script.js')
+          text = p.read_text()
+          marker = '// Keep the reCAPTCHA v3 badge inside the mailing-list form'
+          if marker not in text:
+              raise SystemExit('Could not find reCAPTCHA marker in script.js')
+          rest = marker + text.split(marker, 1)[1]
+          ticker = """document.getElementById('year').textContent = new Date().getFullYear();
+
+const ticker = document.querySelector('.ticker');
+const tickerText = ticker?.querySelector('span');
+
+if (ticker && tickerText) {
+  tickerText.classList.add('ticker-copy');
+
+  if (!ticker.querySelector('.ticker-copy[aria-hidden=\"true\"]')) {
+    const duplicate = tickerText.cloneNode(true);
+    duplicate.setAttribute('aria-hidden', 'true');
+    ticker.appendChild(duplicate);
+  }
+}
+
+"""
+          p.write_text(ticker + rest)
+
+          # index.html: same Instagram label on desktop and mobile, with no arrow.
+          p = Path('index.html')
+          text = p.read_text()
+          old = '<a href="https://instagram.com/psychfestwest" target="_blank">@psychfestwest ↗</a>'
+          new = '<a href="https://instagram.com/psychfestwest" target="_blank" rel="noopener">@psychfestwest</a>'
+          if old not in text:
+              raise SystemExit('Could not find Instagram nav link in index.html')
+          p.write_text(text.replace(old, new, 1))
+
+          # style.css: remove the mobile-only IG replacement so the real HTML label is shown.
+          p = Path('style.css')
+          text = p.read_text()
+          old = '''  header nav a:last-child{display:inline!important;font-size:0!important}
+  header nav a:last-child::after{
+    content:"IG ↗";
+    font:500 10px 'DM Mono',monospace;
+    letter-spacing:.055em;
+    white-space:nowrap;
+  }
+'''
+          if old not in text:
+              raise SystemExit('Could not find mobile Instagram override in style.css')
+          p.write_text(text.replace(old, '', 1))
+          PY
+
+      - name: Commit changes and remove one-shot workflow
+        run: |
+          rm .github/workflows/fix-ticker-mobile-nav.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add script.js index.html style.css .github/workflows/fix-ticker-mobile-nav.yml
+          git commit -m "Fix ticker source and unify Instagram nav label"
+          git push

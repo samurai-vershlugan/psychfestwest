@@ -129,9 +129,55 @@ const positionRecaptchaBadge = () => {
   return true;
 };
 
+/* After a successful signup, place the confirmation directly below the nav. */
+const successMessage = document.getElementById('success-message');
+let successViewPositioned = false;
+
+const isVisible = (element) => {
+  if (!element) return false;
+  const style = getComputedStyle(element);
+  return style.display !== 'none' && style.visibility !== 'hidden' && element.getBoundingClientRect().height > 0;
+};
+
+const positionSuccessMessage = () => {
+  if (!successMessage || !isVisible(successMessage)) {
+    successViewPositioned = false;
+    return;
+  }
+  if (successViewPositioned) return;
+
+  successViewPositioned = true;
+
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      const header = document.querySelector('header');
+      const headerHeight = header?.getBoundingClientRect().height || 0;
+      const messageTop = successMessage.getBoundingClientRect().top + window.scrollY;
+      const breathingRoom = 10;
+      const targetTop = Math.max(0, messageTop - headerHeight - breathingRoom);
+
+      window.scrollTo({
+        top: targetTop,
+        behavior: 'smooth'
+      });
+    });
+  });
+};
+
+if (successMessage) {
+  const successObserver = new MutationObserver(positionSuccessMessage);
+  successObserver.observe(successMessage, {
+    attributes: true,
+    attributeFilter: ['class', 'style', 'hidden'],
+    childList: true,
+    subtree: true
+  });
+}
+
 const syncFormPolish = () => {
   polishBrevoCountryPicker();
   positionRecaptchaBadge();
+  positionSuccessMessage();
 };
 
 syncFormPolish();

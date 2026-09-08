@@ -1,0 +1,38 @@
+name: Finalize mailing list
+on:
+  push:
+    paths:
+      - '.github/workflows/finalize-mailing-list.yml'
+permissions:
+  contents: write
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Update form copy and country order
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p = Path('index.html')
+          s = p.read_text()
+          s = s.replace('brevo-fixes.css?v=2', 'brevo-fixes.css?v=3')
+          s = s.replace('Provide your email address to subscribe to our newsletter', 'Provide your email address to subscribe to the doomsletter')
+          s = s.replace('The SMS field must contain between 6 and 19 digits and include the country code without using +/0 (e.g. 1xxxxxxxxxx for the United States)', 'Provide your mobile number (numbers only) to receive text updates')
+          us = '<option value="+1" selected>+1 US</option>'
+          marker = '<select class="input" name="SMS__COUNTRY_CODE">'
+          if us in s and marker in s:
+              s = s.replace(us, '', 1)
+              s = s.replace(marker, marker + us, 1)
+          p.write_text(s)
+          PY
+      - name: Commit and remove workflow
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add index.html
+          git commit -m "Finalize mailing list form behavior" || true
+          git rm .github/workflows/finalize-mailing-list.yml
+          git commit -m "Remove one-shot mailing list finalizer"
+          git push

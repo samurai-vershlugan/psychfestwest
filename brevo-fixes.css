@@ -1,9 +1,9 @@
+/* Psych Fest West overrides for Brevo's phone selector and reCAPTCHA. */
 .live-signup .brevo-embed .sib-sms-input-wrapper,
 .live-signup .brevo-embed .sib-sms-input-wrapper * {
   font-family:'Space Grotesk',sans-serif!important;
 }
 
-/* Keep the selected country and the dropdown options consistent and readable on mobile. */
 .live-signup .brevo-embed .sib-sms-input-wrapper select,
 .live-signup .brevo-embed .sib-sms-input-wrapper select.input,
 .live-signup .brevo-embed .sib-sms-input-wrapper [role='combobox'],
@@ -13,44 +13,72 @@
   font-weight:500!important;
   line-height:1.25!important;
   color:#2f2a31!important;
+  -webkit-text-fill-color:#2f2a31!important;
   -webkit-text-size-adjust:100%!important;
 }
 
-.live-signup .brevo-embed .sib-sms-select__dropdown,
-.live-signup .brevo-embed .sib-sms-select__dropdown *,
-.live-signup .brevo-embed .sib-sms-select__dropdown li,
-.live-signup .brevo-embed .sib-sms-select__dropdown [role='option'],
-.live-signup .brevo-embed .sib-sms-input-wrapper option {
+/* Brevo mounts this menu under body on mobile, outside .live-signup. */
+.sib-sms-select__dropdown,
+.sib-sms-select__dropdown *,
+.sib-sms-select__dropdown li,
+.sib-sms-select__dropdown [role='option'],
+.sib-sms-select__dropdown span,
+.sib-sms-select__dropdown div,
+.sib-sms-select__list,
+.sib-sms-select__list *,
+.sib-sms-select__item,
+.sib-sms-select__item * {
   font-family:'Space Grotesk',sans-serif!important;
   font-size:16px!important;
   font-weight:400!important;
   line-height:1.3!important;
   color:#51464f!important;
-  background:#fff!important;
+  background-color:#fff!important;
   opacity:1!important;
   -webkit-text-fill-color:#51464f!important;
 }
 
-/* Brevo's SMS helper copy is too verbose for this compact signup form. */
-.live-signup .brevo-embed .form__entry:has(.sib-sms-input-wrapper) .entry__specification,
-.live-signup .brevo-embed .sib-sms-input-wrapper + .entry__specification,
-.live-signup .brevo-embed .sib-sms-input-wrapper ~ .entry__specification {
-  display:none!important;
+.live-signup .brevo-embed .sib-sms-input-wrapper option {
+  font-family:'Space Grotesk',sans-serif!important;
+  font-size:16px!important;
+  font-weight:400!important;
+  color:#51464f!important;
+  background:#fff!important;
+  -webkit-text-fill-color:#51464f!important;
 }
 
-/* Let reCAPTCHA use Google's normal fixed badge placement, where it remains visible on mobile. */
-.grecaptcha-badge {
+/* Restore the compact left-aligned reCAPTCHA badge inside the form. */
+.recaptcha-badge-slot {
+  display:flex!important;
+  justify-content:flex-start!important;
+  align-items:center!important;
+  min-height:60px!important;
+  margin:2px 0 8px!important;
+  padding:0!important;
+  text-align:left!important;
+  overflow:visible!important;
+}
+
+.recaptcha-badge-slot .grecaptcha-badge {
+  position:relative!important;
+  right:auto!important;
+  bottom:auto!important;
+  left:auto!important;
+  top:auto!important;
   visibility:visible!important;
   opacity:1!important;
-  z-index:2147483647!important;
+  z-index:2!important;
+  margin:0!important;
 }
 
 @media (max-width:760px){
-  .live-signup .brevo-embed .sib-sms-select__dropdown,
-  .live-signup .brevo-embed .sib-sms-select__dropdown *,
   .live-signup .brevo-embed .sib-sms-input-wrapper select,
   .live-signup .brevo-embed .sib-sms-input-wrapper [role='combobox'],
-  .live-signup .brevo-embed .sib-sms-input-wrapper button {
+  .live-signup .brevo-embed .sib-sms-input-wrapper button,
+  .sib-sms-select__dropdown,
+  .sib-sms-select__dropdown *,
+  .sib-sms-select__list,
+  .sib-sms-select__list * {
     font-size:16px!important;
   }
 }

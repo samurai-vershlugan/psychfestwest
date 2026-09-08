@@ -60,10 +60,10 @@ const polishBrevoCountryPicker = () => {
 };
 
 /*
- * The Brevo embed already has a reCAPTCHA marker row directly above SUBSCRIBE.
- * Keep Google's real badge attached to <body>, but position it in document
- * coordinates instead of viewport coordinates. This makes it scroll naturally
- * with the form rather than floating/bouncing while the page moves.
+ * Anchor Google's real badge to Brevo's native reCAPTCHA row. The badge stays
+ * attached to <body> for Google's mechanics, but its document position is
+ * calculated from the actual input-field edge. The reserved row is tall enough
+ * to center the badge comfortably between the mobile helper and SUBSCRIBE.
  */
 const positionRecaptchaBadge = () => {
   const marker = document.querySelector('.live-signup .brevo-embed .g-recaptcha-v3');
@@ -73,7 +73,15 @@ const positionRecaptchaBadge = () => {
 
   if (!anchorRow || !badge || !field) return false;
 
-  anchorRow.style.setProperty('min-height', '72px', 'important');
+  const slotHeight = 94;
+  const badgeScale = 0.72;
+  const badgeNativeHeight = 60;
+  const badgeVisualHeight = badgeNativeHeight * badgeScale;
+
+  anchorRow.style.setProperty('height', `${slotHeight}px`, 'important');
+  anchorRow.style.setProperty('min-height', `${slotHeight}px`, 'important');
+  anchorRow.style.setProperty('padding', '0', 'important');
+  anchorRow.style.setProperty('margin', '0', 'important');
   anchorRow.style.setProperty('position', 'relative', 'important');
 
   const rowRect = anchorRow.getBoundingClientRect();
@@ -81,7 +89,7 @@ const positionRecaptchaBadge = () => {
   const bodyRect = document.body.getBoundingClientRect();
 
   const left = fieldRect.left - bodyRect.left;
-  const top = rowRect.top - bodyRect.top + 6;
+  const top = rowRect.top - bodyRect.top + ((rowRect.height - badgeVisualHeight) / 2);
 
   badge.style.setProperty('position', 'absolute', 'important');
   badge.style.setProperty('left', `${left}px`, 'important');
@@ -89,9 +97,9 @@ const positionRecaptchaBadge = () => {
   badge.style.setProperty('right', 'auto', 'important');
   badge.style.setProperty('bottom', 'auto', 'important');
   badge.style.setProperty('width', '256px', 'important');
-  badge.style.setProperty('height', '60px', 'important');
+  badge.style.setProperty('height', `${badgeNativeHeight}px`, 'important');
   badge.style.setProperty('overflow', 'hidden', 'important');
-  badge.style.setProperty('transform', 'scale(.72)', 'important');
+  badge.style.setProperty('transform', `scale(${badgeScale})`, 'important');
   badge.style.setProperty('transform-origin', 'top left', 'important');
   badge.style.setProperty('z-index', '20', 'important');
   badge.style.setProperty('opacity', '1', 'important');

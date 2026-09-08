@@ -1,0 +1,63 @@
+name: Apply PFW logo
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/apply-pfw-logo.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Update nav logo and favicon
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          # index.html
+          p = Path('index.html')
+          text = p.read_text()
+          old_head = '<link rel="stylesheet" href="style.css">'
+          new_head = '<link rel="stylesheet" href="style.css">\n<link rel="icon" type="image/png" href="pfw-mark.png">'
+          if '<link rel="icon"' not in text:
+              if old_head not in text:
+                  raise SystemExit('Stylesheet link not found')
+              text = text.replace(old_head, new_head, 1)
+
+          old_logo = '<a class="pfw" href="#top">PFW</a>'
+          new_logo = '<a class="pfw" href="#top" aria-label="Psych Fest West home"><img src="pfw-mark.png" alt=""></a>'
+          if old_logo not in text:
+              raise SystemExit('PFW nav link not found')
+          text = text.replace(old_logo, new_logo, 1)
+          p.write_text(text)
+
+          # style.css
+          p = Path('style.css')
+          text = p.read_text()
+          old = ".pfw{font:600 12px 'DM Mono';border:1px solid;border-radius:50%;padding:10px;text-decoration:none}"
+          new = ".pfw{width:48px;height:48px;display:flex;align-items:center;justify-content:center;text-decoration:none;flex:0 0 auto}\n.pfw img{display:block;width:48px;height:48px;object-fit:contain}"
+          if old not in text:
+              raise SystemExit('Desktop PFW style not found')
+          text = text.replace(old, new, 1)
+
+          old_mobile = "  header .pfw{padding:9px!important;font-size:10.5px!important;flex:0 0 auto!important}"
+          new_mobile = "  header .pfw{width:42px!important;height:42px!important;padding:0!important;flex:0 0 auto!important}\n  header .pfw img{width:42px!important;height:42px!important}"
+          if old_mobile not in text:
+              raise SystemExit('Mobile PFW style not found')
+          text = text.replace(old_mobile, new_mobile, 1)
+          p.write_text(text)
+          PY
+
+      - name: Commit changes and remove workflow
+        run: |
+          rm .github/workflows/apply-pfw-logo.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html style.css .github/workflows/apply-pfw-logo.yml
+          git commit -m "Use PFW logo in navigation and favicon"
+          git push

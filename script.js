@@ -61,25 +61,28 @@ const polishBrevoCountryPicker = () => {
 
 /*
  * The Brevo embed already contains a hidden .g-recaptcha-v3 row immediately
- * above SUBSCRIBE. Keep Google's badge attached to <body> (so Brevo/Google
- * mechanics remain untouched) and visually anchor the real badge to that row.
+ * above SUBSCRIBE. Keep Google's badge attached to <body> and visually anchor
+ * it to that row. Its left edge is taken from the actual form input fields so
+ * it lines up with the white boxes above it.
  */
 const positionRecaptchaBadge = () => {
   const marker = document.querySelector('.live-signup .brevo-embed .g-recaptcha-v3');
   const anchorRow = marker?.parentElement;
   const badge = document.querySelector('.grecaptcha-badge');
+  const field = document.querySelector('.live-signup .brevo-embed .entry__field');
 
-  if (!anchorRow || !badge) return false;
+  if (!anchorRow || !badge || !field) return false;
 
   anchorRow.style.setProperty('min-height', '72px', 'important');
   anchorRow.style.setProperty('position', 'relative', 'important');
 
-  const rect = anchorRow.getBoundingClientRect();
-  const visible = rect.bottom > 0 && rect.top < window.innerHeight;
+  const rowRect = anchorRow.getBoundingClientRect();
+  const fieldRect = field.getBoundingClientRect();
+  const visible = rowRect.bottom > 0 && rowRect.top < window.innerHeight;
 
   badge.style.setProperty('position', 'fixed', 'important');
-  badge.style.setProperty('left', `${Math.round(rect.left)}px`, 'important');
-  badge.style.setProperty('top', `${Math.round(rect.top + 6)}px`, 'important');
+  badge.style.setProperty('left', `${Math.round(fieldRect.left)}px`, 'important');
+  badge.style.setProperty('top', `${Math.round(rowRect.top + 6)}px`, 'important');
   badge.style.setProperty('right', 'auto', 'important');
   badge.style.setProperty('bottom', 'auto', 'important');
   badge.style.setProperty('width', '256px', 'important');

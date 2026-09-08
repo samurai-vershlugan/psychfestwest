@@ -19,7 +19,6 @@ jobs:
           python3 - <<'PY'
           from pathlib import Path
 
-          # index.html
           p = Path('index.html')
           text = p.read_text()
           old_head = '<link rel="stylesheet" href="style.css">'
@@ -36,17 +35,16 @@ jobs:
           text = text.replace(old_logo, new_logo, 1)
           p.write_text(text)
 
-          # style.css
           p = Path('style.css')
           text = p.read_text()
           old = ".pfw{font:600 12px 'DM Mono';border:1px solid;border-radius:50%;padding:10px;text-decoration:none}"
-          new = ".pfw{width:48px;height:48px;display:flex;align-items:center;justify-content:center;text-decoration:none;flex:0 0 auto}\n.pfw img{display:block;width:48px;height:48px;object-fit:contain}"
+          new = ".pfw{width:48px;height:48px;display:flex;align-items:center;justify-content:center;text-decoration:none;flex:0 0 auto}.pfw img{display:block;width:48px;height:48px;object-fit:contain}"
           if old not in text:
               raise SystemExit('Desktop PFW style not found')
           text = text.replace(old, new, 1)
 
-          old_mobile = "  header .pfw{padding:9px!important;font-size:10.5px!important;flex:0 0 auto!important}"
-          new_mobile = "  header .pfw{width:42px!important;height:42px!important;padding:0!important;flex:0 0 auto!important}\n  header .pfw img{width:42px!important;height:42px!important}"
+          old_mobile = "header .pfw{padding:9px!important;font-size:10.5px!important;flex:0 0 auto!important}"
+          new_mobile = "header .pfw{width:42px!important;height:42px!important;padding:0!important;flex:0 0 auto!important}header .pfw img{width:42px!important;height:42px!important}"
           if old_mobile not in text:
               raise SystemExit('Mobile PFW style not found')
           text = text.replace(old_mobile, new_mobile, 1)

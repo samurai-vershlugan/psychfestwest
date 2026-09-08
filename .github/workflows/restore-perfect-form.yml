@@ -1,0 +1,44 @@
+name: Restore perfect form alignment
+on:
+  push:
+    paths:
+      - '.github/workflows/restore-perfect-form.yml'
+permissions:
+  contents: write
+jobs:
+  restore:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Restore known-good JOIN form markup
+        run: |
+          python3 - <<'PY'
+          import subprocess
+          from pathlib import Path
+
+          known_good = subprocess.check_output([
+              'git','show','b1f68cd4bc072fed88d3c737f2ea347ccac09ded:index.html'
+          ], text=True)
+          p = Path('index.html')
+          current = p.read_text()
+
+          start = '<section id="join" class="two join">'
+          end = '<section class="manifesto">'
+
+          gs = known_good.index(start)
+          ge = known_good.index(end, gs)
+          cs = current.index(start)
+          ce = current.index(end, cs)
+
+          restored = current[:cs] + known_good[gs:ge] + current[ce:]
+          p.write_text(restored)
+          PY
+      - name: Commit restore
+        run: |
+          git config user.name "samurai-vershlugan"
+          git config user.email "samurai@feathergun.com"
+          git add index.html
+          git commit -m "Restore perfectly aligned Brevo form and CAPTCHA markup"
+          git push

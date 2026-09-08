@@ -10,12 +10,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Fix Brevo form copy, country dropdown and captcha placement
-        shell: python
+      - name: Apply mailing list fixes
+        shell: bash
         run: |
+          python - <<'PY'
           from pathlib import Path
 
-          # Update helper copy and cache-bust the corrective stylesheet.
           p = Path('index.html')
           s = p.read_text()
           s = s.replace('Provide your email address to subscribe to our newsletter', 'Provide your email address to subscribe to the doomsletter')
@@ -23,13 +23,11 @@ jobs:
           s = s.replace('brevo-fixes.css?v=1', 'brevo-fixes.css?v=2')
           p.write_text(s)
 
-          # Country dropdown is mounted outside the form on mobile, so style it globally.
-          Path('brevo-fixes.css').write_text(r'''/* Psych Fest West overrides for Brevo's phone selector and reCAPTCHA. */
+          Path('brevo-fixes.css').write_text("""/* Psych Fest West overrides for Brevo's phone selector and reCAPTCHA. */
 .live-signup .brevo-embed .sib-sms-input-wrapper,
 .live-signup .brevo-embed .sib-sms-input-wrapper * {
   font-family:'Space Grotesk',sans-serif!important;
 }
-
 .live-signup .brevo-embed .sib-sms-input-wrapper select,
 .live-signup .brevo-embed .sib-sms-input-wrapper select.input,
 .live-signup .brevo-embed .sib-sms-input-wrapper [role='combobox'],
@@ -42,8 +40,7 @@ jobs:
   -webkit-text-fill-color:#2f2a31!important;
   -webkit-text-size-adjust:100%!important;
 }
-
-/* Brevo portals this menu under <body>, outside .live-signup, especially on mobile. */
+/* Brevo portals this menu under body on mobile, outside .live-signup. */
 .sib-sms-select__dropdown,
 .sib-sms-select__dropdown *,
 .sib-sms-select__dropdown li,
@@ -63,7 +60,6 @@ jobs:
   opacity:1!important;
   -webkit-text-fill-color:#51464f!important;
 }
-
 .live-signup .brevo-embed .sib-sms-input-wrapper option {
   font-family:'Space Grotesk',sans-serif!important;
   font-size:16px!important;
@@ -72,8 +68,6 @@ jobs:
   background:#fff!important;
   -webkit-text-fill-color:#51464f!important;
 }
-
-/* Restore the compact left-aligned reCAPTCHA badge inside the form. */
 .recaptcha-badge-slot {
   display:flex!important;
   justify-content:flex-start!important;
@@ -95,7 +89,6 @@ jobs:
   z-index:2!important;
   margin:0!important;
 }
-
 @media (max-width:760px){
   .live-signup .brevo-embed .sib-sms-input-wrapper select,
   .live-signup .brevo-embed .sib-sms-input-wrapper [role='combobox'],
@@ -107,17 +100,15 @@ jobs:
     font-size:16px!important;
   }
 }
-''')
+""")
 
-          # Put Google's v3 badge back into a predictable, left-aligned slot above Subscribe.
-          Path('script.js').write_text(r'''document.getElementById('year').textContent = new Date().getFullYear();
+          Path('script.js').write_text("""document.getElementById('year').textContent = new Date().getFullYear();
 
 const ticker = document.querySelector('.ticker');
 const tickerText = ticker?.querySelector('span');
-
 if (ticker && tickerText) {
   tickerText.classList.add('ticker-copy');
-  if (!ticker.querySelector('.ticker-copy[aria-hidden="true"]')) {
+  if (!ticker.querySelector('.ticker-copy[aria-hidden=\"true\"]')) {
     const duplicate = tickerText.cloneNode(true);
     duplicate.setAttribute('aria-hidden', 'true');
     ticker.appendChild(duplicate);
@@ -128,22 +119,18 @@ const placeRecaptchaBadge = () => {
   const form = document.querySelector('.live-signup .brevo-embed #sib-form');
   const badge = document.querySelector('.grecaptcha-badge');
   const submitButton = form?.querySelector('.sib-form-block__button');
-  const submitRow = submitButton?.closest('[style*="padding"]') || submitButton?.parentElement?.parentElement;
+  const submitRow = submitButton?.closest('[style*=\"padding\"]') || submitButton?.parentElement?.parentElement;
   if (!form || !badge || !submitRow) return false;
-
   let slot = form.querySelector('.recaptcha-badge-slot');
   if (!slot) {
     slot = document.createElement('div');
     slot.className = 'recaptcha-badge-slot sib-form-block';
     slot.setAttribute('aria-label', 'reCAPTCHA protection');
   }
-  if (slot.parentElement !== form || slot.nextElementSibling !== submitRow) {
-    form.insertBefore(slot, submitRow);
-  }
+  if (slot.parentElement !== form || slot.nextElementSibling !== submitRow) form.insertBefore(slot, submitRow);
   if (badge.parentElement !== slot) slot.appendChild(badge);
   return true;
 };
-
 if (!placeRecaptchaBadge()) {
   const captchaObserver = new MutationObserver(() => {
     if (placeRecaptchaBadge()) captchaObserver.disconnect();
@@ -151,8 +138,10 @@ if (!placeRecaptchaBadge()) {
   captchaObserver.observe(document.body, { childList: true, subtree: true });
   window.setTimeout(() => captchaObserver.disconnect(), 15000);
 }
-''')
+""")
+          PY
       - name: Commit fixes and remove workflow
+        shell: bash
         run: |
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com

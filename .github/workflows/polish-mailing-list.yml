@@ -1,0 +1,62 @@
+name: Polish mailing list
+on:
+  push:
+    paths:
+      - '.github/workflows/polish-mailing-list.yml'
+permissions:
+  contents: write
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Update Brevo form markup
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+
+          p = Path('index.html')
+          s = p.read_text()
+
+          # Cache-bust the visual fixes.
+          s = re.sub(r'brevo-fixes\.css\?v=\d+', 'brevo-fixes.css?v=4', s)
+
+          # Preserve requested helper copy.
+          s = s.replace('Provide your email address to subscribe to our newsletter', 'Provide your email address to subscribe to the doomsletter')
+          s = s.replace('The SMS field must contain between 6 and 19 digits and include the country code without using +/0 (e.g. 1xxxxxxxxxx for the United States)', 'Provide your mobile number (numbers only) to receive text updates')
+
+          # Add stable classes to the two heading rows so external Brevo CSS cannot blow up their sizes.
+          s = s.replace(
+            '<div style="padding: 8px 0;"><div class="sib-form-block" style="font-size:11px; text-align:left; font-family:Helvetica, sans-serif; color:#3C4858; background-color:transparent;"><p>MAILING LIST</p></div></div>',
+            '<div class="pfw-mailing-kicker-row" style="padding: 8px 0;"><div class="sib-form-block pfw-mailing-kicker" style="font-size:11px; text-align:left; font-family:Helvetica, sans-serif; color:#3C4858; background-color:transparent;"><p>MAILING LIST</p></div></div>',
+            1
+          )
+          s = s.replace(
+            '<div style="padding: 8px 0;"><div class="sib-form-block" style="font-size:32px; text-align:left; font-weight:700; font-family:Helvetica, sans-serif; color:#3C4858; background-color:transparent;"><p>Subscribe to The Doomsletter.</p></div></div>',
+            '<div class="pfw-mailing-title-row" style="padding: 8px 0;"><div class="sib-form-block pfw-mailing-title" style="font-size:32px; text-align:left; font-weight:700; font-family:Helvetica, sans-serif; color:#3C4858; background-color:transparent;"><p>Subscribe to The Doomsletter.</p></div></div>',
+            1
+          )
+
+          # Put the US source option first. Brevo's generated menu is also pinned by script.js after rendering.
+          m = re.search(r'(<select class="input" name="SMS__COUNTRY_CODE">)(.*?)(</select>)', s, re.S)
+          if m:
+            body = m.group(2)
+            us_match = re.search(r'<option value="\+1" selected>\+1 US</option>', body)
+            if us_match:
+              us = us_match.group(0)
+              body = body[:us_match.start()] + body[us_match.end():]
+              s = s[:m.start()] + m.group(1) + us + body + m.group(3) + s[m.end():]
+
+          p.write_text(s)
+          PY
+      - name: Commit and remove workflow
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add index.html
+          git commit -m "Restore compact mailing list hierarchy" || true
+          git rm .github/workflows/polish-mailing-list.yml
+          git commit -m "Remove one-shot mailing list polish workflow"
+          git push

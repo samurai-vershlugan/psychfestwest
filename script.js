@@ -18,76 +18,108 @@ const countryCodeToFlag = (code) => {
   return String.fromCodePoint(...[...code].map(char => 127397 + char.charCodeAt(0)));
 };
 
-const prepareCountrySelect = () => {
+/*
+ * Brevo builds its own country picker after page load. Keep Brevo's DOM and
+ * behavior intact, but decorate its native .sib-flag elements and put the
+ * United States item first in the generated list.
+ */
+const polishBrevoCountryPicker = () => {
   const select = document.querySelector('.live-signup select[name="SMS__COUNTRY_CODE"]');
-  if (!select) return;
 
-  const options = [...select.options];
-  options.forEach(option => {
-    const text = option.textContent.trim().replace(/^\p{Regional_Indicator}{2}\s*/u, '');
-    const match = text.match(/\b([A-Z]{2})$/);
-    if (!match) return;
-    option.textContent = `${countryCodeToFlag(match[1])} ${text}`;
+  if (select) {
+    const usOption = [...select.options].find(option => /\bUS$/.test(option.textContent.trim()));
+    if (usOption) {
+      if (usOption !== select.firstElementChild) select.insertBefore(usOption, select.firstElementChild);
+      usOption.selected = true;
+      select.value = usOption.value;
+    }
+  }
+
+  document.querySelectorAll('.sib-flag').forEach(flag => {
+    const codeClass = [...flag.classList].find(name => /^sib-flag-[a-z]{2}$/.test(name));
+    if (!codeClass) return;
+
+    const code = codeClass.slice(-2).toUpperCase();
+    const emoji = countryCodeToFlag(code);
+    if (!emoji) return;
+
+    flag.textContent = emoji;
+    flag.style.setProperty('background', 'none', 'important');
+    flag.style.setProperty('width', '26px', 'important');
+    flag.style.setProperty('height', '24px', 'important');
+    flag.style.setProperty('display', 'inline-flex', 'important');
+    flag.style.setProperty('align-items', 'center', 'important');
+    flag.style.setProperty('justify-content', 'center', 'important');
+    flag.style.setProperty('font-size', '20px', 'important');
+    flag.style.setProperty('line-height', '1', 'important');
+    flag.style.setProperty('flex', '0 0 26px', 'important');
   });
 
-  const us = [...select.options].find(option => /\bUS$/.test(option.textContent.trim()));
-  if (us) {
-    select.insertBefore(us, select.firstElementChild);
-    us.selected = true;
+  const list = document.querySelector('.sib-sms-select__list');
+  const usItem = list?.querySelector('li .sib-flag-us')?.closest('li');
+
+  if (list && usItem && usItem !== list.firstElementChild) {
+    list.insertBefore(usItem, list.firstElementChild);
   }
 };
 
-const decorateBrevoCountryDropdown = () => {
-  const items = [...document.querySelectorAll('.sib-sms-select__dropdown li, .sib-sms-select__dropdown [role="option"], .sib-sms-select__item')];
-
-  items.forEach(item => {
-    if (item.querySelector('.pfw-country-flag')) return;
-
-    const text = item.textContent.trim();
-    const codeMatch = text.match(/\b([A-Z]{2})\b(?!.*\b[A-Z]{2}\b)/);
-    const code = /United States/i.test(text) ? 'US' : codeMatch?.[1];
-    if (!code) return;
-
-    const flag = document.createElement('span');
-    flag.className = 'pfw-country-flag';
-    flag.setAttribute('aria-hidden', 'true');
-    flag.textContent = countryCodeToFlag(code);
-    item.prepend(flag);
-  });
-
-  const usItem = items.find(item => /\bUS\b|United States/i.test(item.textContent));
-  if (usItem?.parentElement && usItem !== usItem.parentElement.firstElementChild) {
-    usItem.parentElement.insertBefore(usItem, usItem.parentElement.firstElementChild);
-  }
-};
-
-const placeRecaptchaBadge = () => {
+/*
+ * Google appends the reCAPTCHA badge to <body>. Do not reparent it because
+ * Brevo relies on Google's original node. Instead reserve a slot inside the
+ * form and position Google's actual badge over that slot.
+ */
+const ensureRecaptchaSlot = () => {
   const form = document.querySelector('.live-signup #sib-form');
-  const badge = document.querySelector('.grecaptcha-badge');
   const submitButton = form?.querySelector('.sib-form-block__button');
   const submitRow = submitButton?.closest('div[style*="padding"]');
-
-  if (!form || !badge || !submitRow) return false;
+  if (!form || !submitRow) return null;
 
   let slot = form.querySelector('.recaptcha-badge-slot');
   if (!slot) {
     slot = document.createElement('div');
     slot.className = 'recaptcha-badge-slot';
-    slot.setAttribute('aria-label', 'reCAPTCHA protection');
+    slot.setAttribute('aria-hidden', 'true');
+    slot.style.cssText = 'height:68px;position:relative;width:100%;';
     form.insertBefore(slot, submitRow);
   }
-
-  if (badge.parentElement !== slot) slot.appendChild(badge);
-  return true;
+  return slot;
 };
 
-prepareCountrySelect();
-decorateBrevoCountryDropdown();
-placeRecaptchaBadge();
+const positionRecaptchaBadge = () => {
+  const slot = ensureRecaptchaSlot();
+  const badge = document.querySelector('.grecaptcha-badge');
+  if (!slot || !badge) return;
 
-const formPolishObserver = new MutationObserver(() => {
-  decorateBrevoCountryDropdown();
-  placeRecaptchaBadge();
-});
+  const slotRect = slot.getBoundingClientRect();
+  const bodyRect = document.body.getBoundingClientRect();
+  const left = slotRect.left - bodyRect.left;
+  const top = slotRect.top - bodyRect.top + 4;
 
+  badge.style.setProperty('position', 'absolute', 'important');
+  badge.style.setProperty('left', `${left}px`, 'important');
+  badge.style.setProperty('top', `${top}px`, 'important');
+  badge.style.setProperty('right', 'auto', 'important');
+  badge.style.setProperty('bottom', 'auto', 'important');
+  badge.style.setProperty('transform', 'none', 'important');
+  badge.style.setProperty('transform-origin', 'top left', 'important');
+  badge.style.setProperty('visibility', 'visible', 'important');
+  badge.style.setProperty('opacity', '1', 'important');
+  badge.style.setProperty('z-index', '20', 'important');
+}
+
+let polishFrame = null;
+const scheduleFormPolish = () => {
+  if (polishFrame) cancelAnimationFrame(polishFrame);
+  polishFrame = requestAnimationFrame(() => {
+    polishBrevoCountryPicker();
+    positionRecaptchaBadge();
+    polishFrame = null;
+  });
+};
+
+scheduleFormPolish();
+window.addEventListener('load', scheduleFormPolish);
+window.addEventListener('resize', scheduleFormPolish);
+
+const formPolishObserver = new MutationObserver(scheduleFormPolish);
 formPolishObserver.observe(document.body, { childList: true, subtree: true });

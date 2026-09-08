@@ -1,0 +1,35 @@
+name: Update PFW logo v4
+on:
+  push:
+    paths:
+      - '.github/workflows/update-pfw-logo-v4.yml'
+permissions:
+  contents: write
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install final logo and refresh references
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import base64, pathlib
+          data = '''__BASE64__'''
+          pathlib.Path('images').mkdir(exist_ok=True)
+          pathlib.Path('images/pfw-logo-transparent.png').write_bytes(base64.b64decode(data))
+          p = pathlib.Path('index.html')
+          s = p.read_text()
+          s = s.replace('images/pfw-logo-transparent.png?v=5', 'images/pfw-logo-transparent.png?v=6')
+          p.write_text(s)
+          PY
+      - name: Commit and remove workflow
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add images/pfw-logo-transparent.png index.html
+          git commit -m "Use final site-matched PFW logo" || true
+          git rm .github/workflows/update-pfw-logo-v4.yml
+          git commit -m "Remove one-shot PFW logo workflow"
+          git push

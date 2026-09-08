@@ -1,0 +1,33 @@
+name: Swap ART 2 and 3
+on:
+  push:
+    paths:
+      - '.github/workflows/swap-art-2-3.yml'
+permissions:
+  contents: write
+jobs:
+  reorder:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Swap gallery items 2 and 3
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('index.html')
+          s=p.read_text()
+          item2='<a class="art-piece" href="images/PFW-dave-1.jpeg" target="_blank" rel="noopener noreferrer" aria-label="Open Psych Fest West artwork in a new tab"><img src="images/PFW-dave-1.jpeg" alt="Psych Fest West psychedelic artwork" loading="lazy" decoding="async"></a>'
+          item3='<div class="art-piece" aria-label="Animated Psych Fest West artwork"><img src="images/PFW-rotating-face.gif" alt="Animated Psych Fest West psychedelic artwork" loading="lazy"></div>'
+          old=item2+'\n'+item3
+          new=item3+'\n'+item2
+          if old not in s:
+              raise SystemExit('Expected ART items not found in current index.html')
+          p.write_text(s.replace(old,new,1))
+          PY
+      - name: Commit reorder
+        run: |
+          git config user.name "samurai-vershlugan"
+          git config user.email "samurai@feathergun.com"
+          git add index.html
+          git commit -m "Swap ART gallery items 2 and 3"
+          git push

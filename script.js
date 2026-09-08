@@ -74,8 +74,9 @@ const getElementRotation = (element) => {
 
 /*
  * Anchor Google's real badge to Brevo's native reCAPTCHA row. The badge stays
- * attached to <body> for Google's mechanics, but matches the actual SUBSCRIBE
- * button's left edge and the card's rotation so it reads as part of the form.
+ * attached to <body> for Google's mechanics. On desktop, compensate for the
+ * card's rotation so the badge follows the same visual left-edge line as the
+ * SUBSCRIBE button instead of merely sharing its raw x coordinate.
  */
 const positionRecaptchaBadge = () => {
   const marker = document.querySelector('.live-signup .brevo-embed .g-recaptcha-v3');
@@ -101,9 +102,14 @@ const positionRecaptchaBadge = () => {
   const buttonRect = submitButton.getBoundingClientRect();
   const bodyRect = document.body.getBoundingClientRect();
   const cardRotation = getElementRotation(signupCard);
+  const angle = cardRotation * (Math.PI / 180);
 
-  const left = buttonRect.left - bodyRect.left;
-  const top = rowRect.top - bodyRect.top + ((rowRect.height - badgeVisualHeight) / 2);
+  const badgeTopViewport = rowRect.top + ((rowRect.height - badgeVisualHeight) / 2);
+  const verticalDifference = buttonRect.top - badgeTopViewport;
+  const rotationCompensation = Math.sin(angle) * verticalDifference;
+
+  const left = buttonRect.left - bodyRect.left + rotationCompensation;
+  const top = badgeTopViewport - bodyRect.top;
 
   badge.style.setProperty('position', 'absolute', 'important');
   badge.style.setProperty('left', `${left}px`, 'important');

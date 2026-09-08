@@ -60,66 +60,60 @@ const polishBrevoCountryPicker = () => {
 };
 
 /*
- * Restore the exact placement approach that previously worked: move Google's
- * real reCAPTCHA badge into a slot immediately above Brevo's submit row.
+ * Keep Google's real reCAPTCHA badge physically inside the form. Google may
+ * recreate or move the badge after initial load, so this stays synchronized
+ * instead of disconnecting after the first successful placement.
  */
 const placeRecaptchaBadge = () => {
   const form = document.querySelector('.live-signup .brevo-embed #sib-form');
-  const badge = document.querySelector('.grecaptcha-badge');
   const submitButton = form?.querySelector('.sib-form-block__button');
   const submitRow = submitButton?.closest('[style*="padding"]') || submitButton?.parentElement?.parentElement;
-
-  if (!form || !badge || !submitRow) return false;
+  if (!form || !submitRow) return false;
 
   let slot = form.querySelector('.recaptcha-badge-slot');
   if (!slot) {
     slot = document.createElement('div');
     slot.className = 'recaptcha-badge-slot sib-form-block';
     slot.setAttribute('aria-label', 'reCAPTCHA protection');
-  }
-
-  if (slot.parentElement !== form || slot.nextElementSibling !== submitRow) {
+    form.insertBefore(slot, submitRow);
+  } else if (slot.nextElementSibling !== submitRow) {
     form.insertBefore(slot, submitRow);
   }
 
-  if (badge.parentElement !== slot) {
-    slot.appendChild(badge);
-  }
+  const badges = [...document.querySelectorAll('.grecaptcha-badge')];
+  if (!badges.length) return false;
 
-  /* Same visual treatment used by the previously working version. */
-  slot.style.setProperty('display', 'flex', 'important');
-  slot.style.setProperty('justify-content', 'flex-start', 'important');
-  slot.style.setProperty('min-height', '44px', 'important');
-  slot.style.setProperty('margin-top', '8px', 'important');
-  slot.style.setProperty('overflow', 'visible', 'important');
+  badges.forEach(badge => {
+    if (badge.parentElement !== slot) slot.appendChild(badge);
 
-  badge.style.setProperty('position', 'relative', 'important');
-  badge.style.setProperty('left', 'auto', 'important');
-  badge.style.setProperty('right', 'auto', 'important');
-  badge.style.setProperty('top', 'auto', 'important');
-  badge.style.setProperty('bottom', 'auto', 'important');
-  badge.style.setProperty('transform', 'scale(.72)', 'important');
-  badge.style.setProperty('transform-origin', 'top left', 'important');
-  badge.style.setProperty('box-shadow', 'none', 'important');
-  badge.style.setProperty('visibility', 'visible', 'important');
-  badge.style.setProperty('opacity', '1', 'important');
+    badge.style.setProperty('position', 'relative', 'important');
+    badge.style.setProperty('left', 'auto', 'important');
+    badge.style.setProperty('right', 'auto', 'important');
+    badge.style.setProperty('top', 'auto', 'important');
+    badge.style.setProperty('bottom', 'auto', 'important');
+    badge.style.setProperty('transform', 'scale(.72)', 'important');
+    badge.style.setProperty('transform-origin', 'top left', 'important');
+    badge.style.setProperty('box-shadow', 'none', 'important');
+    badge.style.setProperty('visibility', 'visible', 'important');
+    badge.style.setProperty('opacity', '1', 'important');
+  });
 
   return true;
 };
 
-polishBrevoCountryPicker();
-
-if (!placeRecaptchaBadge()) {
-  const captchaObserver = new MutationObserver(() => {
-    polishBrevoCountryPicker();
-    if (placeRecaptchaBadge()) captchaObserver.disconnect();
-  });
-  captchaObserver.observe(document.body, { childList: true, subtree: true });
-  window.setTimeout(() => captchaObserver.disconnect(), 15000);
-}
-
-/* Brevo builds the country menu lazily when opened, so keep only that polish observed. */
-const countryObserver = new MutationObserver(() => {
+const syncFormPolish = () => {
   polishBrevoCountryPicker();
+  placeRecaptchaBadge();
+};
+
+syncFormPolish();
+window.addEventListener('load', syncFormPolish);
+
+/* Brevo and Google both add DOM after page load, so keep these two pieces synced. */
+const formObserver = new MutationObserver(() => {
+  syncFormPolish();
 });
-countryObserver.observe(document.body, { childList: true, subtree: true });
+formObserver.observe(document.body, { childList: true, subtree: true });
+
+/* Backup for Google moving the badge without a useful child-list mutation. */
+window.setInterval(placeRecaptchaBadge, 1000);

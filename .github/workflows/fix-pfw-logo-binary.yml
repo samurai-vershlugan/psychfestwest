@@ -1,0 +1,30 @@
+name: Fix PFW logo binary
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/fix-pfw-logo-binary.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Decode logo asset into a real PNG
+        run: |
+          set -e
+          base64 -d pfw-logo-v2.png > pfw-logo-v2.fixed.png
+          file pfw-logo-v2.fixed.png
+          mv pfw-logo-v2.fixed.png pfw-logo-v2.png
+      - name: Commit fixed binary and remove workflow
+        run: |
+          rm .github/workflows/fix-pfw-logo-binary.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add pfw-logo-v2.png .github/workflows/fix-pfw-logo-binary.yml
+          git commit -m "Fix PFW logo binary asset"
+          git push

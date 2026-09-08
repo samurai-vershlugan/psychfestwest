@@ -43,7 +43,7 @@ const polishBrevoCountryPicker = () => {
     const emoji = countryCodeToFlag(code);
     if (!emoji) return;
 
-    flag.textContent = emoji;
+    if (flag.textContent !== emoji) flag.textContent = emoji;
     flag.style.setProperty('background', 'none', 'important');
     flag.style.setProperty('width', '26px', 'important');
     flag.style.setProperty('height', '24px', 'important');
@@ -105,7 +105,7 @@ const positionRecaptchaBadge = () => {
   badge.style.setProperty('visibility', 'visible', 'important');
   badge.style.setProperty('opacity', '1', 'important');
   badge.style.setProperty('z-index', '20', 'important');
-}
+};
 
 let polishFrame = null;
 const scheduleFormPolish = () => {

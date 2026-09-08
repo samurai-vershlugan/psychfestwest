@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-labelledby="title">
+  <title id="title">Psych Fest West</title>
+  <g fill="none" stroke-linecap="square" stroke-linejoin="miter">
+    <path d="M28 38 L72 218 L128 92 L184 218 L228 38" stroke="#F4EDCF" stroke-width="22"/>
+    <path d="M58 84 V160 M58 84 H91 C110 84 120 94 120 109 C120 124 110 134 91 134 H58" stroke="#FF5FC8" stroke-width="14"/>
+    <path d="M143 84 V160 M143 84 H198 M143 118 H188" stroke="#D9FF4F" stroke-width="14"/>
+  </g>
+</svg>

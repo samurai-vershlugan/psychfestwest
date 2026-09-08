@@ -10,143 +10,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Apply mailing list fixes
+      - name: Update helper text and stylesheet version
         shell: bash
         run: |
-          python - <<'PY'
-          from pathlib import Path
-
-          p = Path('index.html')
-          s = p.read_text()
-          s = s.replace('Provide your email address to subscribe to our newsletter', 'Provide your email address to subscribe to the doomsletter')
-          s = s.replace('The SMS field must contain between 6 and 19 digits and include the country code without using +/0 (e.g. 1xxxxxxxxxx for the United States)', 'Provide your mobile number (numbers only) to receive text updates')
-          s = s.replace('brevo-fixes.css?v=1', 'brevo-fixes.css?v=2')
-          p.write_text(s)
-
-          Path('brevo-fixes.css').write_text("""/* Psych Fest West overrides for Brevo's phone selector and reCAPTCHA. */
-.live-signup .brevo-embed .sib-sms-input-wrapper,
-.live-signup .brevo-embed .sib-sms-input-wrapper * {
-  font-family:'Space Grotesk',sans-serif!important;
-}
-.live-signup .brevo-embed .sib-sms-input-wrapper select,
-.live-signup .brevo-embed .sib-sms-input-wrapper select.input,
-.live-signup .brevo-embed .sib-sms-input-wrapper [role='combobox'],
-.live-signup .brevo-embed .sib-sms-input-wrapper button {
-  font-family:'Space Grotesk',sans-serif!important;
-  font-size:16px!important;
-  font-weight:500!important;
-  line-height:1.25!important;
-  color:#2f2a31!important;
-  -webkit-text-fill-color:#2f2a31!important;
-  -webkit-text-size-adjust:100%!important;
-}
-/* Brevo portals this menu under body on mobile, outside .live-signup. */
-.sib-sms-select__dropdown,
-.sib-sms-select__dropdown *,
-.sib-sms-select__dropdown li,
-.sib-sms-select__dropdown [role='option'],
-.sib-sms-select__dropdown span,
-.sib-sms-select__dropdown div,
-.sib-sms-select__list,
-.sib-sms-select__list *,
-.sib-sms-select__item,
-.sib-sms-select__item * {
-  font-family:'Space Grotesk',sans-serif!important;
-  font-size:16px!important;
-  font-weight:400!important;
-  line-height:1.3!important;
-  color:#51464f!important;
-  background-color:#fff!important;
-  opacity:1!important;
-  -webkit-text-fill-color:#51464f!important;
-}
-.live-signup .brevo-embed .sib-sms-input-wrapper option {
-  font-family:'Space Grotesk',sans-serif!important;
-  font-size:16px!important;
-  font-weight:400!important;
-  color:#51464f!important;
-  background:#fff!important;
-  -webkit-text-fill-color:#51464f!important;
-}
-.recaptcha-badge-slot {
-  display:flex!important;
-  justify-content:flex-start!important;
-  align-items:center!important;
-  min-height:60px!important;
-  margin:2px 0 8px!important;
-  padding:0!important;
-  text-align:left!important;
-  overflow:visible!important;
-}
-.recaptcha-badge-slot .grecaptcha-badge {
-  position:relative!important;
-  right:auto!important;
-  bottom:auto!important;
-  left:auto!important;
-  top:auto!important;
-  visibility:visible!important;
-  opacity:1!important;
-  z-index:2!important;
-  margin:0!important;
-}
-@media (max-width:760px){
-  .live-signup .brevo-embed .sib-sms-input-wrapper select,
-  .live-signup .brevo-embed .sib-sms-input-wrapper [role='combobox'],
-  .live-signup .brevo-embed .sib-sms-input-wrapper button,
-  .sib-sms-select__dropdown,
-  .sib-sms-select__dropdown *,
-  .sib-sms-select__list,
-  .sib-sms-select__list * {
-    font-size:16px!important;
-  }
-}
-""")
-
-          Path('script.js').write_text("""document.getElementById('year').textContent = new Date().getFullYear();
-
-const ticker = document.querySelector('.ticker');
-const tickerText = ticker?.querySelector('span');
-if (ticker && tickerText) {
-  tickerText.classList.add('ticker-copy');
-  if (!ticker.querySelector('.ticker-copy[aria-hidden=\"true\"]')) {
-    const duplicate = tickerText.cloneNode(true);
-    duplicate.setAttribute('aria-hidden', 'true');
-    ticker.appendChild(duplicate);
-  }
-}
-
-const placeRecaptchaBadge = () => {
-  const form = document.querySelector('.live-signup .brevo-embed #sib-form');
-  const badge = document.querySelector('.grecaptcha-badge');
-  const submitButton = form?.querySelector('.sib-form-block__button');
-  const submitRow = submitButton?.closest('[style*=\"padding\"]') || submitButton?.parentElement?.parentElement;
-  if (!form || !badge || !submitRow) return false;
-  let slot = form.querySelector('.recaptcha-badge-slot');
-  if (!slot) {
-    slot = document.createElement('div');
-    slot.className = 'recaptcha-badge-slot sib-form-block';
-    slot.setAttribute('aria-label', 'reCAPTCHA protection');
-  }
-  if (slot.parentElement !== form || slot.nextElementSibling !== submitRow) form.insertBefore(slot, submitRow);
-  if (badge.parentElement !== slot) slot.appendChild(badge);
-  return true;
-};
-if (!placeRecaptchaBadge()) {
-  const captchaObserver = new MutationObserver(() => {
-    if (placeRecaptchaBadge()) captchaObserver.disconnect();
-  });
-  captchaObserver.observe(document.body, { childList: true, subtree: true });
-  window.setTimeout(() => captchaObserver.disconnect(), 15000);
-}
-""")
-          PY
-      - name: Commit fixes and remove workflow
+          python -c "from pathlib import Path; p=Path('index.html'); s=p.read_text(); s=s.replace('Provide your email address to subscribe to our newsletter','Provide your email address to subscribe to the doomsletter'); s=s.replace('The SMS field must contain between 6 and 19 digits and include the country code without using +/0 (e.g. 1xxxxxxxxxx for the United States)','Provide your mobile number (numbers only) to receive text updates'); s=s.replace('brevo-fixes.css?v=1','brevo-fixes.css?v=2'); p.write_text(s)"
+      - name: Commit changes and remove workflow
         shell: bash
         run: |
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
-          git add index.html brevo-fixes.css script.js
-          git commit -m "Fix mailing list mobile styling and captcha" || true
+          git add index.html
+          git commit -m "Update mailing list helper text" || true
           git rm .github/workflows/fix-mailing-list-form.yml
           git commit -m "Remove one-shot mailing list workflow"
           git push

@@ -60,10 +60,10 @@ const polishBrevoCountryPicker = () => {
 };
 
 /*
- * The Brevo embed already contains a hidden .g-recaptcha-v3 row immediately
- * above SUBSCRIBE. Keep Google's badge attached to <body> and visually anchor
- * it to that row. Its left edge is taken from the actual form input fields so
- * it lines up with the white boxes above it.
+ * The Brevo embed already has a reCAPTCHA marker row directly above SUBSCRIBE.
+ * Keep Google's real badge attached to <body>, but position it in document
+ * coordinates instead of viewport coordinates. This makes it scroll naturally
+ * with the form rather than floating/bouncing while the page moves.
  */
 const positionRecaptchaBadge = () => {
   const marker = document.querySelector('.live-signup .brevo-embed .g-recaptcha-v3');
@@ -78,11 +78,14 @@ const positionRecaptchaBadge = () => {
 
   const rowRect = anchorRow.getBoundingClientRect();
   const fieldRect = field.getBoundingClientRect();
-  const visible = rowRect.bottom > 0 && rowRect.top < window.innerHeight;
+  const bodyRect = document.body.getBoundingClientRect();
 
-  badge.style.setProperty('position', 'fixed', 'important');
-  badge.style.setProperty('left', `${Math.round(fieldRect.left)}px`, 'important');
-  badge.style.setProperty('top', `${Math.round(rowRect.top + 6)}px`, 'important');
+  const left = fieldRect.left - bodyRect.left;
+  const top = rowRect.top - bodyRect.top + 6;
+
+  badge.style.setProperty('position', 'absolute', 'important');
+  badge.style.setProperty('left', `${left}px`, 'important');
+  badge.style.setProperty('top', `${top}px`, 'important');
   badge.style.setProperty('right', 'auto', 'important');
   badge.style.setProperty('bottom', 'auto', 'important');
   badge.style.setProperty('width', '256px', 'important');
@@ -90,9 +93,9 @@ const positionRecaptchaBadge = () => {
   badge.style.setProperty('overflow', 'hidden', 'important');
   badge.style.setProperty('transform', 'scale(.72)', 'important');
   badge.style.setProperty('transform-origin', 'top left', 'important');
-  badge.style.setProperty('z-index', '10000', 'important');
-  badge.style.setProperty('opacity', visible ? '1' : '0', 'important');
-  badge.style.setProperty('visibility', visible ? 'visible' : 'hidden', 'important');
+  badge.style.setProperty('z-index', '20', 'important');
+  badge.style.setProperty('opacity', '1', 'important');
+  badge.style.setProperty('visibility', 'visible', 'important');
 
   return true;
 };
@@ -105,11 +108,10 @@ const syncFormPolish = () => {
 syncFormPolish();
 window.addEventListener('load', syncFormPolish);
 window.addEventListener('resize', positionRecaptchaBadge);
-window.addEventListener('scroll', positionRecaptchaBadge, { passive: true });
 
 /* Brevo and Google both build pieces lazily. */
 const formObserver = new MutationObserver(syncFormPolish);
 formObserver.observe(document.body, { childList: true, subtree: true });
 
-/* Google may rewrite its own badge style after load; re-assert the anchor. */
-window.setInterval(positionRecaptchaBadge, 500);
+/* Google may rewrite its own badge style after load; re-assert without scroll tracking. */
+window.setInterval(positionRecaptchaBadge, 750);

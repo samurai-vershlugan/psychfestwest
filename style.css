@@ -14,9 +14,134 @@ header{height:76px;margin:auto;display:flex;align-items:center;justify-content:s
 section:not(.hero){width:min(calc(100% - 34px),1180px);margin:auto;padding:110px 0}.pink{color:#ff5fc8}.card{border:1px solid #f4edcf33;background:#0b071066;display:grid;grid-template-columns:1.2fr .8fr}.card>div:first-child,.details{padding:46px}.card h2,.two h2{font:400 clamp(62px,9vw,120px)/.8 'Archivo Black';letter-spacing:-.07em;margin:18px 0}.details{border-left:1px solid #f4edcf33}.details p{border-bottom:1px solid #f4edcf33;padding-bottom:20px}.details small{display:block;color:#f4edcf88;margin-bottom:7px}.details strong{font-size:27px;line-height:1.05}.copy{grid-column:1/-1;border-top:1px solid #f4edcf33;padding:34px 46px;font-size:23px;line-height:1.45}.copy small{color:#f4edcf88}.chips{grid-column:1/-1;padding:0 46px 32px;display:flex;gap:8px;flex-wrap:wrap}.chips span{border:1px solid #f4edcf33;border-radius:99px;padding:8px 11px;font:500 10px 'DM Mono'}.full{grid-column:1/-1;width:100%;min-height:62px}.two{display:grid;grid-template-columns:1fr 1fr;gap:65px;border-top:1px solid #f4edcf33}.two h2{font-size:clamp(48px,6vw,78px)}.bodycopy{padding-top:25px;font-size:24px;line-height:1.45;color:#f4edcfcc}.bodycopy strong{color:#d9ff4f}.join{align-items:center}.join>div:first-child>p:last-child{font-size:18px;line-height:1.5;color:#f4edcfbb}.signup{background:#f4edcf;color:#0b0710;padding:42px;box-shadow:14px 14px #8d66ff55;transform:rotate(1deg)}.formtitle{font:400 32px 'Archivo Black';margin:0}.note{font:500 10px/1.5 'DM Mono';opacity:.55}.manifesto p{font:400 clamp(30px,5vw,64px)/1.05 'Archivo Black';letter-spacing:-.05em;margin:0}.manifesto p:last-child{color:#d9ff4f}.be-one{background:linear-gradient(90deg,#ff5fc8 0%,#8d66ff 100%);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent}
 footer{width:min(calc(100% - 34px),1180px);margin:auto;border-top:1px solid #f4edcf33;padding:34px 0;display:flex;justify-content:space-between;gap:20px;font:500 16px/1.5 'DM Mono';color:#f4edcf99}footer strong{font-size:20px;letter-spacing:.02em}footer span{font-size:15px}footer a{font-size:17px;text-decoration:none}.instagram-link{display:inline-flex;align-items:center;gap:9px;text-decoration:none}.instagram-icon{width:22px;height:22px;flex:0 0 auto}
 .flyer-feature{grid-column:1;padding:34px;display:grid;grid-template-columns:minmax(150px,210px) minmax(0,1fr);gap:30px;align-items:center}.flyer-link{display:block;position:relative;text-decoration:none}.flyer-link img{display:block;width:100%;height:auto;border:1px solid #f4edcf55;box-shadow:10px 10px 0 #8d66ff44;transition:transform .2s ease,box-shadow .2s ease}.flyer-link:hover img{transform:translate(-3px,-3px);box-shadow:14px 14px 0 #ff5fc844}.flyer-info h3{font:400 clamp(30px,4vw,54px)/.9 'Archivo Black';letter-spacing:-.055em;margin:10px 0 12px}.flyer-info p{max-width:420px;line-height:1.45}.flyer-info .event-subtitle{font-size:12px;line-height:1.45;color:#ff5fc8;margin:0}.flyer-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}.flyer-actions .btn{margin:0}.details{grid-column:2}
-.live-signup .brevo-embed .sib-form,.live-signup .brevo-embed #sib-form-container,.live-signup .brevo-embed #sib-container{background:transparent!important;color:#12081e!important}.live-signup .brevo-embed #sib-container{border:0!important;max-width:none!important;padding:0!important}.live-signup .brevo-embed #sib-container > form > div:nth-of-type(1),.live-signup .brevo-embed #sib-container > form > div:nth-of-type(2){display:none!important}.live-signup .brevo-embed .entry__label{display:block!important;visibility:visible!important;opacity:1!important;color:#12081e!important;font-family:'Space Grotesk',sans-serif!important;font-size:15px!important;font-weight:700!important;line-height:1.35!important;text-transform:none!important;letter-spacing:0!important;margin:0 0 6px!important}.live-signup .brevo-embed .entry__specification{display:block!important;visibility:visible!important;opacity:1!important;color:#51464f!important;background:transparent!important;font-family:'Space Grotesk',sans-serif!important;font-size:12px!important;line-height:1.4!important;margin-top:6px!important}.live-signup .brevo-embed .entry__field,.live-signup .brevo-embed .sib-sms-input-wrapper .entry__field{background:#fff!important;border:1px solid #d8d0c7!important;border-radius:0!important}.live-signup .brevo-embed .input{color:#12081e!important;background:#fff!important;font-family:'Space Grotesk',sans-serif!important}.live-signup .brevo-embed input::placeholder{color:#7a6f78!important;opacity:1!important}.live-signup .brevo-embed input:-webkit-autofill,.live-signup .brevo-embed input:-webkit-autofill:hover,.live-signup .brevo-embed input:-webkit-autofill:focus,.live-signup .brevo-embed input:-webkit-autofill:active{-webkit-box-shadow:0 0 0 1000px #fff inset!important;-webkit-text-fill-color:#12081e!important;caret-color:#12081e!important;transition:background-color 9999s ease-out 0s}.live-signup .brevo-embed .sib-sms-input-wrapper select.input,.live-signup .brevo-embed .sib-sms-input-wrapper select.input option{background:#fff!important;color:#12081e!important}.live-signup .brevo-embed .sib-sms-tooltip__box,.live-signup .brevo-embed .sib-sms-tooltip__box *,.live-signup .brevo-embed .sib-sms-select__dropdown,.live-signup .brevo-embed .sib-sms-select__dropdown *{color:#12081e!important}.live-signup .brevo-embed .sib-sms-tooltip__icon{color:#2BB2FC!important}.live-signup .brevo-embed .entry__error{color:#8d1521!important;background:transparent!important;border:0!important;font-size:12px!important}.live-signup .brevo-embed .sib-form-block__button{width:100%!important;justify-content:center!important;text-align:center!important;background:#ff5fc8!important;color:#12081e!important;border-radius:0!important;font-family:'DM Mono',monospace!important;font-size:14px!important;font-weight:700!important;letter-spacing:.06em!important}
+/* Psych Fest West Doomsletter form. Brevo controls behavior; these rules control appearance only. */
+.live-signup .brevo-embed .sib-form,
+.live-signup .brevo-embed #sib-form-container,
+.live-signup .brevo-embed #sib-container{
+  background:transparent!important;
+  color:#12081e!important;
+}
+.live-signup .brevo-embed #sib-container{
+  border:0!important;
+  max-width:none!important;
+  padding:0!important;
+}
+.live-signup .brevo-embed .pfw-mailing-heading,
+.live-signup .brevo-embed .pfw-mailing-heading p{
+  margin:0!important;
+  padding:0!important;
+  color:#12081e!important;
+  font:700 32px/1.05 'Space Grotesk',sans-serif!important;
+  letter-spacing:-.02em!important;
+  text-transform:uppercase!important;
+}
+.live-signup .brevo-embed .pfw-mailing-subtitle,
+.live-signup .brevo-embed .pfw-mailing-subtitle p{
+  margin:0!important;
+  padding:0!important;
+  color:#51464f!important;
+  font:500 16px/1.4 'Space Grotesk',sans-serif!important;
+}
+.live-signup .brevo-embed .entry__label{
+  display:block!important;
+  visibility:visible!important;
+  opacity:1!important;
+  color:#12081e!important;
+  font-family:'Space Grotesk',sans-serif!important;
+  font-size:15px!important;
+  font-weight:700!important;
+  line-height:1.35!important;
+  text-transform:none!important;
+  letter-spacing:0!important;
+  margin:0 0 6px!important;
+}
+.live-signup .brevo-embed .entry__specification{
+  display:block!important;
+  visibility:visible!important;
+  opacity:1!important;
+  color:#51464f!important;
+  background:transparent!important;
+  font-family:'Space Grotesk',sans-serif!important;
+  font-size:12px!important;
+  line-height:1.4!important;
+  margin-top:6px!important;
+}
+.live-signup .brevo-embed .entry__field,
+.live-signup .brevo-embed .sib-sms-input-wrapper .entry__field{
+  background:#fff!important;
+  border:1px solid #d8d0c7!important;
+  border-radius:0!important;
+}
+.live-signup .brevo-embed .input{
+  color:#12081e!important;
+  background:#fff!important;
+  font-family:'Space Grotesk',sans-serif!important;
+  font-size:16px!important;
+}
+.live-signup .brevo-embed input:-webkit-autofill,
+.live-signup .brevo-embed input:-webkit-autofill:hover,
+.live-signup .brevo-embed input:-webkit-autofill:focus,
+.live-signup .brevo-embed input:-webkit-autofill:active{
+  -webkit-box-shadow:0 0 0 1000px #fff inset!important;
+  -webkit-text-fill-color:#12081e!important;
+  caret-color:#12081e!important;
+}
+.live-signup .brevo-embed .sib-sms-input-wrapper select.input,
+.live-signup .brevo-embed .sib-sms-input-wrapper select.input option{
+  background:#fff!important;
+  color:#12081e!important;
+  -webkit-text-fill-color:#12081e!important;
+  font-family:'Space Grotesk',sans-serif!important;
+  font-size:16px!important;
+  font-weight:500!important;
+  opacity:1!important;
+}
+.sib-sms-select__dropdown,
+.sib-sms-select__dropdown *,
+.sib-sms-select__list,
+.sib-sms-select__list *,
+.sib-sms-select__item,
+.sib-sms-select__item *{
+  background:#fff!important;
+  color:#51464f!important;
+  -webkit-text-fill-color:#51464f!important;
+  font-family:'Space Grotesk',sans-serif!important;
+  font-size:16px!important;
+  font-weight:400!important;
+  opacity:1!important;
+}
+.live-signup .brevo-embed .sib-sms-tooltip__box,
+.live-signup .brevo-embed .sib-sms-tooltip__box *{
+  color:#12081e!important;
+}
+.live-signup .brevo-embed .sib-sms-tooltip__icon{color:#2BB2FC!important}
+.live-signup .brevo-embed .entry__error{
+  color:#8d1521!important;
+  background:transparent!important;
+  border:0!important;
+  font-size:12px!important;
+}
+.live-signup .brevo-embed .sib-form-block__button{
+  width:100%!important;
+  justify-content:center!important;
+  text-align:center!important;
+  background:#ff5fc8!important;
+  color:#12081e!important;
+  border-radius:0!important;
+  font-family:'DM Mono',monospace!important;
+  font-size:14px!important;
+  font-weight:700!important;
+  letter-spacing:.06em!important;
+}
+/* Keep Google's native badge intact; only move its fixed position to the left. */
+.grecaptcha-badge{
+  left:12px!important;
+  right:auto!important;
+  visibility:visible!important;
+  opacity:1!important;
+}
+
 @media(min-width:981px){header nav{gap:30px!important;margin-right:clamp(12px,3vw,42px)!important}header nav a{font-size:13px!important;letter-spacing:.07em!important}}
 @media(min-width:761px) and (max-width:980px){.card{grid-template-columns:1fr!important}.flyer-feature{grid-column:1!important}.details{grid-column:1!important;border-left:0!important;border-top:1px solid #f4edcf33!important}}
 @keyframes pfwTickerScroll{from{transform:translateX(0)}to{transform:translateX(-100%)}}
 @media(max-width:760px){header{gap:12px!important;padding-left:16px;padding-right:16px}header .pfw{width:42px!important;height:42px!important;padding:0!important;flex:0 0 auto!important}header .pfw img{width:42px!important;height:42px!important}header nav{gap:12px!important;align-items:center!important;justify-content:flex-end!important;flex-wrap:nowrap!important;min-width:0!important;flex:1 1 auto!important}header nav a{display:inline!important;white-space:nowrap!important;font-size:10px!important;letter-spacing:.055em!important}header nav a:last-child{display:inline!important;font-size:0!important}header nav a:last-child::after{content:"@PSYCHFESTWEST"!important;font:500 10px 'DM Mono',monospace;letter-spacing:.055em;white-space:nowrap}.hero{min-height:650px}.hero h1{font-size:24vw}.planet{width:110px;height:110px;right:-10px}.satellite-a{width:28px;height:28px;right:25%;top:11%}.satellite-b{width:18px;height:18px;right:3%;top:35%}.satellite-c{width:34px;height:34px;right:17%;top:40%}.satellite-d{display:none}.ticker-copy{animation-duration:34s}.card,.two{grid-template-columns:1fr}.details{border-left:0;border-top:1px solid #f4edcf33;grid-column:1}.card>div:first-child,.details,.copy{padding:28px 25px}.chips{display:none;padding:0 25px 28px}.two{gap:20px}.signup{transform:none;padding:28px}.flyer-feature{grid-column:1;grid-template-columns:minmax(105px,42%) minmax(0,1fr)!important;padding:28px 25px;gap:16px!important}.flyer-link{max-width:150px;margin:0}.flyer-feature .flyer-info{min-width:0!important}.flyer-feature .flyer-info h3{font-size:clamp(18px,5vw,22px)!important;line-height:.95!important;letter-spacing:-.045em!important;max-width:100%!important;white-space:nowrap!important}.flyer-actions .btn{white-space:nowrap!important;font-size:9px!important;padding:0 12px!important;min-height:44px!important}.live-signup{padding:28px 24px 24px!important}.live-signup .brevo-embed{margin-top:8px!important}.live-signup .brevo-embed .sib-form{padding:0!important}.live-signup .brevo-embed #sib-form-container,.live-signup .brevo-embed #sib-container{padding:0!important;margin:0!important}.live-signup .brevo-embed .sib-form-block{padding-top:6px!important;padding-bottom:6px!important}.live-signup .brevo-embed .form__entry{margin:0!important}.live-signup .brevo-embed .entry__label{margin-bottom:4px!important}.live-signup .brevo-embed .entry__specification{margin-top:4px!important}.live-signup .brevo-embed .sib-form-block__button{margin-top:2px!important}.live-signup>.note{margin:10px 0 0!important}footer{flex-direction:column;font-size:15px;padding-top:28px;padding-bottom:28px}footer strong{font-size:18px}}
-.recaptcha-badge-slot{display:flex;justify-content:flex-start;min-height:44px;margin-top:8px;overflow:visible}.recaptcha-badge-slot .grecaptcha-badge{position:relative!important;right:auto!important;bottom:auto!important;transform:scale(.72)!important;transform-origin:top left!important;box-shadow:none!important}.live-signup .brevo-embed select,.live-signup .brevo-embed select option,.live-signup .brevo-embed .sib-sms-select__dropdown,.live-signup .brevo-embed .sib-sms-select__dropdown *{background:#fff!important;color:#12081e!important;-webkit-text-fill-color:#12081e!important;font-weight:600!important;opacity:1!important}

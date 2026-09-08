@@ -17,74 +17,38 @@ jobs:
           fetch-depth: 0
 
       - name: Add ART section to live site
+        env:
+          ART_HTML_B64: PC9zZWN0aW9uPgoKPHNlY3Rpb24gaWQ9ImFydCIgY2xhc3M9ImFydC1zZWN0aW9uIj4KICA8cCBjbGFzcz0iZXllYnJvdyI+UFJFTU9OSVRJT05TLCBWSVNJT05TLCBBTkQgT1RIRVIgRElNRU5TSU9OUzwvcD4KICA8ZGl2IGNsYXNzPSJhcnQtaGVhZCI+CiAgICA8ZGl2PjxoMj5BUlQ8L2gyPjwvZGl2PgogICAgPGRpdiBjbGFzcz0iYXJ0LWludHJvLWNvcHkiPgogICAgICA8cCBjbGFzcz0iYXJ0LWxlYWQiPkNlbGVicmF0ZSB0aGUgY29zbWljIHNwaXJpdCBvZiBQc3ljaCBGZXN0IFdlc3QuPC9wPgogICAgICA8cD5UaGVzZSBkZXNpZ25zIGNhcHR1cmUgdGhlIG90aGVyd29ybGRseSB2aWJlcyB0aGF0IGluc3BpcmUgUHN5Y2ggRmVzdCBXZXN0LiBNb3JlIHRvIGNvbWUuLi48L3A+CiAgICA8L2Rpdj4KICA8L2Rpdj4KICA8ZGl2IGNsYXNzPSJhcnQtZ3JpZCIgYXJpYS1sYWJlbD0iUHN5Y2ggRmVzdCBXZXN0IGFydHdvcmsgZ2FsbGVyeSI+CiAgICA8YSBjbGFzcz0iYXJ0LXBpZWNlIiBocmVmPSJpbWFnZXMvUEZXLWRhdmUtMi5qcGVnIiB0YXJnZXQ9Il9ibGFuayIgcmVsPSJub29wZW5lciBub3JlZmVycmVyIiBhcmlhLWxhYmVsPSJPcGVuIFBzeWNoIEZlc3QgV2VzdCBhcnR3b3JrIGluIGEgbmV3IHRhYiI+PGltZyBzcmM9ImltYWdlcy9QRlctZGF2ZS0yLmpwZWciIGFsdD0iUHN5Y2ggRmVzdCBXZXN0IHBzeWNoZWRlbGljIGFydHdvcmsiIGxvYWRpbmc9ImxhenkiIGRlY29kaW5nPSJhc3luYyI+PC9hPgogICAgPGEgY2xhc3M9ImFydC1waWVjZSIgaHJlZj0iaW1hZ2VzL1BGVy1kYXZlLTEuanBlZyIgdGFyZ2V0PSJfYmxhbmsiIHJlbD0ibm9vcGVuZXIgbm9yZWZlcnJlciIgYXJpYS1sYWJlbD0iT3BlbiBQc3ljaCBGZXN0IFdlc3QgYXJ0d29yayBpbiBhIG5ldyB0YWIiPjxpbWcgc3JjPSJpbWFnZXMvUEZXLWRhdmUtMS5qcGVnIiBhbHQ9IlBzeWNoIEZlc3QgV2VzdCBwc3ljaGVkZWxpYyBhcnR3b3JrIiBsb2FkaW5nPSJsYXp5IiBkZWNvZGluZz0iYXN5bmMiPjwvYT4KICAgIDxhIGNsYXNzPSJhcnQtcGllY2UiIGhyZWY9ImltYWdlcy9QRlctcm90YXRpbmctZmFjZS5naWYiIHRhcmdldD0iX2JsYW5rIiByZWw9Im5vb3BlbmVyIG5vcmVmZXJyZXIiIGFyaWEtbGFiZWw9Ik9wZW4gYW5pbWF0ZWQgUHN5Y2ggRmVzdCBXZXN0IGFydHdvcmsgaW4gYSBuZXcgdGFiIj48aW1nIHNyYz0iaW1hZ2VzL1BGVy1yb3RhdGluZy1mYWNlLmdpZiIgYWx0PSJBbmltYXRlZCBQc3ljaCBGZXN0IFdlc3QgcHN5Y2hlZGVsaWMgYXJ0d29yayIgbG9hZGluZz0ibGF6eSI+PC9hPgogICAgPGEgY2xhc3M9ImFydC1waWVjZSIgaHJlZj0iaW1hZ2VzL1BGVy1hbmltYXRlZC1mYWNlLmdpZiIgdGFyZ2V0PSJfYmxhbmsiIHJlbD0ibm9vcGVuZXIgbm9yZWZlcnJlciIgYXJpYS1sYWJlbD0iT3BlbiBhbmltYXRlZCBQc3ljaCBGZXN0IFdlc3QgYXJ0d29yayBpbiBhIG5ldyB0YWIiPjxpbWcgc3JjPSJpbWFnZXMvUEZXLWFuaW1hdGVkLWZhY2UuZ2lmIiBhbHQ9IkFuaW1hdGVkIFBzeWNoIEZlc3QgV2VzdCBwc3ljaGVkZWxpYyBhcnR3b3JrIiBsb2FkaW5nPSJsYXp5Ij48L2E+CiAgICA8YSBjbGFzcz0iYXJ0LXBpZWNlIiBocmVmPSJpbWFnZXMvUEZXLXNhbS0xLnN2ZyIgdGFyZ2V0PSJfYmxhbmsiIHJlbD0ibm9vcGVuZXIgbm9yZWZlcnJlciIgYXJpYS1sYWJlbD0iT3BlbiBQc3ljaCBGZXN0IFdlc3QgYXJ0d29yayBpbiBhIG5ldyB0YWIiPjxpbWcgc3JjPSJpbWFnZXMvUEZXLXNhbS0xLnN2ZyIgYWx0PSJQc3ljaCBGZXN0IFdlc3QgcHN5Y2hlZGVsaWMgYXJ0d29yayIgbG9hZGluZz0ibGF6eSIgZGVjb2Rpbmc9ImFzeW5jIj48L2E+CiAgPC9kaXY+Cjwvc2VjdGlvbj4KCjxzZWN0aW9uIGlkPSJqb2luIiBjbGFzcz0idHdvIGpvaW4iPg==
+          ART_CSS_B64: LyogQVJUIGdhbGxlcnkgKi8KLmFydC1zZWN0aW9ue2JvcmRlci10b3A6MXB4IHNvbGlkICNmNGVkY2YzM30KLmFydC1oZWFke2Rpc3BsYXk6Z3JpZDtncmlkLXRlbXBsYXRlLWNvbHVtbnM6LjlmciAxLjFmcjtnYXA6NjVweDthbGlnbi1pdGVtczplbmQ7bWFyZ2luLXRvcDoxNnB4fQouYXJ0LWhlYWQgaDJ7Zm9udDo0MDAgY2xhbXAoNzRweCwxMHZ3LDEzOHB4KS8uNzggJ0FyY2hpdm8gQmxhY2snO2xldHRlci1zcGFjaW5nOi0uMDdlbTttYXJnaW46MDtjb2xvcjojZjRlZGNmfQouYXJ0LWludHJvLWNvcHl7bWF4LXdpZHRoOjU2MHB4O3BhZGRpbmctYm90dG9tOjhweH0KLmFydC1pbnRyby1jb3B5IHB7bWFyZ2luOjA7Y29sb3I6I2Y0ZWRjZmJiO2ZvbnQtc2l6ZToxOHB4O2xpbmUtaGVpZ2h0OjEuNTV9Ci5hcnQtaW50cm8tY29weSAuYXJ0LWxlYWR7Y29sb3I6I2Y0ZWRjZjtmb250LXNpemU6MjRweDtmb250LXdlaWdodDo2MDA7bGluZS1oZWlnaHQ6MS4zNTttYXJnaW4tYm90dG9tOjEycHh9Ci5hcnQtZ3JpZHtkaXNwbGF5OmdyaWQ7Z3JpZC10ZW1wbGF0ZS1jb2x1bW5zOnJlcGVhdCg1LG1pbm1heCgwLDFmcikpO2dhcDoxNnB4O2FsaWduLWl0ZW1zOnN0YXJ0O21hcmdpbi10b3A6NTRweH0KLmFydC1waWVjZXtkaXNwbGF5OmJsb2NrO3RleHQtZGVjb3JhdGlvbjpub25lO3Bvc2l0aW9uOnJlbGF0aXZlO292ZXJmbG93OmhpZGRlbjtib3JkZXI6MXB4IHNvbGlkICNmNGVkY2YzMztiYWNrZ3JvdW5kOiMwYjA3MTA2Njtib3gtc2hhZG93OjhweCA4cHggMCAjOGQ2NmZmMmU7dHJhbnNpdGlvbjp0cmFuc2Zvcm0gLjJzIGVhc2UsYm94LXNoYWRvdyAuMnMgZWFzZSxib3JkZXItY29sb3IgLjJzIGVhc2V9Ci5hcnQtcGllY2UgaW1ne2Rpc3BsYXk6YmxvY2s7d2lkdGg6MTAwJTtoZWlnaHQ6YXV0bzt0cmFuc2l0aW9uOnRyYW5zZm9ybSAuMjVzIGVhc2U7dHJhbnNmb3JtLW9yaWdpbjpjZW50ZXJ9Ci5hcnQtcGllY2U6aG92ZXJ7dHJhbnNmb3JtOnRyYW5zbGF0ZSgtM3B4LC0zcHgpO2JvcmRlci1jb2xvcjojZjRlZGNmNzc7Ym94LXNoYWRvdzoxMnB4IDEycHggMCAjZmY1ZmM4NDR9Ci5hcnQtcGllY2U6aG92ZXIgaW1ne3RyYW5zZm9ybTpzY2FsZSgxLjAxNSl9Ci5hcnQtcGllY2U6Zm9jdXMtdmlzaWJsZXtvdXRsaW5lOjJweCBzb2xpZCAjZDlmZjRmO291dGxpbmUtb2Zmc2V0OjVweH0KQG1lZGlhKG1heC13aWR0aDo5ODBweCl7LmFydC1oZWFke2dyaWQtdGVtcGxhdGUtY29sdW1uczoxZnI7Z2FwOjE4cHh9LmFydC1pbnRyby1jb3B5e3BhZGRpbmctYm90dG9tOjB9LmFydC1ncmlke2dyaWQtdGVtcGxhdGUtY29sdW1uczpyZXBlYXQoMyxtaW5tYXgoMCwxZnIpKTtnYXA6MTRweDttYXJnaW4tdG9wOjQycHh9fQpAbWVkaWEobWF4LXdpZHRoOjc2MHB4KXsuYXJ0LWhlYWQgaDJ7Zm9udC1zaXplOmNsYW1wKDY0cHgsMjR2dywxMDRweCl9LmFydC1pbnRyby1jb3B5IC5hcnQtbGVhZHtmb250LXNpemU6MjFweH0uYXJ0LWludHJvLWNvcHkgcHtmb250LXNpemU6MTZweH0uYXJ0LWdyaWR7Z3JpZC10ZW1wbGF0ZS1jb2x1bW5zOnJlcGVhdCgyLG1pbm1heCgwLDFmcikpO2dhcDoxMnB4O21hcmdpbi10b3A6MzRweH0uYXJ0LXBpZWNle2JveC1zaGFkb3c6NnB4IDZweCAwICM4ZDY2ZmYyZX0uYXJ0LXBpZWNlOmhvdmVye3RyYW5zZm9ybTpub25lO2JveC1zaGFkb3c6NnB4IDZweCAwICM4ZDY2ZmYyZX0uYXJ0LXBpZWNlOmhvdmVyIGltZ3t0cmFuc2Zvcm06bm9uZX19Cgo=
         run: |
           python3 - <<'PY'
+          import base64
+          import os
           from pathlib import Path
 
           index_path = Path('index.html')
           style_path = Path('style.css')
-
           index = index_path.read_text()
           style = style_path.read_text()
 
           old_nav = '<header><a class="pfw" href="#top" aria-label="Psych Fest West home"><img src="images/pfw-logo-site-256.png?v=2" alt="" style="width:40px!important;height:40px!important"></a><nav><a href="#top">Home</a><a href="#event">Events</a><a href="#about">About</a><a href="#join">Join</a><a href="https://instagram.com/psychfestwest" target="_blank">@psychfestwest</a></nav></header>'
           new_nav = '<header><a class="pfw" href="#top" aria-label="Psych Fest West home"><img src="images/pfw-logo-site-256.png?v=2" alt="" style="width:40px!important;height:40px!important"></a><nav><a href="#top">Home</a><a href="#event">Events</a><a href="#about">About</a><a href="#art">Art</a><a href="#join">Join</a><a href="https://instagram.com/psychfestwest" target="_blank">@psychfestwest</a></nav></header>'
-
           if old_nav not in index:
               raise SystemExit('Expected navigation markup not found; refusing to modify index.html')
           index = index.replace(old_nav, new_nav, 1)
 
           join_marker = '</section>\n\n<section id="join" class="two join">'
-          art_section = '''</section>
-
-<section id="art" class="art-section">
-  <p class="eyebrow">PREMONITIONS, VISIONS, AND OTHER DIMENSIONS</p>
-  <div class="art-head">
-    <div><h2>ART</h2></div>
-    <div class="art-intro-copy">
-      <p class="art-lead">Celebrate the cosmic spirit of Psych Fest West.</p>
-      <p>These designs capture the otherworldly vibes that inspire Psych Fest West. More to come...</p>
-    </div>
-  </div>
-  <div class="art-grid" aria-label="Psych Fest West artwork gallery">
-    <a class="art-piece" href="images/PFW-dave-2.jpeg" target="_blank" rel="noopener noreferrer" aria-label="Open Psych Fest West artwork in a new tab"><img src="images/PFW-dave-2.jpeg" alt="Psych Fest West psychedelic artwork" loading="lazy" decoding="async"></a>
-    <a class="art-piece" href="images/PFW-dave-1.jpeg" target="_blank" rel="noopener noreferrer" aria-label="Open Psych Fest West artwork in a new tab"><img src="images/PFW-dave-1.jpeg" alt="Psych Fest West psychedelic artwork" loading="lazy" decoding="async"></a>
-    <a class="art-piece" href="images/PFW-rotating-face.gif" target="_blank" rel="noopener noreferrer" aria-label="Open animated Psych Fest West artwork in a new tab"><img src="images/PFW-rotating-face.gif" alt="Animated Psych Fest West psychedelic artwork" loading="lazy"></a>
-    <a class="art-piece" href="images/PFW-animated-face.gif" target="_blank" rel="noopener noreferrer" aria-label="Open animated Psych Fest West artwork in a new tab"><img src="images/PFW-animated-face.gif" alt="Animated Psych Fest West psychedelic artwork" loading="lazy"></a>
-    <a class="art-piece" href="images/PFW-sam-1.svg" target="_blank" rel="noopener noreferrer" aria-label="Open Psych Fest West artwork in a new tab"><img src="images/PFW-sam-1.svg" alt="Psych Fest West psychedelic artwork" loading="lazy" decoding="async"></a>
-  </div>
-</section>
-
-<section id="join" class="two join">'''
-
           if join_marker not in index:
               raise SystemExit('Expected ABOUT/JOIN boundary not found; refusing to modify index.html')
-          index = index.replace(join_marker, art_section, 1)
+          art_html = base64.b64decode(os.environ['ART_HTML_B64']).decode()
+          index = index.replace(join_marker, art_html, 1)
 
           css_marker = '/* Psych Fest West Doomsletter form. Brevo controls behavior; these rules control appearance only. */'
-          art_css = r'''
-/* ART gallery */
-.art-section{border-top:1px solid #f4edcf33}
-.art-head{display:grid;grid-template-columns:.9fr 1.1fr;gap:65px;align-items:end;margin-top:16px}
-.art-head h2{font:400 clamp(74px,10vw,138px)/.78 'Archivo Black';letter-spacing:-.07em;margin:0;color:#f4edcf}
-.art-intro-copy{max-width:560px;padding-bottom:8px}
-.art-intro-copy p{margin:0;color:#f4edcfbb;font-size:18px;line-height:1.55}
-.art-intro-copy .art-lead{color:#f4edcf;font-size:24px;font-weight:600;line-height:1.35;margin-bottom:12px}
-.art-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:16px;align-items:start;margin-top:54px}
-.art-piece{display:block;text-decoration:none;position:relative;overflow:hidden;border:1px solid #f4edcf33;background:#0b071066;box-shadow:8px 8px 0 #8d66ff2e;transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease}
-.art-piece img{display:block;width:100%;height:auto;transition:transform .25s ease;transform-origin:center}
-.art-piece:hover{transform:translate(-3px,-3px);border-color:#f4edcf77;box-shadow:12px 12px 0 #ff5fc844}
-.art-piece:hover img{transform:scale(1.015)}
-.art-piece:focus-visible{outline:2px solid #d9ff4f;outline-offset:5px}
-@media(max-width:980px){.art-head{grid-template-columns:1fr;gap:18px}.art-intro-copy{padding-bottom:0}.art-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:42px}}
-@media(max-width:760px){.art-head h2{font-size:clamp(64px,24vw,104px)}.art-intro-copy .art-lead{font-size:21px}.art-intro-copy p{font-size:16px}.art-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:34px}.art-piece{box-shadow:6px 6px 0 #8d66ff2e}.art-piece:hover{transform:none;box-shadow:6px 6px 0 #8d66ff2e}.art-piece:hover img{transform:none}}
-
-'''
-
           if css_marker not in style:
               raise SystemExit('Expected CSS insertion marker not found; refusing to modify style.css')
           if '.art-grid{' in style:
               raise SystemExit('ART gallery styles already present; refusing duplicate insertion')
+          art_css = base64.b64decode(os.environ['ART_CSS_B64']).decode()
           style = style.replace(css_marker, art_css + css_marker, 1)
 
           index_path.write_text(index)

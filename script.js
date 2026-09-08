@@ -18,11 +18,7 @@ const countryCodeToFlag = (code) => {
   return String.fromCodePoint(...[...code].map(char => 127397 + char.charCodeAt(0)));
 };
 
-/*
- * Brevo builds its own country picker after page load. Keep Brevo's DOM and
- * behavior intact, but decorate its native .sib-flag elements and put the
- * United States item first in the generated list.
- */
+/* Brevo country-picker polish. */
 const polishBrevoCountryPicker = () => {
   const select = document.querySelector('.live-signup select[name="SMS__COUNTRY_CODE"]');
 
@@ -64,62 +60,66 @@ const polishBrevoCountryPicker = () => {
 };
 
 /*
- * Google appends the reCAPTCHA badge to <body>. Do not reparent it because
- * Brevo relies on Google's original node. Instead reserve a slot inside the
- * form and position Google's actual badge over that slot.
+ * Restore the exact placement approach that previously worked: move Google's
+ * real reCAPTCHA badge into a slot immediately above Brevo's submit row.
  */
-const ensureRecaptchaSlot = () => {
-  const form = document.querySelector('.live-signup #sib-form');
+const placeRecaptchaBadge = () => {
+  const form = document.querySelector('.live-signup .brevo-embed #sib-form');
+  const badge = document.querySelector('.grecaptcha-badge');
   const submitButton = form?.querySelector('.sib-form-block__button');
-  const submitRow = submitButton?.closest('div[style*="padding"]');
-  if (!form || !submitRow) return null;
+  const submitRow = submitButton?.closest('[style*="padding"]') || submitButton?.parentElement?.parentElement;
+
+  if (!form || !badge || !submitRow) return false;
 
   let slot = form.querySelector('.recaptcha-badge-slot');
   if (!slot) {
     slot = document.createElement('div');
-    slot.className = 'recaptcha-badge-slot';
-    slot.setAttribute('aria-hidden', 'true');
-    slot.style.cssText = 'height:68px;position:relative;width:100%;';
+    slot.className = 'recaptcha-badge-slot sib-form-block';
+    slot.setAttribute('aria-label', 'reCAPTCHA protection');
+  }
+
+  if (slot.parentElement !== form || slot.nextElementSibling !== submitRow) {
     form.insertBefore(slot, submitRow);
   }
-  return slot;
-};
 
-const positionRecaptchaBadge = () => {
-  const slot = ensureRecaptchaSlot();
-  const badge = document.querySelector('.grecaptcha-badge');
-  if (!slot || !badge) return;
+  if (badge.parentElement !== slot) {
+    slot.appendChild(badge);
+  }
 
-  const slotRect = slot.getBoundingClientRect();
-  const bodyRect = document.body.getBoundingClientRect();
-  const left = slotRect.left - bodyRect.left;
-  const top = slotRect.top - bodyRect.top + 4;
+  /* Same visual treatment used by the previously working version. */
+  slot.style.setProperty('display', 'flex', 'important');
+  slot.style.setProperty('justify-content', 'flex-start', 'important');
+  slot.style.setProperty('min-height', '44px', 'important');
+  slot.style.setProperty('margin-top', '8px', 'important');
+  slot.style.setProperty('overflow', 'visible', 'important');
 
-  badge.style.setProperty('position', 'absolute', 'important');
-  badge.style.setProperty('left', `${left}px`, 'important');
-  badge.style.setProperty('top', `${top}px`, 'important');
+  badge.style.setProperty('position', 'relative', 'important');
+  badge.style.setProperty('left', 'auto', 'important');
   badge.style.setProperty('right', 'auto', 'important');
+  badge.style.setProperty('top', 'auto', 'important');
   badge.style.setProperty('bottom', 'auto', 'important');
-  badge.style.setProperty('transform', 'none', 'important');
+  badge.style.setProperty('transform', 'scale(.72)', 'important');
   badge.style.setProperty('transform-origin', 'top left', 'important');
+  badge.style.setProperty('box-shadow', 'none', 'important');
   badge.style.setProperty('visibility', 'visible', 'important');
   badge.style.setProperty('opacity', '1', 'important');
-  badge.style.setProperty('z-index', '20', 'important');
+
+  return true;
 };
 
-let polishFrame = null;
-const scheduleFormPolish = () => {
-  if (polishFrame) cancelAnimationFrame(polishFrame);
-  polishFrame = requestAnimationFrame(() => {
+polishBrevoCountryPicker();
+
+if (!placeRecaptchaBadge()) {
+  const captchaObserver = new MutationObserver(() => {
     polishBrevoCountryPicker();
-    positionRecaptchaBadge();
-    polishFrame = null;
+    if (placeRecaptchaBadge()) captchaObserver.disconnect();
   });
-};
+  captchaObserver.observe(document.body, { childList: true, subtree: true });
+  window.setTimeout(() => captchaObserver.disconnect(), 15000);
+}
 
-scheduleFormPolish();
-window.addEventListener('load', scheduleFormPolish);
-window.addEventListener('resize', scheduleFormPolish);
-
-const formPolishObserver = new MutationObserver(scheduleFormPolish);
-formPolishObserver.observe(document.body, { childList: true, subtree: true });
+/* Brevo builds the country menu lazily when opened, so keep only that polish observed. */
+const countryObserver = new MutationObserver(() => {
+  polishBrevoCountryPicker();
+});
+countryObserver.observe(document.body, { childList: true, subtree: true });

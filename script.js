@@ -59,19 +59,32 @@ const polishBrevoCountryPicker = () => {
   }
 };
 
+const getElementRotation = (element) => {
+  if (!element) return 0;
+  const transform = getComputedStyle(element).transform;
+  if (!transform || transform === 'none') return 0;
+
+  const match = transform.match(/^matrix\(([^)]+)\)$/);
+  if (!match) return 0;
+
+  const values = match[1].split(',').map(Number);
+  const [a, b] = values;
+  return Math.atan2(b, a) * (180 / Math.PI);
+};
+
 /*
  * Anchor Google's real badge to Brevo's native reCAPTCHA row. The badge stays
- * attached to <body> for Google's mechanics, but its document position is
- * calculated from the actual input-field edge. The reserved row is tall enough
- * to center the badge comfortably between the mobile helper and SUBSCRIBE.
+ * attached to <body> for Google's mechanics, but matches the actual SUBSCRIBE
+ * button's left edge and the card's rotation so it reads as part of the form.
  */
 const positionRecaptchaBadge = () => {
   const marker = document.querySelector('.live-signup .brevo-embed .g-recaptcha-v3');
   const anchorRow = marker?.parentElement;
   const badge = document.querySelector('.grecaptcha-badge');
-  const field = document.querySelector('.live-signup .brevo-embed .entry__field');
+  const submitButton = document.querySelector('.live-signup .brevo-embed .sib-form-block__button');
+  const signupCard = document.querySelector('.live-signup');
 
-  if (!anchorRow || !badge || !field) return false;
+  if (!anchorRow || !badge || !submitButton) return false;
 
   const slotHeight = 94;
   const badgeScale = 0.72;
@@ -85,10 +98,11 @@ const positionRecaptchaBadge = () => {
   anchorRow.style.setProperty('position', 'relative', 'important');
 
   const rowRect = anchorRow.getBoundingClientRect();
-  const fieldRect = field.getBoundingClientRect();
+  const buttonRect = submitButton.getBoundingClientRect();
   const bodyRect = document.body.getBoundingClientRect();
+  const cardRotation = getElementRotation(signupCard);
 
-  const left = fieldRect.left - bodyRect.left;
+  const left = buttonRect.left - bodyRect.left;
   const top = rowRect.top - bodyRect.top + ((rowRect.height - badgeVisualHeight) / 2);
 
   badge.style.setProperty('position', 'absolute', 'important');
@@ -99,7 +113,7 @@ const positionRecaptchaBadge = () => {
   badge.style.setProperty('width', '256px', 'important');
   badge.style.setProperty('height', `${badgeNativeHeight}px`, 'important');
   badge.style.setProperty('overflow', 'hidden', 'important');
-  badge.style.setProperty('transform', `scale(${badgeScale})`, 'important');
+  badge.style.setProperty('transform', `rotate(${cardRotation}deg) scale(${badgeScale})`, 'important');
   badge.style.setProperty('transform-origin', 'top left', 'important');
   badge.style.setProperty('z-index', '20', 'important');
   badge.style.setProperty('opacity', '1', 'important');

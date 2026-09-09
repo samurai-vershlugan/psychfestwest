@@ -189,4 +189,3 @@ const formObserver = new MutationObserver(syncFormPolish);
 formObserver.observe(document.body, { childList: true, subtree: true });
 
 /* Google may rewrite its own badge style after load; re-assert without scroll tracking. */
-window.setInterval(positionRecaptchaBadge, 750);

@@ -24,36 +24,12 @@ const polishBrevoCountryPicker = () => {
   const select = document.querySelector('.live-signup select[name="SMS__COUNTRY_CODE"]');
 
   if (select) {
-    const phoneInput = document.querySelector('.live-signup input[name="SMS"]');
     const usOption = [...select.options].find(option => /\bUS$/.test(option.textContent.trim()));
-
     if (usOption) {
-      const blankOption = [...select.options].find(option => option.value === '');
-      if (blankOption && blankOption !== select.firstElementChild) {
-        select.insertBefore(blankOption, select.firstElementChild);
+      if (usOption !== select.firstElementChild) {
+        select.insertBefore(usOption, select.firstElementChild);
       }
-      if (usOption !== select.options[1]) {
-        select.insertBefore(usOption, select.options[1] || null);
-      }
-
-      if (!phoneInput?.value.trim()) {
-        select.value = '';
-      } else if (!select.value) {
-        select.value = usOption.value;
-      }
-
-      if (phoneInput && !phoneInput.dataset.pfwCountryBound) {
-        phoneInput.dataset.pfwCountryBound = 'true';
-        phoneInput.addEventListener('input', () => {
-          if (phoneInput.value.trim() && !select.value) {
-            select.value = usOption.value;
-            select.dispatchEvent(new Event('change', { bubbles: true }));
-          } else if (!phoneInput.value.trim()) {
-            select.value = '';
-            select.dispatchEvent(new Event('change', { bubbles: true }));
-          }
-        });
-      }
+      select.value = usOption.value;
     }
   }
 
@@ -155,6 +131,24 @@ const positionRecaptchaBadge = () => {
 };
 
 /* After a successful signup, place the confirmation directly below the nav. */
+/* Keep Brevo's mobile field optional while showing US as the default country. */
+const brevoForm = document.getElementById('sib-form');
+
+if (brevoForm) {
+  brevoForm.addEventListener('submit', () => {
+    const phoneInput = brevoForm.querySelector('input[name="SMS"]');
+    const countrySelect = brevoForm.querySelector('select[name="SMS__COUNTRY_CODE"]');
+
+    if (phoneInput && countrySelect && !phoneInput.value.trim()) {
+      countrySelect.disabled = true;
+
+      setTimeout(() => {
+        countrySelect.disabled = false;
+      }, 0);
+    }
+  }, true);
+}
+
 const successMessage = document.getElementById('success-message');
 let successViewPositioned = false;
 

@@ -131,24 +131,6 @@ const positionRecaptchaBadge = () => {
 };
 
 /* After a successful signup, place the confirmation directly below the nav. */
-/* Keep Brevo's mobile field optional while showing US as the default country. */
-const brevoForm = document.getElementById('sib-form');
-
-if (brevoForm) {
-  brevoForm.addEventListener('submit', () => {
-    const phoneInput = brevoForm.querySelector('input[name="SMS"]');
-    const countrySelect = brevoForm.querySelector('select[name="SMS__COUNTRY_CODE"]');
-
-    if (phoneInput && countrySelect && !phoneInput.value.trim()) {
-      countrySelect.disabled = true;
-
-      setTimeout(() => {
-        countrySelect.disabled = false;
-      }, 0);
-    }
-  }, true);
-}
-
 const successMessage = document.getElementById('success-message');
 let successViewPositioned = false;
 

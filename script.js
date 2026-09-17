@@ -130,6 +130,34 @@ const positionRecaptchaBadge = () => {
   return true;
 };
 
+const scheduleRecaptchaPosition = () => {
+  requestAnimationFrame(() => {
+    requestAnimationFrame(positionRecaptchaBadge);
+  });
+};
+
+const recaptchaResizeObserver = 'ResizeObserver' in window
+  ? new ResizeObserver(scheduleRecaptchaPosition)
+  : null;
+const observedRecaptchaElements = new WeakSet();
+
+const observeRecaptchaLayout = () => {
+  if (!recaptchaResizeObserver) return;
+
+  const marker = document.querySelector('.live-signup .brevo-embed .g-recaptcha-v3');
+  const elements = [
+    marker?.parentElement,
+    document.querySelector('.live-signup .brevo-embed .sib-form-block__button'),
+    document.querySelector('.live-signup')
+  ].filter(Boolean);
+
+  elements.forEach(element => {
+    if (observedRecaptchaElements.has(element)) return;
+    observedRecaptchaElements.add(element);
+    recaptchaResizeObserver.observe(element);
+  });
+};
+
 /* After a successful signup, place the confirmation directly below the nav. */
 const successMessage = document.getElementById('success-message');
 let successViewPositioned = false;
@@ -177,13 +205,18 @@ if (successMessage) {
 
 const syncFormPolish = () => {
   polishBrevoCountryPicker();
+  observeRecaptchaLayout();
   positionRecaptchaBadge();
   positionSuccessMessage();
 };
 
 syncFormPolish();
-window.addEventListener('load', syncFormPolish);
-window.addEventListener('resize', positionRecaptchaBadge);
+window.addEventListener('load', scheduleRecaptchaPosition);
+window.addEventListener('resize', scheduleRecaptchaPosition);
+
+if (document.fonts?.ready) {
+  document.fonts.ready.then(scheduleRecaptchaPosition);
+}
 
 /* Brevo and Google both build pieces lazily. */
 const formObserver = new MutationObserver(syncFormPolish);

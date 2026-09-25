@@ -61,71 +61,20 @@ const polishBrevoCountryPicker = () => {
   }
 };
 
-const getElementRotation = (element) => {
-  if (!element) return 0;
-  const transform = getComputedStyle(element).transform;
-  if (!transform || transform === 'none') return 0;
-
-  const match = transform.match(/^matrix\(([^)]+)\)$/);
-  if (!match) return 0;
-
-  const values = match[1].split(',').map(Number);
-  const [a, b] = values;
-  return Math.atan2(b, a) * (180 / Math.PI);
-};
-
 /*
- * Anchor Google's real badge to Brevo's native reCAPTCHA row. The badge stays
- * attached to <body> for Google's mechanics. On desktop, compensate for the
- * card's rotation so the badge follows the same visual left-edge line as the
- * SUBSCRIBE button instead of merely sharing its raw x coordinate.
+ * Keep Google's visible reCAPTCHA badge inside the dedicated form slot.
+ * Google initially appends the badge to <body>; once it exists, move that
+ * same badge node into the slot so it stays directly above SUBSCRIBE.
  */
 const positionRecaptchaBadge = () => {
-  const marker = document.querySelector('.live-signup .brevo-embed .g-recaptcha-v3');
-  const anchorRow = marker?.parentElement;
+  const slot = document.querySelector('.live-signup .recaptcha-badge-slot');
   const badge = document.querySelector('.grecaptcha-badge');
-  const submitButton = document.querySelector('.live-signup .brevo-embed .sib-form-block__button');
-  const signupCard = document.querySelector('.live-signup');
 
-  if (!anchorRow || !badge || !submitButton) return false;
+  if (!slot || !badge) return false;
 
-  const slotHeight = 94;
-  const badgeScale = 0.72;
-  const badgeNativeHeight = 60;
-  const badgeVisualHeight = badgeNativeHeight * badgeScale;
-
-  anchorRow.style.setProperty('height', `${slotHeight}px`, 'important');
-  anchorRow.style.setProperty('min-height', `${slotHeight}px`, 'important');
-  anchorRow.style.setProperty('padding', '0', 'important');
-  anchorRow.style.setProperty('margin', '0', 'important');
-  anchorRow.style.setProperty('position', 'relative', 'important');
-
-  const rowRect = anchorRow.getBoundingClientRect();
-  const buttonRect = submitButton.getBoundingClientRect();
-  const bodyRect = document.body.getBoundingClientRect();
-  const cardRotation = getElementRotation(signupCard);
-  const angle = cardRotation * (Math.PI / 180);
-
-  const badgeTopViewport = rowRect.top + ((rowRect.height - badgeVisualHeight) / 2);
-  const verticalDifference = buttonRect.top - badgeTopViewport;
-  const rotationCompensation = Math.sin(angle) * verticalDifference;
-
-  const left = buttonRect.left - bodyRect.left + rotationCompensation;
-  const top = badgeTopViewport - bodyRect.top;
-
-  badge.style.setProperty('position', 'absolute', 'important');
-  badge.style.setProperty('left', `${left}px`, 'important');
-  badge.style.setProperty('top', `${top}px`, 'important');
-  badge.style.setProperty('right', 'auto', 'important');
-  badge.style.setProperty('bottom', 'auto', 'important');
-  badge.style.setProperty('width', '256px', 'important');
-  badge.style.setProperty('height', `${badgeNativeHeight}px`, 'important');
-  badge.style.setProperty('overflow', 'hidden', 'important');
-  badge.style.setProperty('transform', `rotate(${cardRotation}deg) scale(${badgeScale})`, 'important');
-  badge.style.setProperty('transform-origin', 'top left', 'important');
-  badge.style.setProperty('z-index', '20', 'important');
-  badge.style.setProperty('opacity', '1', 'important');
-  badge.style.setProperty('visibility', 'visible', 'important');
+  if (badge.parentElement !== slot) {
+    slot.appendChild(badge);
+  }
 
   return true;
 };
@@ -133,28 +82,6 @@ const positionRecaptchaBadge = () => {
 const scheduleRecaptchaPosition = () => {
   requestAnimationFrame(() => {
     requestAnimationFrame(positionRecaptchaBadge);
-  });
-};
-
-const recaptchaResizeObserver = 'ResizeObserver' in window
-  ? new ResizeObserver(scheduleRecaptchaPosition)
-  : null;
-const observedRecaptchaElements = new WeakSet();
-
-const observeRecaptchaLayout = () => {
-  if (!recaptchaResizeObserver) return;
-
-  const marker = document.querySelector('.live-signup .brevo-embed .g-recaptcha-v3');
-  const elements = [
-    marker?.parentElement,
-    document.querySelector('.live-signup .brevo-embed .sib-form-block__button'),
-    document.querySelector('.live-signup')
-  ].filter(Boolean);
-
-  elements.forEach(element => {
-    if (observedRecaptchaElements.has(element)) return;
-    observedRecaptchaElements.add(element);
-    recaptchaResizeObserver.observe(element);
   });
 };
 
@@ -205,7 +132,6 @@ if (successMessage) {
 
 const syncFormPolish = () => {
   polishBrevoCountryPicker();
-  observeRecaptchaLayout();
   positionRecaptchaBadge();
   positionSuccessMessage();
 };

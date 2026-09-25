@@ -69,12 +69,19 @@ const polishBrevoCountryPicker = () => {
 const positionRecaptchaBadge = () => {
   const slot = document.querySelector('.live-signup .recaptcha-badge-slot');
   const badge = document.querySelector('.grecaptcha-badge');
+  const submitButton = document.querySelector('.live-signup .sib-form-block__button');
 
-  if (!slot || !badge) return false;
+  if (!slot || !badge || !submitButton) return false;
 
   if (badge.parentElement !== slot) {
     slot.appendChild(badge);
   }
+
+  const slotRect = slot.getBoundingClientRect();
+  const buttonRect = submitButton.getBoundingClientRect();
+  const leftOffset = Math.max(0, buttonRect.left - slotRect.left);
+
+  badge.style.setProperty('margin-left', `${leftOffset}px`, 'important');
 
   return true;
 };

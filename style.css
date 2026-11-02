@@ -280,3 +280,17 @@ footer{width:min(calc(100% - 34px),1180px);margin:auto;border-top:1px solid #f4e
 .playlist-four-grid .playlist-collection-art img{width:min(100%,185px);max-height:185px}
 .playlist-four-grid .playlist-collection .collection-cta{margin-top:0}
 @media(max-width:980px){.playlist-four-grid .spotify-embed iframe{height:152px}}
+
+
+/* All Playlists: artwork and oversized collection action sit side by side. */
+.playlist-four-grid .collection-feature{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:18px;align-items:center;margin-top:0}
+.playlist-four-grid .collection-feature .playlist-collection-art{padding:0;min-width:0;justify-content:center}
+.playlist-four-grid .collection-feature .playlist-collection-art img{width:100%;max-width:175px;max-height:165px;object-fit:contain}
+.playlist-four-grid .collection-action{min-width:0;display:flex;flex-direction:column;gap:10px}
+.playlist-four-grid .collection-action .collection-cta{width:100%;min-height:110px;padding:18px;display:flex;align-items:center;justify-content:center;text-align:center;line-height:1.4;font-size:14px}
+.playlist-four-grid .collection-action .collection-note{margin:0;text-align:center;line-height:1.4}
+@media(max-width:500px){
+  .playlist-four-grid .collection-feature{grid-template-columns:1fr}
+  .playlist-four-grid .collection-feature .playlist-collection-art img{max-height:150px}
+  .playlist-four-grid .collection-action .collection-cta{min-height:76px}
+}

@@ -294,3 +294,14 @@ footer{width:min(calc(100% - 34px),1180px);margin:auto;border-top:1px solid #f4e
   .playlist-four-grid .collection-feature .playlist-collection-art img{max-height:150px}
   .playlist-four-grid .collection-action .collection-cta{min-height:76px}
 }
+
+
+/* Final playlist grid alignment: two equal-height rows, compact collection CTA. */
+@media(min-width:981px){
+  .playlist-grid.playlist-four-grid{align-items:stretch}
+  .playlist-four-grid .playlist-card{height:100%;align-self:stretch}
+}
+.playlist-four-grid .collection-feature{flex:1;align-content:center}
+.playlist-four-grid .collection-action .collection-cta{width:auto;min-height:0;padding:13px 16px;font-size:11px;line-height:1.4;align-self:center;white-space:nowrap}
+.playlist-four-grid .collection-action .collection-note{font-size:10px}
+@media(max-width:500px){.playlist-four-grid .collection-action .collection-cta{min-height:0;white-space:normal}}

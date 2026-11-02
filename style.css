@@ -240,7 +240,7 @@ footer{width:min(calc(100% - 34px),1180px);margin:auto;border-top:1px solid #f4e
 /* Listen: two-by-two desktop grid, one-column mobile. */
 .playlist-grid.playlist-four-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
 .playlist-four-grid .playlist-card{display:flex;flex-direction:column}
-.playlist-four-grid .spotify-embed{margin-top:auto}
+.playlist-four-grid .spotify-embed{margin-top:0}
 .playlist-actions{display:flex;flex-wrap:wrap;align-items:center;column-gap:24px;row-gap:3px}
 .playlist-actions .playlist-link{font-size:11px}
 .universal-link{color:#44dbc7}
@@ -259,3 +259,13 @@ footer{width:min(calc(100% - 34px),1180px);margin:auto;border-top:1px solid #f4e
 .playlist-collection-art img{display:block;width:min(100%,320px);max-height:352px;height:auto;object-fit:contain;filter:drop-shadow(0 8px 18px #0008)}
 .playlist-collection .collection-cta{margin-top:auto}
 @media(max-width:980px){.playlist-collection-art img{max-height:300px}}
+
+
+/* Align the copy-to-player spacing across all three playlist cards. */
+.playlist-four-grid .playlist-card>p:not(.eyebrow){min-height:0;margin-bottom:20px}
+.playlist-four-grid .playlist-card h3{margin-bottom:12px}
+.playlist-four-grid .playlist-card .playlist-actions{margin-top:auto;padding-top:4px}
+/* Keep the collection artwork in proportion to the neighboring player. */
+.playlist-four-grid .playlist-collection-art{flex:1;min-height:0;padding:8px 0 12px}
+.playlist-four-grid .playlist-collection-art img{width:min(100%,250px);max-height:246px}
+@media(max-width:980px){.playlist-four-grid .playlist-collection-art img{max-height:220px}}

@@ -269,3 +269,14 @@ footer{width:min(calc(100% - 34px),1180px);margin:auto;border-top:1px solid #f4e
 .playlist-four-grid .playlist-collection-art{flex:1;min-height:0;padding:8px 0 12px}
 .playlist-four-grid .playlist-collection-art img{width:min(100%,250px);max-height:246px}
 @media(max-width:980px){.playlist-four-grid .playlist-collection-art img{max-height:220px}}
+
+
+/* Compact Spotify cards: no equal-height stretching or spacer pushing players down. */
+.playlist-grid.playlist-four-grid{align-items:start}
+.playlist-four-grid .playlist-card{height:auto;align-self:start}
+.playlist-four-grid .spotify-embed iframe{height:152px}
+.playlist-four-grid .playlist-card .playlist-actions{margin-top:0;padding-top:0}
+.playlist-four-grid .playlist-collection-art{flex:0 0 auto;min-height:0;padding:8px 0 12px}
+.playlist-four-grid .playlist-collection-art img{width:min(100%,185px);max-height:185px}
+.playlist-four-grid .playlist-collection .collection-cta{margin-top:0}
+@media(max-width:980px){.playlist-four-grid .spotify-embed iframe{height:152px}}

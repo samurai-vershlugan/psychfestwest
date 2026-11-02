@@ -227,3 +227,11 @@ footer{width:min(calc(100% - 34px),1180px);margin:auto;border-top:1px solid #f4e
   .listen-social{margin-top:28px}
   header nav a:first-child{display:none!important}
 }
+
+
+/* Three playlist cards: preserve the established two-card styling elsewhere. */
+.playlist-grid.three-playlists{grid-template-columns:repeat(3,minmax(0,1fr))}
+.three-playlists .playlist-card h3{font-size:clamp(23px,2.35vw,32px);overflow-wrap:break-word}
+.playlist-card.halloween{border-color:#ff8b3d99;box-shadow:10px 10px 0 #8d66ff2e}
+.spooky,.spooky-link{color:#ff8b3d}
+@media(max-width:980px){.playlist-grid.three-playlists{grid-template-columns:1fr}}
